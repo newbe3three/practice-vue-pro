@@ -1,0 +1,2 @@
+com.practice.framework.redis.config.PracticeRedisAutoConfiguration
+com.practice.framework.redis.config.PracticeCacheAutoConfiguration

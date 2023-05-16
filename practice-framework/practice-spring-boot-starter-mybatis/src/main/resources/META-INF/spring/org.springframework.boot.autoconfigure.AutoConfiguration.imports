@@ -1,0 +1,2 @@
+com.practice.framework.datasource.config.PracticeDataSourceAutoConfiguration
+com.practice.framework.mybatis.config.PracticeMybatisAutoConfiguration

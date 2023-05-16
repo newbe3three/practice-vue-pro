@@ -1,0 +1,6 @@
+com.practice.framework.apilog.config.PracticeApiLogAutoConfiguration
+com.practice.framework.jackson.config.PracticeJacksonAutoConfiguration
+com.github.xiaoymin.knife4j.spring.configuration.Knife4jAutoConfiguration
+com.practice.framework.swagger.config.PracticeSwaggerAutoConfiguration
+com.practice.framework.web.config.PracticeWebAutoConfiguration
+com.practice.framework.xss.config.PracticeXssAutoConfiguration

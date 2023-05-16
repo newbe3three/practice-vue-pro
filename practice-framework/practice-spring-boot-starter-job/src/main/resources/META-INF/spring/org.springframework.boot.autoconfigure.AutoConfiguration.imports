@@ -1,0 +1,2 @@
+com.practice.framework.quartz.config.PracticeQuartzAutoConfiguration
+com.practice.framework.quartz.config.PracticeAsyncAutoConfiguration

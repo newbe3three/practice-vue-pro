@@ -1,0 +1,2 @@
+com.practice.framework.idempotent.config.PracticeIdempotentConfiguration
+com.practice.framework.lock4j.config.PracticeLock4jConfiguration

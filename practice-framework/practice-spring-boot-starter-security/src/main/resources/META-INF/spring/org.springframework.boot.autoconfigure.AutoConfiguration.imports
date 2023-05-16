@@ -1,0 +1,2 @@
+com.practice.framework.security.config.PracticeSecurityAutoConfiguration
+com.practice.framework.security.config.PracticeWebSecurityConfigurerAdapter
