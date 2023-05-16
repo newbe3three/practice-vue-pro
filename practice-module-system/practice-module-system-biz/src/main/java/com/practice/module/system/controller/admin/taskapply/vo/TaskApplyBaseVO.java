@@ -14,9 +14,9 @@ import javax.validation.constraints.*;
 @Data
 public class TaskApplyBaseVO {
 
-    @Schema(description = "名字", required = true, example = "张三")
-    @NotNull(message = "名字不能为空")
-    private String name;
+    @Schema(description = "用户编号", required = true, example = "1")
+    @NotNull(message = "用户编号不能为空")
+    private Long  userId;
 
     @Schema(description = "部门编号", required = true, example = "1")
     @NotNull(message = "部门编号不能为空")

@@ -58,6 +58,13 @@ public class TaskApplyServiceImpl implements TaskApplyService {
         if (taskDO.getStatus() != 1) {
             throw exception(TASK_STATUS_ALLPY_ERROR);
         }
+        System.out.println("nihao");
+        //检验是否存在对当前任务的申请,每个用户对同一人任务只能存在一个状态为待审核的
+        if(taskApplyMapper.selectByTaskIdAndUserId(
+                createReqVO.getTaskId(),createReqVO.getUserId()) != null){
+            throw exception(TASK_APPLY_REPEAT);
+        }
+        System.out.println("nihao2");
 
         //任务申请的初始状态设置为0 审核中
         createReqVO.setStatus((byte) 0);

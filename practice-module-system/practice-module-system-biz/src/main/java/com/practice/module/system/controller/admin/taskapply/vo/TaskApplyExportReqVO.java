@@ -13,8 +13,8 @@ import static com.practice.framework.common.util.date.DateUtils.FORMAT_YEAR_MONT
 @Data
 public class TaskApplyExportReqVO {
 
-    @Schema(description = "名字", example = "张三")
-    private String name;
+    @Schema(description = "用户编号", example = "1")
+    private Long userId;
 
     @Schema(description = "部门编号", example = "李四")
     private Long deptId;

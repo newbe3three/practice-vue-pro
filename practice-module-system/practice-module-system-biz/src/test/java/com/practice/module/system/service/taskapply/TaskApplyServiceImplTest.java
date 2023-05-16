@@ -110,7 +110,7 @@ public class TaskApplyServiceImplTest extends BaseDbUnitTest {
     public void testGetTaskApplyPage() {
        // mock 数据
        TaskApplyDO dbTaskApply = randomPojo(TaskApplyDO.class, o -> { // 等会查询到
-           o.setName(null);
+           o.setUserId(null);
            o.setDeptId(null);
            o.setCreator(null);
            o.setTaskId(null);
@@ -120,7 +120,7 @@ public class TaskApplyServiceImplTest extends BaseDbUnitTest {
        });
        taskApplyMapper.insert(dbTaskApply);
        // 测试 name 不匹配
-       taskApplyMapper.insert(cloneIgnoreId(dbTaskApply, o -> o.setName(null)));
+       taskApplyMapper.insert(cloneIgnoreId(dbTaskApply, o -> o.setUserId(null)));
        // 测试 deptName 不匹配
        taskApplyMapper.insert(cloneIgnoreId(dbTaskApply, o -> o.setDeptId(null)));
        // 测试 creator 不匹配
@@ -135,7 +135,7 @@ public class TaskApplyServiceImplTest extends BaseDbUnitTest {
        taskApplyMapper.insert(cloneIgnoreId(dbTaskApply, o -> o.setCreateTime(null)));
        // 准备参数
        TaskApplyPageReqVO reqVO = new TaskApplyPageReqVO();
-       reqVO.setName(null);
+       reqVO.setUserId(null);
        reqVO.setDeptId(null);
        reqVO.setCreator(null);
        reqVO.setTaskId(null);
@@ -156,7 +156,7 @@ public class TaskApplyServiceImplTest extends BaseDbUnitTest {
     public void testGetTaskApplyList() {
        // mock 数据
        TaskApplyDO dbTaskApply = randomPojo(TaskApplyDO.class, o -> { // 等会查询到
-           o.setName(null);
+           o.setUserId(null);
            o.setDeptId(null);
            o.setCreator(null);
            o.setTaskId(null);
@@ -166,7 +166,7 @@ public class TaskApplyServiceImplTest extends BaseDbUnitTest {
        });
        taskApplyMapper.insert(dbTaskApply);
        // 测试 name 不匹配
-       taskApplyMapper.insert(cloneIgnoreId(dbTaskApply, o -> o.setName(null)));
+       taskApplyMapper.insert(cloneIgnoreId(dbTaskApply, o -> o.setUserId(null)));
        // 测试 deptName 不匹配
        taskApplyMapper.insert(cloneIgnoreId(dbTaskApply, o -> o.setDeptId(null)));
        // 测试 creator 不匹配
@@ -181,7 +181,7 @@ public class TaskApplyServiceImplTest extends BaseDbUnitTest {
        taskApplyMapper.insert(cloneIgnoreId(dbTaskApply, o -> o.setCreateTime(null)));
        // 准备参数
        TaskApplyExportReqVO reqVO = new TaskApplyExportReqVO();
-       reqVO.setName(null);
+       reqVO.setUserId(null);
        reqVO.setDeptId(null);
        reqVO.setCreator(null);
        reqVO.setTaskId(null);

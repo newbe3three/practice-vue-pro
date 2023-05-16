@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 @Data
 @ToString(callSuper = true)
 public class TaskApplyReviewReqVO {
-    @Schema(description = "任务编号", required = true, example = "1")
-    @NotNull(message = "任务编号不能为空")
+    @Schema(description = "申请编号", required = true, example = "1")
+    @NotNull(message = "任务申请编号不能为空")
     private Long id;
 
     @Schema(description = "审核结果", required = true, example = "true")

@@ -22,8 +22,11 @@ public class TaskApplyExcelVO {
     @ExcelProperty("编号")
     private Long id;
 
-    @ExcelProperty("名字")
-    private String name;
+    @ExcelProperty("用户编号")
+    private Long userId;
+
+    @ExcelProperty("用户名称")
+    private String userName;
 
     @ExcelProperty("用户部门编号")
     private Long deptId;

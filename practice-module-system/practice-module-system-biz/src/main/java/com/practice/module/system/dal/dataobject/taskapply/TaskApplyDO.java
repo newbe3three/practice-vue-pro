@@ -28,9 +28,9 @@ public class TaskApplyDO extends BaseDO {
     @TableId
     private Long id;
     /**
-     * 名字
+     * 用户编号
      */
-    private String name;
+    private Long userId;
     /**
      * 部门名称
      */

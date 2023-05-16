@@ -19,7 +19,7 @@ public interface TaskApplyMapper extends BaseMapperX<TaskApplyDO> {
 
     default PageResult<TaskApplyDO> selectPage(TaskApplyPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<TaskApplyDO>()
-                .likeIfPresent(TaskApplyDO::getName, reqVO.getName())
+                .eqIfPresent(TaskApplyDO::getUserId, reqVO.getUserId())
                 .eqIfPresent(TaskApplyDO::getDeptId, reqVO.getDeptId())
                 .eqIfPresent(TaskApplyDO::getCreator, reqVO.getCreator())
                 .eqIfPresent(TaskApplyDO::getTaskId, reqVO.getTaskId())
@@ -31,7 +31,7 @@ public interface TaskApplyMapper extends BaseMapperX<TaskApplyDO> {
 
     default List<TaskApplyDO> selectList(TaskApplyExportReqVO reqVO) {
         return selectList(new LambdaQueryWrapperX<TaskApplyDO>()
-                .likeIfPresent(TaskApplyDO::getName, reqVO.getName())
+                .eqIfPresent(TaskApplyDO::getUserId, reqVO.getUserId())
                 .eqIfPresent(TaskApplyDO::getDeptId, reqVO.getDeptId())
                 .eqIfPresent(TaskApplyDO::getCreator, reqVO.getCreator())
                 .eqIfPresent(TaskApplyDO::getTaskId, reqVO.getTaskId())
@@ -46,4 +46,11 @@ public interface TaskApplyMapper extends BaseMapperX<TaskApplyDO> {
                 .eqIfPresent(TaskApplyDO::getStatus, status));
     }
 
+    default List<TaskApplyDO> selectByTaskIdAndUserId(Long taskId, Long userId) {
+        return selectList(new LambdaQueryWrapperX<TaskApplyDO>()
+                .eqIfPresent(TaskApplyDO::getTaskId, taskId)
+                .eqIfPresent(TaskApplyDO::getUserId, userId)
+
+        );
+    }
 }

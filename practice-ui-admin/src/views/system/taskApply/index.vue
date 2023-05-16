@@ -50,7 +50,7 @@
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
       <el-table-column label="编号" align="center" prop="id" />
-      <el-table-column label="名字" align="center" prop="name" />
+      <el-table-column label="用户名称" align="center" prop="userName" />
       <el-table-column label="部门名称" align="center" prop="deptName" />
       <el-table-column label="任务名称" align="center" prop="taskName" />
       <el-table-column label="手机号码" align="center" prop="mobile" />
@@ -80,8 +80,8 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="名字" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名字" />
+        <el-form-item label="用户名称" prop="userName">
+          <el-input v-model="form.userName" placeholder="请输入名字" />
         </el-form-item>
         <el-form-item label="部门名称" prop="deptName">
           <el-input v-model="form.deptName" placeholder="请输入部门名称" />
@@ -146,7 +146,6 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        name: [{ required: true, message: "名字不能为空", trigger: "blur" }],
         deptName: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
         taskId: [{ required: true, message: "任务id不能为空", trigger: "blur" }],
       }

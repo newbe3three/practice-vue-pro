@@ -171,6 +171,7 @@ public interface ErrorCodeConstants {
     ErrorCode TASK_APPLY_NOT_EXISTS = new ErrorCode(1003025005, "任务申请不存在");
     ErrorCode TASK_APPLY_STATUS_ERROR = new ErrorCode(1003025006, "当前申请已审核！");
     ErrorCode TASK_STATUS_ALLPY_ERROR = new ErrorCode(1003025007, "当前任务不可申请！");
+    ErrorCode TASK_APPLY_REPEAT = new ErrorCode(1003025008, "您已申请当前任务！");
 
 
 }

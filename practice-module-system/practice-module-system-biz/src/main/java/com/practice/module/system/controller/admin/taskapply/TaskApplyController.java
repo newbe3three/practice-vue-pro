@@ -3,6 +3,7 @@ package com.practice.module.system.controller.admin.taskapply;
 import com.practice.module.system.dal.dataobject.dept.DeptDO;
 import com.practice.module.system.service.dept.DeptService;
 import com.practice.module.system.service.task.TaskService;
+import com.practice.module.system.service.user.AdminUserService;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -46,9 +47,12 @@ public class TaskApplyController {
     private TaskService taskService;
     @Resource
     private DeptService deptService;
+    @Resource
+    private AdminUserService adminUserService;
 
     private String taskName;
     private String deptName;
+    private String userName;
     @PostMapping("/create")
     @Operation(summary = "创建任务申请")
     @PreAuthorize("@ss.hasPermission('system:task-apply:create')")
@@ -87,8 +91,11 @@ public class TaskApplyController {
         deptName = deptService.getDept(taskApply.getDeptId()).getName();
         //taskService 根据taskId获取name后写入taskApplyRespVO，因为前端要name
         taskName = taskService.getTask(taskApply.getTaskId()).getName();
+        //adminService 根据userId获取nickname后写入taskApplyRespVO，因为前端要name
+        userName = adminUserService.getUser(taskApply.getUserId()).getNickname();
         taskApplyRespVO.setDeptName(deptName);
         taskApplyRespVO.setTaskName(taskName);
+        taskApplyRespVO.setUserName(userName);
         return success(taskApplyRespVO);
     }
     @PostMapping("/review")
@@ -110,8 +117,10 @@ public class TaskApplyController {
         for(int i = 0; i < taskApplyRespVOS.size(); i++) {
             taskName = taskService.getTask(taskApplyRespVOS.get(i).getTaskId()).getName();
             deptName = deptService.getDept(taskApplyRespVOS.get(i).getDeptId()).getName();
+            userName = adminUserService.getUser(taskApplyRespVOS.get(i).getUserId()).getNickname();
             taskApplyRespVOS.get(i).setTaskName(taskName);
             taskApplyRespVOS.get(i).setDeptName(deptName);
+            taskApplyRespVOS.get(i).setUserName(userName);
         }
         return success(taskApplyRespVOS);
     }
@@ -126,6 +135,8 @@ public class TaskApplyController {
             //taskId 转换成 taskName 输出  deptId转换成deptName输出
             deptName = deptService.getDept(taskApplyRespVOPageResult.getList().get(i).getDeptId()).getName();
             taskName = taskService.getTask(taskApplyRespVOPageResult.getList().get(i).getTaskId()).getName();
+            userName = adminUserService.getUser(taskApplyRespVOPageResult.getList().get(i).getUserId()).getNickname();
+            taskApplyRespVOPageResult.getList().get(i).setUserName(userName);
             taskApplyRespVOPageResult.getList().get(i).setDeptName(deptName);
             taskApplyRespVOPageResult.getList().get(i).setTaskName(taskName);
         }
@@ -145,8 +156,11 @@ public class TaskApplyController {
             //向表格中输入部门名称 和 任务名称
             deptName = deptService.getDept(datas.get(i).getDeptId()).getName();
             taskName = taskService.getTask(datas.get(i).getTaskId()).getName();
+            userName = adminUserService.getUser(datas.get(i).getUserId()).getNickname();
             datas.get(i).setTaskName(taskName);
             datas.get(i).setDeptName(deptName);
+            datas.get(i).setUserName(userName);
+
         }
         ExcelUtils.write(response, "任务申请.xls", "数据", TaskApplyExcelVO.class, datas);
     }

@@ -25,4 +25,8 @@ public class TaskApplyRespVO extends TaskApplyBaseVO {
     @Schema(description = "任务名称", required = true, example = "李四")
     @NotNull(message = "部门名称不能为空")
     private String taskName;
+
+    @Schema(description = "用户名称", required = true, example = "张三")
+    @NotNull(message = "用户名称不能为空")
+    private String userName;
 }
