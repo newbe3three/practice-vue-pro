@@ -444,6 +444,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
+
+
     /**
      * 对密码进行加密
      *
@@ -453,5 +455,10 @@ public class AdminUserServiceImpl implements AdminUserService {
     private String encodePassword(String password) {
         return passwordEncoder.encode(password);
     }
-
+    @Override
+    public Long getUserIdWithUserName(String userName) {
+        AdminUserDO adminUserDO = userMapper.selectByUsername(userName);
+        //只返回userId
+        return adminUserDO.getId();
+    }
 }

@@ -79,7 +79,6 @@ public class TaskApplyController {
         taskApplyService.deleteTaskApply(id);
         return success(true);
     }
-
     @GetMapping("/get")
     @Operation(summary = "获得任务申请")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
@@ -97,6 +96,25 @@ public class TaskApplyController {
         taskApplyRespVO.setTaskName(taskName);
         taskApplyRespVO.setUserName(userName);
         return success(taskApplyRespVO);
+    }
+
+    @GetMapping("/get/userid")
+    @Operation(summary = "获得任务申请")
+    @Parameter(name = "userId", description = "用户编号", required = true, example = "1024")
+    @PreAuthorize("@ss.hasPermission('system:task-apply:get:userid')")
+    public CommonResult<List<TaskApplyRespVO>> getTaskApplyListWithUserId() {
+        List<TaskApplyDO> taskApplyDOList = taskApplyService.getTaskApplyListWithUserId(getLoginUserId());
+        List<TaskApplyRespVO> taskApplyRespVOS = TaskApplyConvert.INSTANCE.convertList(taskApplyDOList);
+        //taskId 转换成 taskName 输出  deptId转换成deptName输出
+        for(int i = 0; i < taskApplyRespVOS.size(); i++) {
+            taskName = taskService.getTask(taskApplyRespVOS.get(i).getTaskId()).getName();
+            deptName = deptService.getDept(taskApplyRespVOS.get(i).getDeptId()).getName();
+            userName = adminUserService.getUser(taskApplyRespVOS.get(i).getUserId()).getNickname();
+            taskApplyRespVOS.get(i).setTaskName(taskName);
+            taskApplyRespVOS.get(i).setDeptName(deptName);
+            taskApplyRespVOS.get(i).setUserName(userName);
+        }
+        return success(taskApplyRespVOS);
     }
     @PostMapping("/review")
     @Operation(summary = "任务申请审核")

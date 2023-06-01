@@ -33,4 +33,5 @@ DELETE FROM "system_mail_log";
 DELETE FROM "system_notify_template";
 DELETE FROM "system_notify_message";
 DELETE FROM "system_task";
-DELETE FROM "system_task_apply"
+DELETE FROM "system_task_apply";
+DELETE FROM "system_resource_article";

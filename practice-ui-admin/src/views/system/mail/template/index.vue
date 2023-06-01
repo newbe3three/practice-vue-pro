@@ -100,6 +100,7 @@
         <el-form-item label="模板内容">
           <editor v-model="form.content" :min-height="192"/>
         </el-form-item>
+
         <el-form-item label="开启状态" prop="status">
           <el-radio-group v-model="form.status">
             <el-radio v-for="dict in this.getDictDatas(DICT_TYPE.COMMON_STATUS)"
@@ -142,14 +143,20 @@ import { createMailTemplate, updateMailTemplate, deleteMailTemplate, getMailTemp
 import Editor from '@/components/Editor';
 import { CommonStatusEnum } from "@/utils/constants";
 import { getSimpleMailAccountList } from "@/api/system/mail/account";
+import MarkdownEditor from  '@/components/Markdown';
+import ElementForm from "@/components/bpmnProcessDesigner/package/penal/form/ElementForm.vue";
 
 export default {
   name: "SystemMailTemplate",
   components: {
+    ElementForm,
     Editor,
+    MarkdownEditor,
   },
   data() {
     return {
+      //vditor
+     // contentEditor: {},
       // 遮罩层
       loading: true,
       // 显示搜索条件

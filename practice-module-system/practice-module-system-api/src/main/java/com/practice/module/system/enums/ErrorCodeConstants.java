@@ -173,5 +173,10 @@ public interface ErrorCodeConstants {
     ErrorCode TASK_STATUS_ALLPY_ERROR = new ErrorCode(1003025007, "当前任务不可申请！");
     ErrorCode TASK_APPLY_REPEAT = new ErrorCode(1003025008, "您已申请当前任务！");
 
+    //资源管理
+    ErrorCode RESOURCE_ARTICLE_NOT_EXISTS = new ErrorCode(1003026001, "文章资源不存在");
+    ErrorCode RESOURCE_ARTICLE_REVIEW_ERROR = new ErrorCode(1003026002, "文章资源审核错误！");
+
+   // ErrorCode RESOURCE_ARTICLE_REJECT_ERROR = new ErrorCode(1003026003, "文章驳回状态错误！");
 
 }

@@ -42,7 +42,13 @@ public interface TaskApplyService {
      * @return 任务申请
      */
     TaskApplyDO getTaskApply(Long id);
-
+    /**
+     * 获得任务申请
+     *
+     * @param userId 用户编号
+     * @return 任务申请
+     */
+    List<TaskApplyDO> getTaskApplyListWithUserId(Long userId);
     /**
      * 获得任务申请列表
      *

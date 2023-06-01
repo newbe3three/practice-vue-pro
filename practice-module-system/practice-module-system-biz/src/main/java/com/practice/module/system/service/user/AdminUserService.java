@@ -209,4 +209,11 @@ public interface AdminUserService {
      */
     boolean isPasswordMatch(String rawPassword, String encodedPassword);
 
+    /**
+     * 根据用户名获得userid
+     *
+     * @param userName 用户名
+     * @return 用户编号
+     */
+    Long getUserIdWithUserName(String userName);
 }

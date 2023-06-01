@@ -53,4 +53,11 @@ public interface TaskApplyMapper extends BaseMapperX<TaskApplyDO> {
 
         );
     }
+    default List<TaskApplyDO> selectByUserId( Long userId) {
+        return selectList(new LambdaQueryWrapperX<TaskApplyDO>()
+                .eqIfPresent(TaskApplyDO::getUserId, userId)
+
+        );
+    }
+
 }
