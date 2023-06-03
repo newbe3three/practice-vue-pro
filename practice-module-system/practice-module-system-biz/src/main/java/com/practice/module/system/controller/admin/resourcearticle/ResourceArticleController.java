@@ -65,13 +65,7 @@ public class ResourceArticleController {
         return success(resourceArticleService.createResourceArticle(createReqVO));
     }
 
-    @PutMapping("/update")
-    @Operation(summary = "更新文章资源")
-    @PreAuthorize("@ss.hasPermission('system:resource-article:update')")
-    public CommonResult<Boolean> updateResourceArticle(@Valid @RequestBody ResourceArticleUpdateReqVO updateReqVO) {
-        resourceArticleService.updateResourceArticle(updateReqVO);
-        return success(true);
-    }
+
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除文章资源")
@@ -151,13 +145,13 @@ public class ResourceArticleController {
     }
     @GetMapping("/query/username")
     @Operation(summary = "根据用户名称查询文章资源分页")
-    //@PreAuthorize()
+    @PreAuthorize("@ss.hasPermission('system:resource-article:query')")
     @Parameter(name = "username", description = "用户名", required = true, example = "admin")
     public CommonResult<PageResult<ResourceArticleRespVO>> getResourceArticleListWithUserName(@Valid ResourceArticlePageReqVO pageVO) {
 
         //ResourceArticlePageReqVO pageVO = new ResourceArticlePageReqVO();
         //先根据username查询userid，然后再去查询article表
-        pageVO.setUserId(adminUserService.getUserIdWithUserName(userName));
+        pageVO.setUserId(adminUserService.getUserIdWithUserName(pageVO.getUserName()));
         PageResult<ResourceArticleDO> pageResult = resourceArticleService.getResourceArticlePage(pageVO);
         PageResult<ResourceArticleRespVO> resourceArticleRespVOPageResult = ResourceArticleConvert.INSTANCE.convertPage(pageResult);
         for (int i=0; i<resourceArticleRespVOPageResult.getList().size();i++) {
@@ -175,9 +169,7 @@ public class ResourceArticleController {
     public CommonResult<List<ResourceArticleRejectRespVO>> reviewResourceArticle(@RequestParam("articleId") Long articleId)  {
         //根据articleId查询审核驳回记录 如果有就返回articleRejctList 如果没有就返回null，前端就没有可以显示的数据
         List<ResourceArticleRejectDO> rejectList = resourceArticleRejectService.getResourceArticleRejectListByArticleId(articleId);
-        System.out.println("nihao"+rejectList);
         List<ResourceArticleRejectRespVO> resourceArticleRejectRespVOS = ResourceArticleRejectConvert.INSTANCE.convertList(rejectList);
-        System.out.println("nihao2"+resourceArticleRejectRespVOS);
         return  success(resourceArticleRejectRespVOS);
     }
 
@@ -199,6 +191,40 @@ public class ResourceArticleController {
         return success(true);
     }
 
+    @GetMapping("/takedown")
+    @Operation(summary = "文章资源下架")
+    @PreAuthorize("@ss.hasPermission('system:resource-article:down')")
+    @Parameter(name = "id", description = "文章编号", required = true, example = "1")
+    public CommonResult<Boolean> takeDownResourceArticle(@RequestParam("id") Long id)  {
+        resourceArticleService.takeDownResourceArticle(id);
+        return success(true);
+    }
+
+    @GetMapping("/query/category")
+    @Operation(summary = "根据类别编号查询文章资源并分页")
+    @PreAuthorize("@ss.hasPermission('system:resource-article:query')")
+   // @Parameter(name = "categoryId", description = "类别编号", required = true, example = "1")
+    public CommonResult<PageResult<ResourceArticleRespVO>> getResourceArticleListWithCategoryId(@Valid ResourceArticlePageReqVO pageReqVO) {
+      //  类别编号不存在就查询不出数据
+
+        PageResult<ResourceArticleDO> pageResult = resourceArticleService.getResourceArticlePage(pageReqVO);
+        PageResult<ResourceArticleRespVO> resourceArticleRespVOPageResult = ResourceArticleConvert.INSTANCE.convertPage(pageResult);
+        for (int i=0; i<resourceArticleRespVOPageResult.getList().size();i++) {
+            userName = adminUserService.getUser(resourceArticleRespVOPageResult.getList().get(i).getUserId()).getUsername();
+            resourceArticleRespVOPageResult.getList().get(i).setUserName(userName);
+        }
+
+        return success(resourceArticleRespVOPageResult);
+    }
+
+
+    @PutMapping("/update")
+    @Operation(summary = "文章资源修改")
+    @PreAuthorize("@ss.hasPermission('system:resource-article:update')")
+    public CommonResult<Boolean> updateResourceArticle(@Valid @RequestBody ResourceArticleUpdateReqVO updateReqVO) {
+        resourceArticleService.updateResourceArticle(updateReqVO);
+        return success(true);
+    }
 }
 
 

@@ -91,4 +91,11 @@ public interface ResourceArticleService {
      * @return
      */
     void reviewFailureResourceArticle(ResourceArticleRejectCreateReqVO createReqVO);
+    /**
+     * 文章资源下架
+     *
+     * @param id 文章资源下架
+     * @return
+     */
+    void takeDownResourceArticle(Long id);
 }

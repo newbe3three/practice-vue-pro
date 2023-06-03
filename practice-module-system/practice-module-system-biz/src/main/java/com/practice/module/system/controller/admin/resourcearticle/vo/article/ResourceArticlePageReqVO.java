@@ -37,7 +37,6 @@ public class ResourceArticlePageReqVO extends PageParam {
     private Byte status;
 
 
-
     @Schema(description = "浏览数量", example = "22204")
     private Long viewCount;
 
