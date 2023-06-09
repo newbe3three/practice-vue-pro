@@ -177,6 +177,8 @@ public interface ErrorCodeConstants {
     ErrorCode RESOURCE_ARTICLE_NOT_EXISTS = new ErrorCode(1003026001, "文章资源不存在");
     ErrorCode RESOURCE_ARTICLE_REVIEW_ERROR = new ErrorCode(1003026002, "文章资源审核错误！");
 
-   // ErrorCode RESOURCE_ARTICLE_REJECT_ERROR = new ErrorCode(1003026003, "文章驳回状态错误！");
+    ErrorCode RESOURCE_ARTICLE_TAKE_DOWN_ERROR= new ErrorCode(1003026005, "文章下架操作错误！");
+    ErrorCode RESOURCE_ARTICLE_CATEGORY_QUERY_ERROR= new ErrorCode(1003026006, "类别查询参数错误！");
 
+    ErrorCode RESOURCE_CATEGORY_NOT_EXISTS= new ErrorCode(1003026007, "资源类别不存在！");
 }

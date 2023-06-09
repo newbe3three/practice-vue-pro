@@ -457,8 +457,18 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
     @Override
     public Long getUserIdWithUserName(String userName) {
-        AdminUserDO adminUserDO = userMapper.selectByUsername(userName);
+
+        try {
+            AdminUserDO adminUserDO = userMapper.selectByUsername(userName);
+            return adminUserDO.getId();
+        }catch (Exception e) {
+            throw exception(USER_NOT_EXISTS);
+        }
+        //验证用户存在性
+//        if (adminUserDO == null) {
+//            throw exception(USER_NOT_EXISTS);
+//        }
         //只返回userId
-        return adminUserDO.getId();
+
     }
 }
