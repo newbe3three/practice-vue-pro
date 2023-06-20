@@ -127,7 +127,7 @@ public class ResourceArticleServiceImpl implements ResourceArticleService {
         validateResourceArticleExists(id);
         //校验状态
         validateResourceArticleStatus(id);
-        //更新任务状态为已发布 status = 1
+        //更新资源状态为已发布 status = 1
         ResourceArticleDO articleDO = new ResourceArticleDO();
         articleDO.setId(id);
         articleDO.setStatus((byte) 1);
@@ -143,7 +143,7 @@ public class ResourceArticleServiceImpl implements ResourceArticleService {
         }
         //校验状态 是否为0或2
         validateResourceArticleStatus(articleDO.getId());
-        //1.更新任务状态为已驳回 status = 2
+        //1.更新资源状态为已驳回 status = 2
         articleDO.setStatus((byte) 2);
         resourceArticleMapper.updateById(articleDO);
         //2.文章驳回意见拆入表中

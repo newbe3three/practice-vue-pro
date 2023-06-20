@@ -181,4 +181,14 @@ public interface ErrorCodeConstants {
     ErrorCode RESOURCE_ARTICLE_CATEGORY_QUERY_ERROR= new ErrorCode(1003026006, "类别查询参数错误！");
 
     ErrorCode RESOURCE_CATEGORY_NOT_EXISTS= new ErrorCode(1003026007, "资源类别不存在！");
+
+    ErrorCode PRACTICE_NOT_EXISTS = new ErrorCode(1003027001, "实践不存在");
+
+    ErrorCode PRACTICE_CREATE_TIME_ERROR = new ErrorCode(1003027002, "实践开始和结束时间冲突");
+    ErrorCode PRACTICE_CREATE_PEOPLE_NUMBER_ERROR = new ErrorCode(1003027003, "实践需求人数不得小于0");
+
+    ErrorCode PRACTICE_REVIEW_STATUS_ERROR = new ErrorCode(1003027004, "实践审核状态错误！");
+
+    ErrorCode PRACTICE_UPDATE_STATUS_ERROR = new ErrorCode(1003027005, "实践修改状态错误！");
+
 }
