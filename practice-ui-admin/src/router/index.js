@@ -94,6 +94,19 @@ export const constantRoutes = [
     }]
   },
   {
+    path: '/system',
+    component: Layout,
+    hidden: true,
+    redirect: 'noredirect',
+    children: [{
+        path: 'task/task',
+        component: (resolve) => require(['@/views/system/task/index'], resolve),
+        name: 'Systemtask',
+        meta: {title: '任务管理' ,activeMenu: '/system/task/task'}
+      }
+  ]
+  },
+  {
     path: '/dict',
     component: Layout,
     hidden: true,
@@ -186,7 +199,7 @@ export const constantRoutes = [
       path: 'value/:propertyId(\\d+)',
       component: (resolve) => require(['@/views/mall/product/property/value'], resolve),
       name: 'ProductPropertyValue',
-      meta: {title: '商品属性值', icon: '', activeMenu: '/product/property'}
+      meta: {title: '商品属性值', icon: '', activeMenu: '/bpm/manager/model'}
     }
     ]
   },
