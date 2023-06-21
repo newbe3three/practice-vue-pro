@@ -87,6 +87,18 @@
     <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
       @pagination="getList" />
 
+    <el-dialog :title="title" :visible.sync="showDetail" width="400px" v-dialogDrag append-to-body center>
+      <div class="item-container"><div class="text-container mar">任务编号：</div><div class="mar">{{ task.id }}</div></div>
+      <div class="item-container"><div class="text-container mar">企业名称：</div><div class="mar">{{ task.deptName }}</div></div>
+      <div class="item-container"><div class="text-container mar">任务名称：</div><div class="mar">{{ task.name }}</div></div>
+      <div class="item-container"><div class="text-container mar">任务报酬：</div><div class="mar">{{ task.amount }}</div></div>
+      <div class="item-container"><div class="text-container mar">开始时间：</div><div class="mar">{{ task.startTime }}</div></div>
+      <div class="item-container"><div class="text-container mar">结束时间：</div><div class="mar">{{ task.endTime }}</div></div>
+      <div class="item-container"><div class="text-container mar">需求人数：</div><div class="mar">{{ task.numberPeople }}</div></div>
+      <div class="item-container"><div class="text-container mar">状态：</div><div class="mar">{{ task.status }}</div></div>
+      <div class="item-container"><div class="text-container mar">驳回意见：</div><div class="mar">{{ task.suggestion }}</div></div>      
+    </el-dialog>
+
     <el-dialog :title="title" :visible.sync="showApply" v-dialogDrag append-to-body center>
       <el-row>
         <div style="font-size: 18px; font-weight: 600; ">任务名称:{{ taskName }}</div>
@@ -109,7 +121,7 @@
     </el-dialog>
 
     <el-dialog :title="title" :visible.sync="showReview" width="500px" v-dialogDrag append-to-body>
-      
+
       <el-input v-model="rejectReason" placeholder="请输入驳回意见" />
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="confirmReject">确 定</el-button>
@@ -157,7 +169,7 @@
 </template>
 
 <script>
-import { createTask, updateTask, deleteTask, getTask, getTaskPage, exportTaskExcel, passTask, rejectTask, getApplyList} from "@/api/system/task";
+import { createTask, updateTask, deleteTask, getTask, getTaskPage, exportTaskExcel, passTask, rejectTask, getApplyList } from "@/api/system/task";
 import { getDictDatas, DICT_TYPE } from '@/utils/dict';
 export default {
   name: "Task",
@@ -165,6 +177,8 @@ export default {
   },
   data() {
     return {
+      // 查看任务
+      showDetail: false,
       // 查看人选弹窗
       showApply: false,
       // 审核提示
@@ -189,6 +203,8 @@ export default {
       list: [],
       // 申请人员列表
       applyList: [],
+      // 任务
+      task: {},
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -274,10 +290,17 @@ export default {
       this.title = "添加任务";
     },
     handleLookTask(row) {
-
+      this.title = '任务详情';
+      this.showDetail = true;
+      this.loading = true;
+      getTask(row.id).then(response => {
+        this.task = response.data;
+        this.loading = false;
+        console.log('1231231', response.data);
+      });
     },
     handleLookPeople(row) {
-      // this.loading = true;
+      this.loading = true;
       getApplyList(id).then(response => {
         this.applyList = response.data.list;
         this.showApply = true;
@@ -293,7 +316,6 @@ export default {
       this.title = "审核提示";
     },
     passTask() {
-      // todo
       this.loading = true;
       passTask(this.taskId).then(response => {
         this.showCheck = false;
@@ -302,14 +324,15 @@ export default {
       });
     },
     handleClose(row) {
-      
+
     },
     rejectTask() {
       this.title = "请填写驳回意见";
       this.showReview = true;
       this.showCheck = false;
     },
-    confirmReject(){
+    confirmReject() {
+      console.log("qweqweqweqweq",this.rejectReason);
       this.loading = true
       rejectTask(this.taskId, this.rejectReason).then(response => {
         this.loading = false;
@@ -317,16 +340,6 @@ export default {
         this.getList();
       });
     },
-    /** 修改按钮操作 */
-    // handleUpdate(row) {
-    //   this.reset();
-    //   const id = row.id;
-    //   getTask(id).then(response => {
-    //     this.form = response.data;
-    //     this.open = true;
-    //     this.title = "修改任务";
-    //   });
-    // },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
@@ -377,3 +390,18 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.item-container {
+  display: flex;
+  flex-direction: row;
+}
+.text-container {
+  width: 100px;
+  text-align-last: justify
+}
+
+.mar{
+  margin: 10px 0;
+}
+</style>

@@ -56,16 +56,23 @@ export function exportTaskExcel(query) {
 // 审核-任务通过
 export function passTask(id) {
   return request({
-    url: '/system/task/pass?id=' + id,
-    method: 'get'
+    url: '/system/task/review',
+    method: 'put',
+    data: {
+      'id': id
+    }
   })
 }
 
 // 审核-任务驳回
 export function rejectTask(id, reason) {
   return request({
-    url: '/system/task/reject?id=' + id + '&reason=' + reason,
-    method: 'get'
+    url: '/system/task/reject',
+    method: 'put',
+    data: {
+      'id': id,
+      'suggestion': reason,
+    }
   })
 }
 
