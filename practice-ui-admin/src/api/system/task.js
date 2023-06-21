@@ -52,3 +52,34 @@ export function exportTaskExcel(query) {
     responseType: 'blob'
   })
 }
+
+// 审核-任务通过
+export function passTask(id) {
+  return request({
+    url: '/system/task/review',
+    method: 'put',
+    data: {
+      'id': id
+    }
+  })
+}
+
+// 审核-任务驳回
+export function rejectTask(id, reason) {
+  return request({
+    url: '/system/task/reject',
+    method: 'put',
+    data: {
+      'id': id,
+      'suggestion': reason,
+    }
+  })
+}
+
+// 审核-任务通过
+export function getApplyList(id) {
+  return request({
+    url: '/system/task/applyList?id=' + id,
+    method: 'get'
+  })
+}
