@@ -191,4 +191,7 @@ public interface ErrorCodeConstants {
 
     ErrorCode PRACTICE_UPDATE_STATUS_ERROR = new ErrorCode(1003027005, "实践修改状态错误！");
 
+    // ========== 组织管理 ==========
+    ErrorCode ORGANIZATION_COMPANY_NOT_EXISTS = new ErrorCode(1003028100, "社会企业不存在");
+
 }
