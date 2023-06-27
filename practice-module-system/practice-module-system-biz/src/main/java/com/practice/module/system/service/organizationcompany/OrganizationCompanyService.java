@@ -29,6 +29,14 @@ public interface OrganizationCompanyService {
     void updateOrganizationCompany(@Valid OrganizationCompanyUpdateReqVO updateReqVO);
 
     /**
+     * 更新服务约定时间
+     *
+     * @param updateReqVO 更新信息
+     */
+    void updateSignOrganizationCompany(OrganizationCompanyUpdateReqVO updateReqVO);
+
+
+    /**
      * 删除社会企业
      *
      * @param id 编号
@@ -67,4 +75,6 @@ public interface OrganizationCompanyService {
      */
     List<OrganizationCompanyDO> getOrganizationCompanyList(OrganizationCompanyExportReqVO exportReqVO);
 
+
+    void stopServiceOrganizationCompany(Long id);
 }

@@ -37,3 +37,5 @@ DELETE FROM "system_task_apply";
 DELETE FROM "system_resource_article";
 DELETE FROM "system_practice";
 DELETE FROM "system_organization_company";
+DELETE FROM "system_organization_school";
+DELETE FROM "system_organization_other";

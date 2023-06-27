@@ -31,4 +31,5 @@ public interface OrganizationCompanyConvert {
 
     List<OrganizationCompanyExcelVO> convertList02(List<OrganizationCompanyDO> list);
 
+
 }

@@ -3,13 +3,13 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="企业编号" prop="id">
+      <el-form-item label="院校编号" prop="id">
         <el-input v-model="queryParams.id" placeholder="请输入企业编号" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="企业名称" prop="name">
+      <el-form-item label="院校名称" prop="name">
         <el-input v-model="queryParams.name" placeholder="请输入企业名称" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="企业简称" prop="abbreviation">
+      <el-form-item label="院校简称" prop="abbreviation">
         <el-input v-model="queryParams.abbreviation" placeholder="请输入企业简称" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
       <el-form-item label="创建时间" prop="createTime">
@@ -27,19 +27,19 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-          v-hasPermi="['system:organization-company:create']">新增</el-button>
+          v-hasPermi="['system:organization-school:create']">新增</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
-          v-hasPermi="['system:organization-company:export']">导出</el-button>
+          v-hasPermi="['system:organization-school:export']">导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
-      <el-table-column label="企业编号" align="center" prop="id" />
-      <el-table-column label="企业名称" align="center" prop="name" />
+      <el-table-column label="院校编号" align="center" prop="id" />
+      <el-table-column label="院校名称" align="center" prop="name" />
       <el-table-column label="入口地址" align="center" prop="ref" />
       <el-table-column label="联系邮箱" align="center" prop="email" width="200" />
       <el-table-column label="联系电话" align="center" prop="phone" />
@@ -55,13 +55,13 @@
       <el-table-column label="操作" align="center" class-name="small-padding" width="300">
         <template v-slot="scope">
           <el-button size="mini" v-show="!scope.row.isEnd" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:organization-company:update']">编辑</el-button>
+            v-hasPermi="['system:organization-school:update']">编辑</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['system:organization-company:delete']">删除</el-button>
+            v-hasPermi="['system:organization-school:delete']">删除</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleService(scope.row)"
-            v-hasPermi="['system:organization-company:delete']">服务约定</el-button>
+            v-hasPermi="['system:organization-school:delete']">服务约定</el-button>
           <el-button size="mini" v-show="!scope.row.isEnd" type="text" icon="el-icon-delete" @click="handleInvite(scope.row)"
-            v-hasPermi="['system:organization-company:delete']">发送邀请</el-button>
+            v-hasPermi="['system:organization-school:delete']">发送邀请</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -74,30 +74,30 @@
 
       <div class="text-container">
         <div>客户名称：</div>
-        <div>{{ company.name }}</div>
+        <div>{{ school.name }}</div>
       </div>
       <div class="text-container">
         <div>客户编号：</div>
-        <div>{{ company.id }}</div>
+        <div>{{ school.id }}</div>
       </div>
 
       <div class="text-container">
         <div>生效日期：</div>
-        <div v-show="showDatePicker"> <el-date-picker clearable v-model="company.startTime" value-format="yyyy-MM-dd"
+        <div v-show="showDatePicker"> <el-date-picker clearable v-model="school.startTime" value-format="yyyy-MM-dd"
             type="date" placeholder="选择开始时间" />
         </div>
-        <div v-show="!showDatePicker">{{ company.startTime }}</div>
+        <div v-show="!showDatePicker">{{ school.startTime }}</div>
       </div>
       <div class="text-container">
         <div>终止日期：</div>
-        <div v-show="showDatePicker"> <el-date-picker clearable v-model="company.endTime" value-format="yyyy-MM-dd"
+        <div v-show="showDatePicker"> <el-date-picker clearable v-model="school.endTime" value-format="yyyy-MM-dd"
             type="date" placeholder="选择终止时间" />
         </div>
-        <div v-show="!showDatePicker">{{ company.endTime }}</div>
+        <div v-show="!showDatePicker">{{ school.endTime }}</div>
       </div>
 
 
-      <div v-show="!company.isEnd" slot="footer" class="dialog-footer">
+      <div v-show="!school.isEnd" slot="footer" class="dialog-footer">
         <el-button :type="showDatePicker ? 'primary': 'info'" @click="confirmSign">{{ showDatePicker ? '确定' : '服务变更' }}</el-button>
         <el-button @click="cancel">取消</el-button>
         <el-button v-show="!showDatePicker" type="danger" @click="stopService">终止服务</el-button>
@@ -107,10 +107,10 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="企业名称" prop="name">
+        <el-form-item label="院校名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入企业名称" />
         </el-form-item>
-        <el-form-item label="企业简称" prop="abbreviation">
+        <el-form-item label="院校简称" prop="abbreviation">
           <el-input v-model="form.abbreviation" placeholder="请输入企业简称" />
         </el-form-item>
         <el-form-item label="入口地址" prop="ref">
@@ -143,12 +143,6 @@
         <el-form-item label="地址" prop="address">
           <el-input v-model="form.address" placeholder="请输入地址" />
         </el-form-item>
-        <el-form-item label="注册地址" prop="registeredAddress">
-          <el-input v-model="form.registeredAddress" placeholder="请输入注册地址" />
-        </el-form-item>
-        <el-form-item label="法人" prop="legalPerson">
-          <el-input v-model="form.legalPerson" placeholder="请输入法人" />
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -160,19 +154,19 @@
 
 <script>
 import {
-  createOrganizationCompany,
-  updateOrganizationCompany,
-  deleteOrganizationCompany,
-  getOrganizationCompany,
-  getOrganizationCompanyPage,
-  exportOrganizationCompanyExcel,
+  createOrganizationSchool,
+  updateOrganizationSchool,
+  deleteOrganizationSchool,
+  getOrganizationSchool,
+  getOrganizationSchoolPage,
+  exportOrganizationSchoolExcel,
   confirmSign,
   stopService,
-} from "@/api/system/organizationCompany";
+} from "@/api/system/organizationSchool";
 import { DICT_TYPE, getDictDatas } from "@/utils/dict";
 
 export default {
-  name: "OrganizationCompany",
+  name: "OrganizationSchool",
   components: {
   },
   data() {
@@ -205,17 +199,16 @@ export default {
         createTime: [],
       },
       // 服务约定
-      company: {},
+      school: {},
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        name: [{ required: true, message: "企业名称不能为空", trigger: "blur" }],
+        name: [{ required: true, message: "院校名称不能为空", trigger: "blur" }],
         phone: [{ required: true, message: "联系电话不能为空", trigger: "blur" }],
         principal: [{ required: true, message: "负责人不能为空", trigger: "blur" }],
         code: [{ required: true, message: "统一社会信用代码不能为空", trigger: "blur" }],
         address: [{ required: true, message: "地址不能为空", trigger: "blur" }],
-        legalPerson: [{ required: true, message: "法人不能为空", trigger: "blur" }],
       },
       sexDictDatas: getDictDatas(DICT_TYPE.SYSTEM_USER_SEX),
     };
@@ -228,7 +221,7 @@ export default {
     getList() {
       this.loading = true;
       // 执行查询
-      getOrganizationCompanyPage(this.queryParams).then(response => {
+      getOrganizationSchoolPage(this.queryParams).then(response => {
         this.list = response.data.list;
         this.total = response.data.total;
         this.loading = false;
@@ -257,8 +250,6 @@ export default {
         principalPosition: undefined,
         code: undefined,
         address: undefined,
-        registeredAddress: undefined,
-        legalPerson: undefined,
       };
       this.resetForm("form");
     },
@@ -276,23 +267,23 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加社会企业";
+      this.title = "添加教育院校";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id;
-      getOrganizationCompany(id).then(response => {
+      getOrganizationSchool(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改社会企业";
+        this.title = "修改教育院校";
       });
     },
     handleService(row) {
-      this.company = row;
+      this.school = row;
       this.title = '服务约定';
       this.showSign = true;
-      if(this.company.startTime === '' || this.company.startTime === null){
+      if(this.school.startTime === '' || this.school.startTime === null){
         this.showDatePicker = true;
       }else{
         this.showDatePicker = false;
@@ -301,7 +292,7 @@ export default {
     confirmSign() {
       if(this.showDatePicker){
         this.loading = true;
-        confirmSign(this.company).then(() => {
+        confirmSign(this.school).then(() => {
         console.log('123', '签署成功');
         this.loading = false;
         this.showSign = false;
@@ -314,7 +305,7 @@ export default {
     },
     stopService(){
       this.loading = true;
-      stopService(this.company.id).then(res => {
+      stopService(this.school.id).then(res => {
         this.showSign = false;
         this.loading = false;
         this.getList();
@@ -329,7 +320,7 @@ export default {
         }
         // 修改的提交
         if (this.form.id != null) {
-          updateOrganizationCompany(this.form).then(response => {
+          updateOrganizationSchool(this.form).then(response => {
             this.$modal.msgSuccess("修改成功");
             this.open = false;
             this.getList();
@@ -337,7 +328,7 @@ export default {
           return;
         }
         // 添加的提交
-        createOrganizationCompany(this.form).then(response => {
+        createOrganizationSchool(this.form).then(response => {
           this.$modal.msgSuccess("新增成功");
           this.open = false;
           this.getList();
@@ -352,7 +343,7 @@ export default {
         return;
       }
       this.$modal.confirm('是否确认删除社会企业编号为"' + id + '"的数据项?').then(function () {
-        return deleteOrganizationCompany(id);
+        return deleteOrganizationSchool(id);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -366,7 +357,7 @@ export default {
       params.pageSize = undefined;
       this.$modal.confirm('是否确认导出所有社会企业数据项?').then(() => {
         this.exportLoading = true;
-        return exportOrganizationCompanyExcel(params);
+        return exportOrganizationSchoolExcel(params);
       }).then(response => {
         this.$download.excel(response, '社会企业.xls');
         this.exportLoading = false;

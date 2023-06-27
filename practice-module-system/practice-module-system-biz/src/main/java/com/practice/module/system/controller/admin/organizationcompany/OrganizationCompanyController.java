@@ -52,6 +52,22 @@ public class OrganizationCompanyController {
         return success(true);
     }
 
+    @PutMapping("/update_sign")
+    @Operation(summary = "更新服务约定")
+    @PreAuthorize("@ss.hasPermission('system:organization-company:update')")
+    public CommonResult<Boolean> updateSignOrganizationCompany(@Valid @RequestBody OrganizationCompanyUpdateReqVO updateReqVO) {
+        organizationCompanyService.updateSignOrganizationCompany(updateReqVO);
+        return success(true);
+    }
+
+    @GetMapping("/stop_service")
+    @Operation(summary = "停止服务")
+    @PreAuthorize("@ss.hasPermission('system:organization-company:update')")
+    public CommonResult<Boolean> stopServiceOrganizationCompany(@RequestParam("id") Long id) {
+        organizationCompanyService.stopServiceOrganizationCompany(id);
+        return success(true);
+    }
+
     @DeleteMapping("/delete")
     @Operation(summary = "删除社会企业")
     @Parameter(name = "id", description = "编号", required = true)

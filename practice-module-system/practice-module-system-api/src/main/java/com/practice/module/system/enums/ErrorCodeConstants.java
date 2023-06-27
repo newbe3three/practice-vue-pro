@@ -194,4 +194,10 @@ public interface ErrorCodeConstants {
     // ========== 组织管理 ==========
     ErrorCode ORGANIZATION_COMPANY_NOT_EXISTS = new ErrorCode(1003028100, "社会企业不存在");
 
+    ErrorCode ORGANIZATION_COMPANY_ALREADY_STOP = new ErrorCode(1003025005, "服务已经终止");
+    ErrorCode ORGANIZATION_SCHOOL_NOT_EXISTS = new ErrorCode(1003028101, "教育院校不存在");
+
+    ErrorCode ORGANIZATION_OTHER_NOT_EXISTS = new ErrorCode(1003028102, "其他组织不存在");
+
+
 }

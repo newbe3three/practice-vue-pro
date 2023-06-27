@@ -12,7 +12,7 @@ import com.practice.module.system.controller.admin.organizationcompany.vo.*;
 /**
  * 社会企业 Mapper
  *
- * @author wx
+ * @author 芋道源码
  */
 @Mapper
 public interface OrganizationCompanyMapper extends BaseMapperX<OrganizationCompanyDO> {

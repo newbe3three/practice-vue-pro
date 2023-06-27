@@ -52,3 +52,21 @@ export function exportOrganizationCompanyExcel(query) {
     responseType: 'blob'
   })
 }
+
+// 服务约定
+export function confirmSign(data) {
+  return request({
+    url: '/system/organization-company/update_sign',
+    method: 'put',
+    data: data
+  })
+}
+
+
+// 服务约定
+export function stopService(id) {
+  return request({
+    url: '/system/organization-company/stop_service?id=' + id,
+    method: 'get',
+  })
+}

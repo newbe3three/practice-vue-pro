@@ -1,16 +1,16 @@
-package com.practice.module.system.controller.admin.organizationcompany.vo;
+package com.practice.module.system.controller.admin.organizationschool.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import java.time.LocalDateTime;
 
-@Schema(description = "管理后台 - 社会企业 Response VO")
+@Schema(description = "管理后台 - 教育院校 Response VO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class OrganizationCompanyRespVO extends OrganizationCompanyBaseVO {
+public class OrganizationSchoolRespVO extends OrganizationSchoolBaseVO {
 
-    @Schema(description = "企业编号", required = true, example = "25180")
+    @Schema(description = "院校编号", required = true, example = "27836")
     private Long id;
 
     @Schema(description = "创建时间", required = true)

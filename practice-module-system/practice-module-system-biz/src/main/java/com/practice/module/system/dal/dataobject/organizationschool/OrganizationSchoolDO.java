@@ -1,6 +1,5 @@
-package com.practice.module.system.dal.dataobject.organizationcompany;
+package com.practice.module.system.dal.dataobject.organizationschool;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import java.util.*;
 import java.time.LocalDateTime;
@@ -9,31 +8,31 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.practice.framework.mybatis.core.dataobject.BaseDO;
 
 /**
- * 社会企业 DO
+ * 教育院校 DO
  *
  * @author wx
  */
-@TableName("system_organization_company")
-@KeySequence("system_organization_company_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
+@TableName("system_organization_school")
+@KeySequence("system_organization_school_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrganizationCompanyDO extends BaseDO {
+public class OrganizationSchoolDO extends BaseDO {
 
     /**
-     * 企业编号
+     * 院校编号
      */
     @TableId
     private Long id;
     /**
-     * 企业名称
+     * 院校名称
      */
     private String name;
     /**
-     * 企业简称
+     * 院校简称
      */
     private String abbreviation;
     /**
@@ -53,10 +52,6 @@ public class OrganizationCompanyDO extends BaseDO {
      */
     private String principal;
     /**
-     * 负责人性别
-     */
-    private String principalSex;
-    /**
      * 联系微信
      */
     private String principalWechat;
@@ -73,14 +68,6 @@ public class OrganizationCompanyDO extends BaseDO {
      */
     private String address;
     /**
-     * 注册地址
-     */
-    private String registeredAddress;
-    /**
-     * 法人
-     */
-    private String legalPerson;
-    /**
      * 开始时间
      */
     private String startTime;
@@ -92,5 +79,4 @@ public class OrganizationCompanyDO extends BaseDO {
      * 是否终止服务
      */
     private Boolean isEnd;
-
 }
