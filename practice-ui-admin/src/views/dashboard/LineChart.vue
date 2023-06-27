@@ -20,7 +20,7 @@ export default {
     },
     height: {
       type: String,
-      default: '350px'
+      default: '450px'
     },
     autoResize: {
       type: Boolean,
@@ -61,7 +61,7 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     },
-    setOptions({ expectedData, actualData } = {}) {
+    setOptions({ number } = {}) {
       this.chart.setOption({
         xAxis: {
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -90,10 +90,10 @@ export default {
           }
         },
         legend: {
-          data: ['expected', 'actual']
+          data: ['number']
         },
         series: [{
-          name: 'expected', itemStyle: {
+          name: 'number', itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {
@@ -104,30 +104,32 @@ export default {
           },
           smooth: true,
           type: 'line',
-          data: expectedData,
+          data: number,
           animationDuration: 2800,
           animationEasing: 'cubicInOut'
-        },
-        {
-          name: 'actual',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
-                color: '#3888fa',
-                width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
-              }
-            }
-          },
-          data: actualData,
-          animationDuration: 2800,
-          animationEasing: 'quadraticOut'
-        }]
+        }
+        // ,
+        // {
+        //   name: 'actual',
+        //   smooth: true,
+        //   type: 'line',
+        //   itemStyle: {
+        //     normal: {
+        //       color: '#3888fa',
+        //       lineStyle: {
+        //         color: '#3888fa',
+        //         width: 2
+        //       },
+        //       areaStyle: {
+        //         color: '#f3f8ff'
+        //       }
+        //     }
+        //   },
+        //   data: actualData,
+        //   animationDuration: 2800,
+        //   animationEasing: 'quadraticOut'
+        // }
+      ]
       })
     }
   }
