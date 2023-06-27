@@ -11,6 +11,9 @@ import com.practice.module.system.controller.admin.practice.vo.reject.PracticeRe
 import com.practice.module.system.dal.dataobject.practice.PracticeDO;
 import com.practice.framework.common.pojo.PageResult;
 
+import static com.practice.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.practice.module.system.enums.ErrorCodeConstants.PRACTICE_NOT_EXISTS;
+
 /**
  * 实践 Service 接口
  *
@@ -81,6 +84,10 @@ public interface PracticeService {
      * @return
      */
     void reviewFailurePractice(PracticeRejectCreateReqVO createReqVO);
+
+    //验证实践是否存在
+    void validatePracticeExists(Long id);
+    void validatePracticeStatus(Long id);
 
 
 }

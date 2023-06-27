@@ -211,7 +211,7 @@ public class DeptServiceImpl implements DeptService {
         }
     }
 
-    private void validateDeptExists(Long id) {
+    public void validateDeptExists(Long id) {
         if (id == null) {
             return;
         }

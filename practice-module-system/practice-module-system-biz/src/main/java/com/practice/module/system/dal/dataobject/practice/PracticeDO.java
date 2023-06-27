@@ -56,5 +56,9 @@ public class PracticeDO extends BaseDO {
      */
     private Byte status;
 
+    /**
+     * 所属企业id
+     * */
+    private Long companyId;
 
 }

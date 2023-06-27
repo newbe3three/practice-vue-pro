@@ -12,6 +12,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static com.practice.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.practice.module.system.enums.ErrorCodeConstants.DEPT_NOT_FOUND;
+
 /**
  * 部门 Service 接口
  *
@@ -101,5 +104,7 @@ public interface DeptService {
      * @param ids 角色编号数组
      */
     void validateDeptList(Collection<Long> ids);
+    void validateDeptExists(Long id);
+
 
 }

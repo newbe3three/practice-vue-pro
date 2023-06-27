@@ -4,8 +4,8 @@ INSERT INTO system_menu(
     path, icon, component, status, component_name
 )
 VALUES (
-    '实践管理', '', 2, 0, 2182,
-    'practice', '', 'system/practice/index', 0, 'Practice'
+    '学校申请实践管理', '', 2, 0, 2182,
+    'practice-school', '', 'system/practiceSchool/index', 0, 'PracticeSchool'
 );
 
 -- 按钮父菜单ID
@@ -18,7 +18,7 @@ INSERT INTO system_menu(
     path, icon, component, status
 )
 VALUES (
-    '实践查询', 'system:practice:query', 3, 1, @parentId,
+    '学校申请实践查询', 'system:practice-school:query', 3, 1, @parentId,
     '', '', '', 0
 );
 INSERT INTO system_menu(
@@ -26,7 +26,7 @@ INSERT INTO system_menu(
     path, icon, component, status
 )
 VALUES (
-    '实践创建', 'system:practice:create', 3, 2, @parentId,
+    '学校申请实践创建', 'system:practice-school:create', 3, 2, @parentId,
     '', '', '', 0
 );
 INSERT INTO system_menu(
@@ -34,7 +34,7 @@ INSERT INTO system_menu(
     path, icon, component, status
 )
 VALUES (
-    '实践更新', 'system:practice:update', 3, 3, @parentId,
+    '学校申请实践更新', 'system:practice-school:update', 3, 3, @parentId,
     '', '', '', 0
 );
 INSERT INTO system_menu(
@@ -42,7 +42,7 @@ INSERT INTO system_menu(
     path, icon, component, status
 )
 VALUES (
-    '实践删除', 'system:practice:delete', 3, 4, @parentId,
+    '学校申请实践删除', 'system:practice-school:delete', 3, 4, @parentId,
     '', '', '', 0
 );
 INSERT INTO system_menu(
@@ -50,6 +50,6 @@ INSERT INTO system_menu(
     path, icon, component, status
 )
 VALUES (
-    '实践导出', 'system:practice:export', 3, 5, @parentId,
+    '学校申请实践导出', 'system:practice-school:export', 3, 5, @parentId,
     '', '', '', 0
 );

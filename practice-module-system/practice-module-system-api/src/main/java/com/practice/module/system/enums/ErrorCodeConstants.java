@@ -191,4 +191,14 @@ public interface ErrorCodeConstants {
 
     ErrorCode PRACTICE_UPDATE_STATUS_ERROR = new ErrorCode(1003027005, "实践修改状态错误！");
 
+    ErrorCode PRACTICE_APPLY_NOT_EXISTS = new ErrorCode(1003027006, "实践申请不存在");
+    ErrorCode PRACTICE_APPLY_REPEAT = new ErrorCode(1003027008, "实践申请重复");
+
+    ErrorCode PRACTICE_STATUS_ERROR = new ErrorCode(1003027007, "当前实践不可申请");
+
+    ErrorCode PRACTICE_APPLY_STATUS_ERROR = new ErrorCode(1003027008, "此申请状态不是待审核");
+
+    ErrorCode PRACTICE_SCHOOL_NOT_EXISTS = new ErrorCode(1003028001, "学校申请实践不存在");
+    ErrorCode PRACTICE_SCHOOL_STATUS_ERROR = new ErrorCode(1003028002, "当前实践已选定学校");
+
 }

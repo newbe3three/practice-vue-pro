@@ -19,7 +19,7 @@ public class PracticeRejectRespVO {
 
     @Schema(description = "实践编号", required = true, example = "25813")
     @NotNull(message = "实践编号不能为空")
-    private Long articleId;
+    private Long practiceId;
 
     @Schema(description = "创建驳回时间", required = true, example = "2022年1月23日")
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)

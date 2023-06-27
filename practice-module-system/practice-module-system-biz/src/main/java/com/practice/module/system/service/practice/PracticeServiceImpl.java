@@ -82,11 +82,19 @@ public class PracticeServiceImpl implements PracticeService {
         practiceMapper.deleteById(id);
     }
 
-    private void validatePracticeExists(Long id) {
+    public void validatePracticeExists(Long id) {
         if (practiceMapper.selectById(id) == null) {
             throw exception(PRACTICE_NOT_EXISTS);
         }
     }
+
+    public void validatePracticeStatus(Long id) {
+        //验证实践状态是否为 审核通过 1
+        if(practiceMapper.selectById(id).getStatus() != 1) {
+            throw exception(PRACTICE_STATUS_ERROR);
+        }
+    }
+
 
     @Override
     public PracticeDO getPractice(Long id) {
@@ -142,7 +150,7 @@ public class PracticeServiceImpl implements PracticeService {
 
     }
 
-   
+
 
 
 }
