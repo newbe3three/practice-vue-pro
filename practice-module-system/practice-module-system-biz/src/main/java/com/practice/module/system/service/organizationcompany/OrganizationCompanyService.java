@@ -77,4 +77,6 @@ public interface OrganizationCompanyService {
 
 
     void stopServiceOrganizationCompany(Long id);
+
+    void sendInviteOrganizationCompany(Long id);
 }

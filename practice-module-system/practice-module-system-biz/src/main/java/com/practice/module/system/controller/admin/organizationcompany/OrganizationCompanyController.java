@@ -68,6 +68,14 @@ public class OrganizationCompanyController {
         return success(true);
     }
 
+    @GetMapping("/invite")
+    @Operation(summary = "发送邀请")
+    @PreAuthorize("@ss.hasPermission('system:organization-company:update')")
+    public CommonResult<Boolean> sendInviteOrganizationCompany(@RequestParam("id") Long id) {
+        organizationCompanyService.sendInviteOrganizationCompany(id);
+        return success(true);
+    }
+
     @DeleteMapping("/delete")
     @Operation(summary = "删除社会企业")
     @Parameter(name = "id", description = "编号", required = true)

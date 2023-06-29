@@ -63,10 +63,19 @@ export function confirmSign(data) {
 }
 
 
-// 服务约定
+// 停止服务
 export function stopService(id) {
   return request({
     url: '/system/organization-company/stop_service?id=' + id,
     method: 'get',
   })
 }
+
+// 发送邀请
+export function sendInvite(id) {
+  return request({
+    url: '/system/organization-company/invite?id=' + id,
+    method: 'get',
+  })
+}
+

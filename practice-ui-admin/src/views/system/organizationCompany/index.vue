@@ -168,6 +168,7 @@ import {
   exportOrganizationCompanyExcel,
   confirmSign,
   stopService,
+  sendInvite,
 } from "@/api/system/organizationCompany";
 import { DICT_TYPE, getDictDatas } from "@/utils/dict";
 
@@ -288,6 +289,13 @@ export default {
         this.title = "修改社会企业";
       });
     },
+    handleInvite(row) {
+      this.$modal.confirm('是否向'+ row.name + '发起邀请').then(()=>{
+        return sendInvite(row.id);
+      }).then(res => {
+        this.$modal.msgSuccess("发送成功");
+      });
+    },
     handleService(row) {
       this.company = row;
       this.title = '服务约定';
@@ -383,3 +391,5 @@ export default {
   line-height: 50px;
 }
 </style>
+
+
