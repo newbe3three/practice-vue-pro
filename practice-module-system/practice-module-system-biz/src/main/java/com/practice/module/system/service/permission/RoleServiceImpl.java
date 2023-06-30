@@ -12,6 +12,7 @@ import com.practice.module.system.controller.admin.permission.vo.role.RolePageRe
 import com.practice.module.system.controller.admin.permission.vo.role.RoleUpdateReqVO;
 import com.practice.module.system.convert.permission.RoleConvert;
 import com.practice.module.system.dal.dataobject.permission.RoleDO;
+import com.practice.module.system.dal.dataobject.permission.UserRoleDO;
 import com.practice.module.system.dal.mysql.permission.RoleMapper;
 import com.practice.module.system.enums.permission.DataScopeEnum;
 import com.practice.module.system.enums.permission.RoleCodeEnum;
@@ -275,5 +276,13 @@ public class RoleServiceImpl implements RoleService {
                 throw exception(ROLE_IS_DISABLE, role.getName());
             }
         });
+    }
+
+    // 获取学生角色id
+    public Long getStudentRoleId() {
+        return roleMapper.selectOne("name", "学生").getId();
+    }
+    public Long getTeacherRoleId() {
+        return roleMapper.selectOne("name", "导师").getId();
     }
 }

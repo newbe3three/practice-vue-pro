@@ -216,4 +216,6 @@ public interface AdminUserService {
      * @return 用户编号
      */
     Long getUserIdWithUserName(String userName);
+
+    void validateUserExists(Long id);
 }

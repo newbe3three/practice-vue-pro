@@ -316,7 +316,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @VisibleForTesting
-    void validateUserExists(Long id) {
+    public void validateUserExists(Long id) {
         if (id == null) {
             return;
         }

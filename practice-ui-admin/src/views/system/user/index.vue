@@ -87,6 +87,8 @@
                                     v-hasPermi="['system:user:update-password']">重置密码</el-dropdown-item>
                   <el-dropdown-item command="handleRole" size="mini" type="text" icon="el-icon-circle-check"
                                     v-hasPermi="['system:permission:assign-user-role']">分配角色</el-dropdown-item>
+                  <el-dropdown-item command="setStudent" size="mini" type="text" icon="el-icon-circle-check"
+                                    v-hasPermi="['system:permission:assign-user-role']">设置为学生</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
@@ -525,6 +527,15 @@ export default {
         // 设置选中
         this.form.roleIds = response.data;
       })
+    },
+    setStudent(row) {
+      this.reset();
+      const id = row.id
+      // 处理了 form 的用户 username 和 nickname 的展示
+      this.form.id = id;
+      this.form.username = row.username;
+      this.form.nickname = row.nickname;
+
     },
     /** 提交按钮 */
     submitForm: function() {

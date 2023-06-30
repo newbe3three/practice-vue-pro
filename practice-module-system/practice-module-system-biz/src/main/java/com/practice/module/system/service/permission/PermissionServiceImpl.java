@@ -16,6 +16,7 @@ import com.practice.module.system.dal.dataobject.permission.MenuDO;
 import com.practice.module.system.dal.dataobject.permission.RoleDO;
 import com.practice.module.system.dal.dataobject.permission.RoleMenuDO;
 import com.practice.module.system.dal.dataobject.permission.UserRoleDO;
+import com.practice.module.system.dal.mysql.permission.RoleMapper;
 import com.practice.module.system.dal.mysql.permission.RoleMenuMapper;
 import com.practice.module.system.dal.mysql.permission.UserRoleMapper;
 import com.practice.module.system.enums.permission.DataScopeEnum;
@@ -434,5 +435,7 @@ public class PermissionServiceImpl implements PermissionService {
         }
         return result;
     }
+
+
 
 }

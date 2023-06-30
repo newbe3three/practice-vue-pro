@@ -140,4 +140,16 @@ public interface RoleService {
      */
     void validateRoleList(Collection<Long> ids);
 
+    /**
+     * 为用户分配学生角色时，获取roleId
+     *
+     *  @return 学生对应的角色id
+     */
+    Long getStudentRoleId();
+    /**
+     * 为用户分配导师角色时，获取roleId
+     *
+     *  @return 导师对应的角色id
+     */
+    Long getTeacherRoleId();
 }

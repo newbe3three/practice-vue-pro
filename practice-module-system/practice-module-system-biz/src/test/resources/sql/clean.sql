@@ -38,3 +38,5 @@ DELETE FROM "system_resource_article";
 DELETE FROM "system_practice";
 DELETE FROM "system_practice_apply";
 DELETE FROM "system_practice_school";
+DELETE FROM "system_students";
+DELETE FROM "system_teachers";

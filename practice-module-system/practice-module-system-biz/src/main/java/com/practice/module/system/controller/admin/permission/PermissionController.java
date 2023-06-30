@@ -5,7 +5,14 @@ import com.practice.framework.common.pojo.CommonResult;
 import com.practice.module.system.controller.admin.permission.vo.permission.PermissionAssignRoleDataScopeReqVO;
 import com.practice.module.system.controller.admin.permission.vo.permission.PermissionAssignRoleMenuReqVO;
 import com.practice.module.system.controller.admin.permission.vo.permission.PermissionAssignUserRoleReqVO;
+import com.practice.module.system.controller.admin.students.vo.StudentCreateVO;
+import com.practice.module.system.controller.admin.students.vo.StudentsCreateReqVO;
+import com.practice.module.system.controller.admin.teachers.vo.TeacherCreateVO;
+import com.practice.module.system.controller.admin.teachers.vo.TeachersCreateReqVO;
 import com.practice.module.system.service.permission.PermissionService;
+import com.practice.module.system.service.permission.RoleService;
+import com.practice.module.system.service.students.StudentsService;
+import com.practice.module.system.service.teachers.TeachersService;
 import com.practice.module.system.service.tenant.TenantService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.Set;
 
 import static com.practice.framework.common.pojo.CommonResult.success;
@@ -34,6 +42,12 @@ public class PermissionController {
     private PermissionService permissionService;
     @Resource
     private TenantService tenantService;
+    @Resource
+    private RoleService roleService;
+    @Resource
+    private StudentsService studentsService;
+    @Resource
+    private TeachersService teachersService;
 
     @Operation(summary = "获得角色拥有的菜单编号")
     @Parameter(name = "roleId", description = "角色编号", required = true)
@@ -79,4 +93,30 @@ public class PermissionController {
         return success(true);
     }
 
+    @Operation(summary = "赋予用户学生角色")
+    @PostMapping("/assign-user-student")
+    @PreAuthorize("@ss.hasPermission('system:permission:assign-user-role')")
+    public CommonResult<Boolean> assignUserStudentRole(@Validated @RequestBody StudentCreateVO studentReqVO) {
+       // 获得学生的roleId
+        Set<Long> roleIds = new HashSet<>();
+        roleIds.add(roleService.getStudentRoleId());
+       //分配学生角色
+        permissionService.assignUserRole(studentReqVO.getUserId(),roleIds);
+        //创建学生信息
+        studentsService.createStudent(studentReqVO);
+        return success(true);
+    }
+    @Operation(summary = "赋予用户导师角色")
+    @PostMapping("/assign-user-teacher")
+    @PreAuthorize("@ss.hasPermission('system:permission:assign-user-role')")
+    public CommonResult<Boolean> assignUserTeacherRole(@Validated @RequestBody TeacherCreateVO teacherReqVO) {
+        // 获得导师的roleId
+        Set<Long> roleIds = new HashSet<>();
+        roleIds.add(roleService.getTeacherRoleId());
+        //分配导师角色
+        permissionService.assignUserRole(teacherReqVO.getUserId(), roleIds);
+        //创建导师信息
+        teachersService.createTeacher(teacherReqVO);
+        return success(true);
+    }
 }

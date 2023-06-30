@@ -2,10 +2,13 @@ package com.practice.module.system.controller.admin.user;
 
 import cn.hutool.core.collection.CollUtil;
 import com.practice.module.system.controller.admin.user.vo.user.*;
+import com.practice.module.system.controller.admin.user.vo.uuid.UUIDActivateReqVO;
+import com.practice.module.system.controller.admin.user.vo.uuid.UUIDCreateReqVO;
 import com.practice.module.system.convert.user.UserConvert;
 import com.practice.module.system.dal.dataobject.dept.DeptDO;
 import com.practice.module.system.dal.dataobject.user.AdminUserDO;
 import com.practice.module.system.service.dept.DeptService;
+import com.practice.module.system.service.sms.SmsSendService;
 import com.practice.module.system.service.user.AdminUserService;
 import com.practice.module.system.enums.common.SexEnum;
 import com.practice.framework.common.enums.CommonStatusEnum;
@@ -14,6 +17,7 @@ import com.practice.framework.common.pojo.PageResult;
 import com.practice.framework.common.util.collection.MapUtils;
 import com.practice.framework.excel.core.util.ExcelUtils;
 import com.practice.framework.operatelog.core.annotations.OperateLog;
+import com.practice.module.system.service.user.UserUUIDService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -44,7 +49,12 @@ public class UserController {
     private AdminUserService userService;
     @Resource
     private DeptService deptService;
-
+    @Resource
+    private AdminUserService adminUserService;
+    @Resource
+    private SmsSendService smsSendService;
+    @Resource
+    private UserUUIDService userUUIDService;
     @PostMapping("/create")
     @Operation(summary = "新增用户")
     @PreAuthorize("@ss.hasPermission('system:user:create')")
@@ -189,4 +199,32 @@ public class UserController {
         return success(userService.importUserList(list, updateSupport));
     }
 
+
+    @GetMapping("invite")
+    @Operation(summary = "邀请")
+    @Parameter(name = "userId", description = "用户编号", required = true, example = "1024")
+    @PreAuthorize("@ss.hasPermission('system:user:invite')")
+    public CommonResult<Boolean> inviteStudent(@RequestParam("userId") Long userId) {
+        AdminUserDO user = adminUserService.getUser(userId);
+        Map<String, Object> map = new HashMap<>();
+        // 生成一个uuid
+        String uuid = UUID.randomUUID().toString().replace("-","");
+        UUIDCreateReqVO createReqVO = new UUIDCreateReqVO();
+        createReqVO.setUsername(user.getUsername());
+        createReqVO.setUuid(uuid);
+        userUUIDService.createUUID(createReqVO);
+        String url = "http://127.0.0.1:48080/admin-api/system/user/activate?username="+user.getUsername()+"&&uuid="+uuid;
+        map.put("url",url);
+        smsSendService.sendSingleSmsToAdmin(user.getMobile(), userId,"status",map);
+        return success(true);
+    }
+    @GetMapping("activate")
+    @PermitAll
+    @Operation(summary = "激活")
+    @Parameter(name = "username", description = "用户编号", required = true, example = "1024")
+    public CommonResult<Boolean> activateStudent(@Valid UUIDActivateReqVO reqVO) {
+
+        userUUIDService.activate(reqVO);
+        return success(true);
+    }
 }

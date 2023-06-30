@@ -201,4 +201,13 @@ public interface ErrorCodeConstants {
     ErrorCode PRACTICE_SCHOOL_NOT_EXISTS = new ErrorCode(1003028001, "学校申请实践不存在");
     ErrorCode PRACTICE_SCHOOL_STATUS_ERROR = new ErrorCode(1003028002, "当前实践已选定学校");
 
+    ErrorCode STUDENTS_NOT_EXISTS = new ErrorCode(1003029001, "学生信息不存在");
+    ErrorCode TEACHERS_NOT_EXISTS = new ErrorCode(1003030001, "导师信息不存在");
+
+    ErrorCode ID_CARD_ERROR = new ErrorCode(1003030002, "身份证号错误！");
+
+
+    ErrorCode USER_ACTIVATE_ERROR = new ErrorCode(1003030003, "username或UUID错误！！");
+    ErrorCode USER_INVITE_ERROR = new ErrorCode(1003030004, "邀请用户错误！！");
+
 }
