@@ -208,7 +208,8 @@ export default {
     // 验证码开关
     this.captchaEnable = getCaptchaEnable();
     // 重定向地址
-    this.redirect = this.$route.query.redirect ? decodeURIComponent(this.$route.query.redirect) : undefined;
+    this.redirect = this.$route.query.login ? decodeURIComponent(this.$route.query.login) : undefined;
+    console.log('qwe', this.$route.query.login);
     this.getCookie();
   },
   methods: {
@@ -256,6 +257,7 @@ export default {
           // 发起登陆
           // console.log("发起登录", this.loginForm);
           this.$store.dispatch(this.loginForm.loginType === "sms" ? "SmsLogin" : "Login", this.loginForm).then(() => {
+            console.log('1231231231', this.redirect);
             this.$router.push({path: this.redirect || "/"}).catch(() => {
             });
           }).catch(() => {

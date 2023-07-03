@@ -27,6 +27,13 @@ public interface AdminUserService {
      */
     Long createUser(@Valid UserCreateReqVO reqVO);
 
+
+    /**
+     * 添加用户
+     * @param reqVO
+     */
+    void addUser(@Valid UserCreateReqVO reqVO);
+
     /**
      * 修改用户
      *

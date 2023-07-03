@@ -74,6 +74,8 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Resource
     private FileApi fileApi;
 
+    private boolean fromInvite = false;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Long createUser(UserCreateReqVO reqVO) {
@@ -98,6 +100,32 @@ public class AdminUserServiceImpl implements AdminUserService {
                     postId -> new UserPostDO().setUserId(user.getId()).setPostId(postId)));
         }
         return user.getId();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addUser(UserCreateReqVO reqVO) {
+        // 校验账户配合
+        tenantService.handleTenantInfo(tenant -> {
+            long count = userMapper.selectCount();
+            if (count >= tenant.getAccountCount()) {
+                throw exception(USER_COUNT_MAX, tenant.getAccountCount());
+            }
+        });
+        fromInvite = true;
+        // 校验正确性
+        validateUserForCreateOrUpdate(null, reqVO.getUsername(), reqVO.getMobile(), reqVO.getEmail(),
+                reqVO.getDeptId(), reqVO.getPostIds());
+        // 插入用户
+        AdminUserDO user = UserConvert.INSTANCE.convert(reqVO);
+        user.setStatus(CommonStatusEnum.ENABLE.getStatus()); // 默认开启
+        user.setPassword(encodePassword(reqVO.getPassword())); // 加密密码
+        userMapper.insert(user);
+        // 插入关联岗位
+        if (CollectionUtil.isNotEmpty(user.getPostIds())) {
+            userPostMapper.insertBatch(convertList(user.getPostIds(),
+                    postId -> new UserPostDO().setUserId(user.getId()).setPostId(postId)));
+        }
     }
 
     @Override
@@ -333,6 +361,9 @@ public class AdminUserServiceImpl implements AdminUserService {
         }
         AdminUserDO user = userMapper.selectByUsername(username);
         if (user == null) {
+            return;
+        }
+        if(fromInvite){
             return;
         }
         // 如果 id 为空，说明不用比较是否为相同 id 的用户

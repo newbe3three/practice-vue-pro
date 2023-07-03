@@ -74,6 +74,17 @@ export const constantRoutes = [
         name: '首页',
         meta: {title: '首页', icon: 'dashboard', affix: true}
       }
+      // ,{
+      //   path: 'index_school',
+      //   component: (resolve) => require(['@/views/index_school'], resolve),
+      //   name: '首页',
+      //   meta: {title: '首页', icon: 'dashboard', affix: true}
+      // },{
+      //   path: 'index_company',
+      //   component: (resolve) => require(['@/views/index_company'], resolve),
+      //   name: '首页',
+      //   meta: {title: '首页', icon: 'dashboard', affix: true}
+      // }
     ]
   },
   {
