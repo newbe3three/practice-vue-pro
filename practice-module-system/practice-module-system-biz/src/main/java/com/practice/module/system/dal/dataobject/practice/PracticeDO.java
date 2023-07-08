@@ -38,6 +38,10 @@ public class PracticeDO extends BaseDO {
      */
     private String content;
     /**
+     *任职
+     * */
+    private String requirement;
+    /**
      * 开始时间
      */
     private LocalDateTime startTime;
@@ -52,12 +56,13 @@ public class PracticeDO extends BaseDO {
     /**
      * 状态
      *
-     * 枚举 {@link TODO practice_status 对应的类}
+     *
      */
     private Byte status;
 
     /**
      * 所属企业id
+     *
      * */
     private Long companyId;
 

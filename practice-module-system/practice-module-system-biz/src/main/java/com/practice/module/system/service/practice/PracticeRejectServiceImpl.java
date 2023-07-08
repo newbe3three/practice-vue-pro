@@ -22,6 +22,7 @@ public class PracticeRejectServiceImpl implements PracticeRejectService{
 
     @Override
     public List<PracticeRejectDO> getPracticeRejectListByArticleId(Long practiceId) {
+        System.out.println("nihao"+practiceId);
         return practiceRejectMapper.selectList("practice_id", practiceId);
     }
 }

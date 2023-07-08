@@ -12,6 +12,8 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.practice.framework.excel.core.annotations.DictFormat;
 import com.practice.framework.excel.core.convert.DictConvert;
 
+import javax.validation.constraints.NotNull;
+
 
 /**
  * 实践 Excel VO
@@ -29,6 +31,9 @@ public class PracticeExcelVO {
 
     @ExcelProperty("实践内容")
     private String content;
+
+    @ExcelProperty("职业要求")
+    private String requirement;
 
     @ExcelProperty("开始时间")
     private LocalDateTime startTime;

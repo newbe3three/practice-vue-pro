@@ -19,13 +19,20 @@ import static com.practice.framework.common.util.date.DateUtils.FORMAT_YEAR_MONT
 @Data
 public class PracticeBaseVO {
 
-    @Schema(description = "名字", required = true, example = "李四")
-    @NotNull(message = "名字不能为空")
+    @Schema(description = "名称", required = true, example = "工程师")
+    @NotNull(message = "名称不能为空")
     private String name;
 
     @Schema(description = "实践内容", required = true)
     @NotNull(message = "实践内容不能为空")
     private String content;
+
+    @Schema(description = "职业要求")
+    @NotNull(message = "职业要求不能为空")
+    private String requirement;
+
+    @Schema(description = "企业id")
+    private Long companyId;
 
     @Schema(description = "开始时间", required = true)
     @NotNull(message = "开始时间不能为空")

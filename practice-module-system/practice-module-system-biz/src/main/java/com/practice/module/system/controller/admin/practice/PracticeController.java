@@ -7,6 +7,9 @@ import com.practice.module.system.controller.admin.resourcearticle.vo.reject.Res
 import com.practice.module.system.convert.practice.PracticeRejectConvert;
 import com.practice.module.system.dal.dataobject.practice.PracticeRejectDO;
 import com.practice.module.system.service.practice.PracticeRejectService;
+import com.practice.module.system.service.practiceschool.PracticeSchoolService;
+import com.practice.module.system.service.tenant.TenantService;
+import com.practice.module.system.service.user.AdminUserService;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -32,6 +35,7 @@ import static com.practice.framework.operatelog.core.enums.OperateTypeEnum.*;
 import com.practice.module.system.dal.dataobject.practice.PracticeDO;
 import com.practice.module.system.convert.practice.PracticeConvert;
 import com.practice.module.system.service.practice.PracticeService;
+import static com.practice.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 @Tag(name = "管理后台 - 实践")
 @RestController
@@ -43,21 +47,13 @@ public class PracticeController {
     private PracticeService practiceService;
     @Resource
     private PracticeRejectService practiceRejectService;
+    @Resource
+    private TenantService tenantService;
+    @Resource
+    private AdminUserService adminUserService;
+    @Resource
+    private PracticeSchoolService practiceSchoolService;
 
-    @PostMapping("/create")
-    @Operation(summary = "创建实践")
-    @PreAuthorize("@ss.hasPermission('system:practice:create')")
-    public CommonResult<Long> createPractice(@Valid @RequestBody PracticeCreateReqVO createReqVO) {
-        return success(practiceService.createPractice(createReqVO));
-    }
-
-    @PutMapping("/update/apply")
-    @Operation(summary = "驳回后修改申请")
-    @PreAuthorize("@ss.hasPermission('system:practice:update')")
-    public CommonResult<Boolean> updatePractice(@Valid @RequestBody PracticeUpdateReqVO updateReqVO) {
-        practiceService.updatePracticeApply(updateReqVO);
-        return success(true);
-    }
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除实践")
@@ -68,14 +64,7 @@ public class PracticeController {
         return success(true);
     }
 
-    @GetMapping("/get")
-    @Operation(summary = "获得实践")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('system:practice:query')")
-    public CommonResult<PracticeRespVO> getPractice(@RequestParam("id") Long id) {
-        PracticeDO practice = practiceService.getPractice(id);
-        return success(PracticeConvert.INSTANCE.convert(practice));
-    }
+
 
     @GetMapping("/list")
     @Operation(summary = "获得实践列表")
@@ -83,16 +72,14 @@ public class PracticeController {
     @PreAuthorize("@ss.hasPermission('system:practice:query')")
     public CommonResult<List<PracticeRespVO>> getPracticeList(@RequestParam("ids") Collection<Long> ids) {
         List<PracticeDO> list = practiceService.getPracticeList(ids);
-        return success(PracticeConvert.INSTANCE.convertList(list));
+        List<PracticeRespVO> practiceRespVOS = PracticeConvert.INSTANCE.convertList(list);
+        for(int i=0;i<=practiceRespVOS.size();i++) {
+            practiceRespVOS.get(i).setCompanyName(tenantService.getTenant(list.get(i).getCompanyId()).getName());
+        }
+
+        return success(practiceRespVOS);
     }
 
-    @GetMapping("/page")
-    @Operation(summary = "获得实践分页")
-    @PreAuthorize("@ss.hasPermission('system:practice:query')")
-    public CommonResult<PageResult<PracticeRespVO>> getPracticePage(@Valid PracticePageReqVO pageVO) {
-        PageResult<PracticeDO> pageResult = practiceService.getPracticePage(pageVO);
-        return success(PracticeConvert.INSTANCE.convertPage(pageResult));
-    }
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出实践 Excel")
@@ -106,7 +93,7 @@ public class PracticeController {
         ExcelUtils.write(response, "实践.xls", "数据", PracticeExcelVO.class, datas);
     }
 
-
+    //平台端接口 实践审核
     @GetMapping("/review")
     @Operation(summary = "实践审核")
     @PreAuthorize("@ss.hasPermission('system:practice:review')")
@@ -118,7 +105,7 @@ public class PracticeController {
         return  success(practiceRejectRespVOS);
     }
 
-
+    //平台端接口 实践审核通过
     @GetMapping("/review/pass")
     @Operation(summary = "实践审核通过")
     @PreAuthorize("@ss.hasPermission('system:practice:review')")
@@ -126,6 +113,7 @@ public class PracticeController {
         practiceService.reviewPassPractice(practiceId);
         return success(true);
     }
+    //平台端接口 实践审核未通过
     @PostMapping("/review/failure")
     @Operation(summary = "实践审核未通过")
     @PreAuthorize("@ss.hasPermission('system:practice:review')")
@@ -133,20 +121,116 @@ public class PracticeController {
         practiceService.reviewFailurePractice(rejectCreateReqVO);
         return success(true);
     }
+    //平台端接口 查询实践数据分页
+    @GetMapping("/page")
+    @Operation(summary = "获得实践分页")
+    @PreAuthorize("@ss.hasPermission('system:practice:query:page')")
+    public CommonResult<PageResult<PracticeRespVO>> getPracticePage(@Valid PracticePageReqVO pageVO) {
+        PageResult<PracticeDO> pageResult = practiceService.getPracticePage(pageVO);
+        PageResult<PracticeRespVO> result = PracticeConvert.INSTANCE.convertPage2(pageResult);
+        for (int i=0;i<result.getList().size();i++) {
+            result.getList().get(i).setCompanyName(tenantService.getTenant(result.getList().get(i).getCompanyId()).getName());
+
+        }
+        return success(result);
+    }
 
 
-    @GetMapping("/query/pass")
-    @Operation(summary = "查询审核通过的实践")
+    @GetMapping("/get")
+    @Operation(summary = "查询实践的信息")
+    @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('system:practice:query')")
-    public CommonResult<PageResult<PracticeRespVO>> queryPassPractice(@Valid PracticePageReqVO pageVO)  {
+    public CommonResult<PracticeRespVO> getPractice(@RequestParam("id") Long id) {
+        PracticeDO practice = practiceService.getPractice(id);
+        PracticeRespVO convert = PracticeConvert.INSTANCE.convert(practice);
+        // companyId --> tenantName
+        convert.setCompanyName(tenantService.getTenant(practice.getCompanyId()).getName());
+        return success(convert);
+    }
+
+    //学校端接口 院校端查询通过审核但还未确定学校的实践
+    @GetMapping("/school/page")
+    @Operation(summary = "院校端查询审核通过还未确定学校的实践")
+    @PreAuthorize("@ss.hasPermission('system:practice:school:page')")
+    public CommonResult<PageResult<PracticeRespVO>> schoolQueryPractice(@Valid PracticePageReqVO pageVO)  {
+        //可以查询的实践的状态为 1的实践（通过审核实践，并且没选定学校的实践）
         PracticePageReqVO page = new PracticePageReqVO();
         page.setPageNo(pageVO.getPageNo());
         page.setPageSize(pageVO.getPageSize());
         page.setStatus((byte) 1);
         PageResult<PracticeDO> pageResult = practiceService.getPracticePage(page);
+        PageResult<PracticeRespVO> result = PracticeConvert.INSTANCE.convertPage(pageResult);
+        for (int i=0;i<result.getList().size();i++) {
+            result.getList().get(i).setCompanyName(tenantService.getTenant(pageResult.getList().get(i).getCompanyId()).getName());
 
-        return success(PracticeConvert.INSTANCE.convertPage(pageResult));
+        }
+        return success(result);
+    }
+
+    //学生端接口 学生查询可以申请的实践
+    @GetMapping("/student/page")
+    @Operation(summary = "学生端查询可以申请的实践")
+    @PreAuthorize("@ss.hasPermission('system:practice:student:get')")
+    public CommonResult<PageResult<PracticeRespVO>> studentQueryPractice(@Valid PracticeIdPageReqVO pageVO)  {
+        //可以查询本schoolId下的实践，已经schoolId为0的实践
+        //根据本校的schoolId查询
+        List<Long> practiceIdList = practiceSchoolService.getPracticeIdListWithSchoolId(adminUserService.getUser(getLoginUserId()).getTenantId());
+        //查询schoolId为0的实践
+        List<Long> listAll = practiceSchoolService.getPracticeIdListWithSchoolId(0L);
+        practiceIdList.addAll(listAll);
+        pageVO.setPracticeIdList(practiceIdList);
+        PageResult<PracticeDO> pageResult = practiceService.studentGetPracticePage(pageVO);
+
+        PageResult<PracticeRespVO> result = PracticeConvert.INSTANCE.convertPage(pageResult);
+        for (int i=0;i<result.getList().size();i++) {
+            result.getList().get(i).setCompanyName(tenantService.getTenant(pageResult.getList().get(i).getCompanyId()).getName());
+
+        }
+        return success(result);
     }
 
 
+
+    //企业端接口 发起实践的创建
+    @PostMapping("/company/create")
+    @Operation(summary = "创建实践")
+    @PreAuthorize("@ss.hasPermission('system:practice:create')")
+    public CommonResult<Long> companyCreatePractice(@Valid @RequestBody PracticeCreateReqVO createReqVO) {
+        //用户只能向自己所属的企业创建实践 tenantId == companyId
+        createReqVO.setCompanyId(adminUserService.getUser(getLoginUserId()).getTenantId());
+        return success(practiceService.createPractice(createReqVO));
+    }
+
+    //企业端接口，实践创建申请驳回后，修改申请
+    @PutMapping("/company/update")
+    @Operation(summary = "驳回后修改申请")
+    @PreAuthorize("@ss.hasPermission('system:practice:company:update')")
+    public CommonResult<Boolean> companyUpdatePractice(@Valid @RequestBody PracticeUpdateReqVO updateReqVO) {
+        practiceService.updatePracticeApply(updateReqVO,adminUserService.getUser(getLoginUserId()).getTenantId());
+        return success(true);
+    }
+
+    //企业端的接口，查询自己所属企业的所发布的实践分页（根据tenantId == companyID）
+    @GetMapping("/company/page")
+    @Operation(summary = "获得本企业的实践分页")
+    @PreAuthorize("@ss.hasPermission('system:practice:company:page')")
+    public CommonResult<PageResult<PracticeRespVO>> companyGetPracticePage(@Valid PracticePageReqVO pageVO) {
+        //根据当前用户的tenantId来限制可以查询到的范围只能是自己所属企业的实践
+        pageVO.setCompanyId(adminUserService.getUser(getLoginUserId()).getTenantId());
+        PageResult<PracticeDO> pageResult = practiceService.getPracticePage(pageVO);
+        PageResult<PracticeRespVO> result = PracticeConvert.INSTANCE.convertPage(pageResult);
+        for (int i=0;i<result.getList().size();i++) {
+            result.getList().get(i).setCompanyName(tenantService.getTenant(pageResult.getList().get(i).getCompanyId()).getName());
+
+        }
+        return success(result);
+    }
+    //企业端接口，企业端创建的实践通过审核后，企业可以选择某些学校也可以不选择，直接发起对实践状态的修改为征集中
+    @GetMapping("/company/confirm")
+    @Operation(summary = "企业修改实践状态为已经选定学校")
+    @PreAuthorize("@ss.hasPermission('system:practice:company:confirm')")
+    public CommonResult<Boolean> companyConfirmPractice(@RequestParam("practiceId") Long practiceId) {
+        practiceService.confirmPracticeByCompany(practiceId,adminUserService.getUser(getLoginUserId()).getTenantId());
+        return success(true);
+    }
 }

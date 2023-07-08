@@ -191,10 +191,13 @@ public interface ErrorCodeConstants {
 
     ErrorCode PRACTICE_UPDATE_STATUS_ERROR = new ErrorCode(1003027005, "实践修改状态错误！");
 
+    ErrorCode PRACTICE_PERMISSION_ERROR = new ErrorCode(1003027005, "修改失败，权限错误！");
+
+
     ErrorCode PRACTICE_APPLY_NOT_EXISTS = new ErrorCode(1003027006, "实践申请不存在");
     ErrorCode PRACTICE_APPLY_REPEAT = new ErrorCode(1003027008, "实践申请重复");
 
-    ErrorCode PRACTICE_STATUS_ERROR = new ErrorCode(1003027007, "当前实践不可申请");
+    ErrorCode PRACTICE_STATUS_ERROR = new ErrorCode(1003027007, "修改实践状态错误！请检查！");
 
     ErrorCode PRACTICE_APPLY_STATUS_ERROR = new ErrorCode(1003027008, "此申请状态不是待审核");
 

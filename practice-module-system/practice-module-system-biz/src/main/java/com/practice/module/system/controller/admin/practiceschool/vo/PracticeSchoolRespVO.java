@@ -18,4 +18,11 @@ public class PracticeSchoolRespVO extends PracticeSchoolBaseVO {
 
     @Schema(description = "状态", example = "2")
     private Byte status;
+
+    @Schema(description = "学校名称", example = "A学校")
+    private String  schoolName;
+    @Schema(description = "实践名称", example = "2")
+    private String practiceName;
+
+
 }

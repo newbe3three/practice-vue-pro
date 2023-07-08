@@ -26,6 +26,12 @@ public class TenantPageReqVO extends PageParam {
     @Schema(description = "联系手机", example = "15601691300")
     private String contactMobile;
 
+    @Schema(description = "统一代码", example = "15601691300")
+    private String code;
+
+    @Schema(description = "地址", example = "15601691300")
+    private String address;
+
     @Schema(description = "租户状态（0正常 1停用）", example = "1")
     private Integer status;
 

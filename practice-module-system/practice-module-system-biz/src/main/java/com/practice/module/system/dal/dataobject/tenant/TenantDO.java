@@ -52,6 +52,15 @@ public class TenantDO extends BaseDO {
      */
     private String contactMobile;
     /**
+     * 统一代码
+     */
+    private String code;
+    /**
+     * 地址
+     *
+     */
+    private String address;
+    /**
      * 租户状态
      *
      * 枚举 {@link CommonStatusEnum}

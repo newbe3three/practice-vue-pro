@@ -19,6 +19,9 @@ public class PracticeExportReqVO {
     @Schema(description = "实践内容")
     private String content;
 
+    @Schema(description = "职业要求")
+    private String requirement;
+
     @Schema(description = "开始时间")
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private LocalDateTime[] startTime;

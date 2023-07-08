@@ -188,6 +188,17 @@ practice:
       - rep_demo_jianpiao
       - tmp_report_data_1
       - tmp_report_data_income
+      - system_task
+      - system_task_apply
+      - system_practice
+      - system_practice_reject
+      - system_practice_apply
+      - system_practice_apply_reject
+      - system_practice_school
+      - system_resource_article
+      - system_resource_article_reject
+      - system_resource_article_category
+      - system_uuid
   sms-code: # 短信验证码相关的配置项
     expire-times: 10m
     send-frequency: 1m

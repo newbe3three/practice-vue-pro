@@ -23,7 +23,7 @@ public interface PracticeConvert {
     PracticeConvert INSTANCE = Mappers.getMapper(PracticeConvert.class);
 
     PracticeDO convert(PracticeCreateReqVO bean);
-
+    PracticeDO convert2(PracticeCreateReqVO bean);
     PracticeDO convert(PracticeUpdateReqVO bean);
 
     PracticeRespVO convert(PracticeDO bean);
@@ -31,7 +31,7 @@ public interface PracticeConvert {
     List<PracticeRespVO> convertList(List<PracticeDO> list);
 
     PageResult<PracticeRespVO> convertPage(PageResult<PracticeDO> page);
-
+    PageResult<PracticeRespVO> convertPage2(PageResult<PracticeDO> page);
     List<PracticeExcelVO> convertList02(List<PracticeDO> list);
 
 }

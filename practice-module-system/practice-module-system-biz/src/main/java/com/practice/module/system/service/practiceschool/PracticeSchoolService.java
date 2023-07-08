@@ -85,5 +85,16 @@ public interface PracticeSchoolService {
      * @param practiceSchoolId 学校申请实践的id
      * @return null
      */
-    void reviewPassPracticeApply(Long practiceSchoolId);
+    void reviewPassPracticeSchoolApply(Long practiceSchoolId);
+
+    /**
+     * 通过schoolId获取通过已经选定学校的practiceId
+     *
+     * @param schoolId 学校id
+     * @return null
+     */
+    List<Long> getPracticeIdListWithSchoolId(Long schoolId);
+
+
+    PageResult<PracticeSchoolDO> getSchoolApplyWithCompanyId(PracticeSchoolPageReqVO pageVO,Long companyId);
 }

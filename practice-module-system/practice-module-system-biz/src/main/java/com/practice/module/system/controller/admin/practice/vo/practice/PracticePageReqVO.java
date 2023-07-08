@@ -18,8 +18,15 @@ public class PracticePageReqVO extends PageParam {
     @Schema(description = "名字", example = "李四")
     private String name;
 
+    @Schema(description = "企业id")
+    private Long companyId;
+
+
     @Schema(description = "实践内容")
     private String content;
+
+    @Schema(description = "职业要求")
+    private String requirement;
 
     @Schema(description = "开始时间")
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)

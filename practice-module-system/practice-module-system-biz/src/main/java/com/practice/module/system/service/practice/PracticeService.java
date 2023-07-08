@@ -3,10 +3,7 @@ package com.practice.module.system.service.practice;
 import java.util.*;
 import javax.validation.*;
 
-import com.practice.module.system.controller.admin.practice.vo.practice.PracticeCreateReqVO;
-import com.practice.module.system.controller.admin.practice.vo.practice.PracticeExportReqVO;
-import com.practice.module.system.controller.admin.practice.vo.practice.PracticePageReqVO;
-import com.practice.module.system.controller.admin.practice.vo.practice.PracticeUpdateReqVO;
+import com.practice.module.system.controller.admin.practice.vo.practice.*;
 import com.practice.module.system.controller.admin.practice.vo.reject.PracticeRejectCreateReqVO;
 import com.practice.module.system.dal.dataobject.practice.PracticeDO;
 import com.practice.framework.common.pojo.PageResult;
@@ -34,7 +31,7 @@ public interface PracticeService {
      *
      * @param updateReqVO 更新信息
      */
-    void updatePracticeApply(@Valid PracticeUpdateReqVO updateReqVO);
+    void updatePracticeApply(@Valid PracticeUpdateReqVO updateReqVO,Long CompanyId);
 
     /**
      * 删除实践
@@ -89,5 +86,26 @@ public interface PracticeService {
     void validatePracticeExists(Long id);
     void validatePracticeStatus(Long id);
 
+    /***
+     * 企业端确定学校
+     *
+     * @Param practiceId 所确定的实践编号
+     * */
+    void confirmPracticeByCompany(Long practiceId,Long companyId);
 
+    /**
+     * 获得实践分页
+     *
+     * @param pageReqVO 根据实践编号列表分页查询
+     * @return 实践分页
+     */
+    PageResult<PracticeDO> studentGetPracticePage(PracticeIdPageReqVO pageReqVO);
+
+    /**
+     * 根据企业id获得通过审核的实践
+     *
+     * @param companyId 企业编号
+     * @return 获取的实践列表
+     */
+    List<PracticeDO> getPassPracticeWithCompanyId(Long companyId);
 }

@@ -24,6 +24,15 @@ public class TenantBaseVO {
     @Schema(description = "联系手机", example = "15601691300")
     private String contactMobile;
 
+    @Schema(description = "统一代码", example = "15601691300")
+    //@NotNull(message = "") 可以为空，后续修改添加
+    private String code;
+
+    @Schema(description = "地址", example = "15601691300")
+    //@NotNull(message = "") 可以为空，后续修改添加
+    private String address;
+
+
     @Schema(description = "租户状态", required = true, example = "1")
     @NotNull(message = "租户状态")
     private Integer status;
