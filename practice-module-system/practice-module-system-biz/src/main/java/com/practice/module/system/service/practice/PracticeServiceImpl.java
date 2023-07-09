@@ -7,6 +7,7 @@ import com.practice.module.system.dal.dataobject.practiceschool.PracticeSchoolDO
 import com.practice.module.system.dal.mysql.practice.PracticeRejectMapper;
 import com.practice.module.system.dal.mysql.practiceschool.PracticeSchoolMapper;
 import com.practice.module.system.dal.mysql.user.AdminUserMapper;
+import com.practice.module.system.service.practiceschool.PracticeSchoolService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +21,7 @@ import com.practice.module.system.convert.practice.PracticeConvert;
 import com.practice.module.system.dal.mysql.practice.PracticeMapper;
 
 import static com.practice.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.practice.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 import static com.practice.module.system.enums.ErrorCodeConstants.*;
 /**
  * 实践 Service 实现类
@@ -38,6 +40,8 @@ public class PracticeServiceImpl implements PracticeService {
     private AdminUserMapper adminUserMapper;
     @Resource
     private PracticeSchoolMapper practiceSchoolMapper;
+    @Resource
+    private PracticeSchoolService practiceSchoolService;
     @Override
     public Long createPractice(PracticeCreateReqVO createReqVO) {
         // 插入
@@ -211,8 +215,17 @@ public class PracticeServiceImpl implements PracticeService {
         }
 
     }
-    public PageResult<PracticeDO> studentGetPracticePage(PracticeIdPageReqVO pageReqVO) {
-        return practiceMapper.selectPageWithId(pageReqVO);
+    public PageResult<PracticeDO> studentGetPracticePage(PracticePageReqVO pageReqVO,Long schoolId) {
+        //可以查询本schoolId下的实践，已经schoolId为0的实践
+        //根据本校的schoolId查询
+        List<Long> practiceIdList = practiceSchoolService.getPracticeIdListWithSchoolId(schoolId);
+        //查询schoolId为0的实践
+        List<Long> listAll = practiceSchoolService.getPracticeIdListWithSchoolId(0L);
+        practiceIdList.addAll(listAll);
+        pageReqVO.setPracticeIdList(practiceIdList);
+
+
+        return practiceMapper.selectPage2(pageReqVO);
     }
     public List<PracticeDO> getPassPracticeWithCompanyId(Long companyId) {
         List<Byte> statusList = new ArrayList<>();

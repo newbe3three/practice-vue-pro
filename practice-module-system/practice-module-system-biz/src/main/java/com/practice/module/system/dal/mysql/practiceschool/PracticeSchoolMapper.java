@@ -44,9 +44,13 @@ public interface PracticeSchoolMapper extends BaseMapperX<PracticeSchoolDO> {
     }
     //根据本企业的实践id列表查询 相关的学校申请
     // select * from school where practiceId in (list)
-    default PageResult<PracticeSchoolDO> selectPage(PracticeIdPageReqVO reqVO) {
+    default PageResult<PracticeSchoolDO> selectPage2(PracticeSchoolPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<PracticeSchoolDO>()
                 .inIfPresent(PracticeSchoolDO::getPracticeId,reqVO.getPracticeIdList())
+                .eqIfPresent(PracticeSchoolDO::getSchoolId, reqVO.getSchoolId())
+                .eqIfPresent(PracticeSchoolDO::getPracticeId, reqVO.getPracticeId())
+                .eqIfPresent(PracticeSchoolDO::getStatus, reqVO.getStatus())
+                .betweenIfPresent(PracticeSchoolDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(PracticeSchoolDO::getId));
     }
 

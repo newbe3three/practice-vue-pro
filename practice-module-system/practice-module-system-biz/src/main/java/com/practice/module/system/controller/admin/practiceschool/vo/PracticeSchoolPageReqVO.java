@@ -28,4 +28,6 @@ public class PracticeSchoolPageReqVO extends PageParam {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private LocalDateTime[] createTime;
 
+    @Schema(description = "实践id列表", example = "2")
+    private List<Long> practiceIdList;
 }

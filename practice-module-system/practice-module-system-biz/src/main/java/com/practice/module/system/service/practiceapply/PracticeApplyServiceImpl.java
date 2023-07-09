@@ -1,5 +1,6 @@
 package com.practice.module.system.service.practiceapply;
 
+import com.practice.module.system.controller.admin.practice.vo.practice.PracticeIdPageReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyCreateReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyExportReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyPageReqVO;
@@ -10,6 +11,7 @@ import com.practice.module.system.dal.dataobject.practice.PracticeDO;
 import com.practice.module.system.dal.dataobject.practiceapply.PracticeApplyRejectDO;
 import com.practice.module.system.dal.mysql.practice.PracticeMapper;
 import com.practice.module.system.dal.mysql.practiceapply.PracticeApplyRejectMapper;
+import com.practice.module.system.service.practice.PracticeService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -40,6 +42,10 @@ public class PracticeApplyServiceImpl implements PracticeApplyService {
     private PracticeMapper practiceMapper;
     @Resource
     private PracticeApplyRejectMapper rejectMapper;
+    @Resource
+    private PracticeService practiceService;
+
+
     @Override
     public Long createPracticeApply(PracticeApplyDO practiceApply) {
 
@@ -196,6 +202,17 @@ public class PracticeApplyServiceImpl implements PracticeApplyService {
         System.out.println("123"+applyRejectDO);
         rejectMapper.insert(applyRejectDO);
 
+    }
+    //
+    public PageResult<PracticeApplyDO> getApplyListWithCompanyId(PracticeApplyPageReqVO pageVO,Long companyId){
+        List<PracticeDO> practiceList = practiceService.getPassPracticeWithCompanyId(companyId);
+        List<Long> practiceIdList = new ArrayList<>();
+        for (PracticeDO practice:practiceList) {
+            practiceIdList.add(practice.getId());
+        }
+        pageVO.setPracticeIdList(practiceIdList);
+
+        return practiceApplyMapper.selectPage2(pageVO);
     }
 
 }

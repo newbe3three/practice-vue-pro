@@ -97,4 +97,12 @@ public interface PracticeApplyService {
      */
     void reviewFailurePracticeApply(PracticeApplyRejectCreateReqVO rejectCreateReqVO);
 
+    /**
+     * 根据企业编号查询申请列表
+     *
+     * @param companyId 企业编号
+     * @return 申请列表
+     */
+    PageResult<PracticeApplyDO> getApplyListWithCompanyId(PracticeApplyPageReqVO pageVO,Long companyId);
+
 }

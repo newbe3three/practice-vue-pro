@@ -171,15 +171,15 @@ public class PracticeController {
     @GetMapping("/student/page")
     @Operation(summary = "学生端查询可以申请的实践")
     @PreAuthorize("@ss.hasPermission('system:practice:student:get')")
-    public CommonResult<PageResult<PracticeRespVO>> studentQueryPractice(@Valid PracticeIdPageReqVO pageVO)  {
+    public CommonResult<PageResult<PracticeRespVO>> studentQueryPractice(@Valid PracticePageReqVO pageVO)  {
         //可以查询本schoolId下的实践，已经schoolId为0的实践
         //根据本校的schoolId查询
-        List<Long> practiceIdList = practiceSchoolService.getPracticeIdListWithSchoolId(adminUserService.getUser(getLoginUserId()).getTenantId());
+        //List<Long> practiceIdList = practiceSchoolService.getPracticeIdListWithSchoolId(adminUserService.getUser(getLoginUserId()).getTenantId());
         //查询schoolId为0的实践
-        List<Long> listAll = practiceSchoolService.getPracticeIdListWithSchoolId(0L);
-        practiceIdList.addAll(listAll);
-        pageVO.setPracticeIdList(practiceIdList);
-        PageResult<PracticeDO> pageResult = practiceService.studentGetPracticePage(pageVO);
+        //List<Long> listAll = practiceSchoolService.getPracticeIdListWithSchoolId(0L);
+        //practiceIdList.addAll(listAll);
+        //pageVO.setPracticeIdList(practiceIdList);
+        PageResult<PracticeDO> pageResult = practiceService.studentGetPracticePage(pageVO,adminUserService.getUser(getLoginUserId()).getTenantId());
 
         PageResult<PracticeRespVO> result = PracticeConvert.INSTANCE.convertPage(pageResult);
         for (int i=0;i<result.getList().size();i++) {

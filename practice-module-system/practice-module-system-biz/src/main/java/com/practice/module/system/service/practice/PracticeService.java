@@ -99,7 +99,7 @@ public interface PracticeService {
      * @param pageReqVO 根据实践编号列表分页查询
      * @return 实践分页
      */
-    PageResult<PracticeDO> studentGetPracticePage(PracticeIdPageReqVO pageReqVO);
+    PageResult<PracticeDO> studentGetPracticePage(PracticePageReqVO pageReqVO,Long schoolId);
 
     /**
      * 根据企业id获得通过审核的实践

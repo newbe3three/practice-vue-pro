@@ -178,11 +178,8 @@ public class PracticeSchoolServiceImpl implements PracticeSchoolService {
             practiceIdList.add(passPracticeList.get(i).getId());
         }
         // 根据上面获得的practiceId 查询对应的学校的申请
-        PracticeIdPageReqVO pageReqVO = new PracticeIdPageReqVO();
-        pageReqVO.setPracticeIdList(practiceIdList);
-        pageReqVO.setPageSize(pageVO.getPageSize());
-        pageReqVO.setPageNo(pageVO.getPageNo());
-        return practiceSchoolMapper.selectPage(pageReqVO);
+       pageVO.setPracticeIdList(practiceIdList);
+        return practiceSchoolMapper.selectPage2(pageVO);
     }
 
 }

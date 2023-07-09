@@ -46,9 +46,17 @@ public interface PracticeMapper extends BaseMapperX<PracticeDO> {
     }
     // 根据practiceIdList来查询PageResult<PracticeDO>
     //select * from system_practice where id in (pageReqVO.getPracticeIdList());
-    default PageResult<PracticeDO> selectPageWithId(PracticeIdPageReqVO pageReqVO) {
-        return selectPage(pageReqVO, new LambdaQueryWrapperX<PracticeDO>()
-                .inIfPresent(PracticeDO::getId, pageReqVO.getPracticeIdList())
+    default PageResult<PracticeDO> selectPage2(PracticePageReqVO reqVO) {
+        return selectPage(reqVO, new LambdaQueryWrapperX<PracticeDO>()
+                .inIfPresent(PracticeDO::getId, reqVO.getPracticeIdList())
+                .likeIfPresent(PracticeDO::getName, reqVO.getName())
+                .likeIfPresent(PracticeDO::getContent, reqVO.getContent())
+                .likeIfPresent(PracticeDO::getRequirement, reqVO.getRequirement())
+                .betweenIfPresent(PracticeDO::getStartTime, reqVO.getStartTime())
+                .betweenIfPresent(PracticeDO::getEndTime, reqVO.getEndTime())
+                .eqIfPresent(PracticeDO::getNumberPeople, reqVO.getNumberPeople())
+                .eqIfPresent(PracticeDO::getStatus, reqVO.getStatus())
+                .betweenIfPresent(PracticeDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(PracticeDO::getId));
     }
 

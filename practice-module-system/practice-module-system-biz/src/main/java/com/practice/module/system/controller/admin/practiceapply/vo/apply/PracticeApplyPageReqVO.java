@@ -34,4 +34,7 @@ public class PracticeApplyPageReqVO extends PageParam {
     @Schema(description = "申请实践id", example = "30503")
     private Long practiceId;
 
+
+    @Schema(description = "实践id列表", example = "30503")
+    private List<Long> practiceIdList;
 }
