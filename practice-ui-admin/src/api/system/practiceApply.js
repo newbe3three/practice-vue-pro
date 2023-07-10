@@ -52,3 +52,23 @@ export function exportPracticeApplyExcel(query) {
     responseType: 'blob'
   })
 }
+
+// 实践审核
+export function reviewPracticeApply(id) {
+  return request({
+    url: '/system/practice-apply/review?practiceApplyId=' + id,
+    method: 'get',
+  })
+}
+
+// 驳回申请
+export function reviewFailurePracticeApply(id, reason) {
+  return request({
+    url: '/system/practice-apply/review/failure',
+    method: 'post',
+    data: {
+      'applyId': id,
+      'suggestion': suggestion,
+    }
+  })
+}

@@ -29,6 +29,8 @@ export const DICT_TYPE = {
   SYSTEM_NOTIFY_TEMPLATE_TYPE: 'system_notify_template_type',
   SYSTEM_TASK_STATUS: 'system_task_status',
   SYSTEM_TASK_APPLY_STATUS: 'system_task_apply_status',
+  PRACTICE_STATUS: 'practice_status',
+  PRACTICE_APPLY_STATUS: 'practice_apply_status',
 
   // ========== INFRA 模块 ==========
   INFRA_BOOLEAN_STRING: 'infra_boolean_string',
