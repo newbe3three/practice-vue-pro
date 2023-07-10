@@ -52,3 +52,35 @@ export function exportPracticeExcel(query) {
     responseType: 'blob'
   })
 }
+
+
+// 实践审核
+export function reviewPractice(id) {
+  return request({
+    url: '/system/practice/review?practiceId=' + id,
+    method: 'get',
+  })
+}
+
+reviewPass
+
+// 审核通过
+export function reviewPass(id) {
+  return request({
+    url: '/system/practice/review/pass?practiceId=' + id,
+    method: 'get',
+  })
+}
+
+
+// 审核通过
+export function reviewFailurePractice(id, reason) {
+  return request({
+    url: '/system/practice/review/failure',
+    method: 'post',
+    data: {
+      'practiceId': id,
+      'suggestion': reason
+    }
+  })
+}
