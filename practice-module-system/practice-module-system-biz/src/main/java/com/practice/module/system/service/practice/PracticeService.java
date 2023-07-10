@@ -93,13 +93,6 @@ public interface PracticeService {
      * */
     void confirmPracticeByCompany(Long practiceId,Long companyId);
 
-    /**
-     * 获得实践分页
-     *
-     * @param pageReqVO 根据实践编号列表分页查询
-     * @return 实践分页
-     */
-    PageResult<PracticeDO> studentGetPracticePage(PracticePageReqVO pageReqVO,Long schoolId);
 
     /**
      * 根据企业id获得通过审核的实践

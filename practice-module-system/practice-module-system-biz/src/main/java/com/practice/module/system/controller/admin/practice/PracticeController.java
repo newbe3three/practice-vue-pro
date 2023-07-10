@@ -52,7 +52,9 @@ public class PracticeController {
     @Resource
     private AdminUserService adminUserService;
     @Resource
-    private PracticeSchoolService practiceSchoolService;
+    private PracticeApplyService practiceApplyService;
+//    @Resource
+//    private PracticeSchoolService practiceSchoolService;
 
 
     @DeleteMapping("/delete")
@@ -179,7 +181,7 @@ public class PracticeController {
         //List<Long> listAll = practiceSchoolService.getPracticeIdListWithSchoolId(0L);
         //practiceIdList.addAll(listAll);
         //pageVO.setPracticeIdList(practiceIdList);
-        PageResult<PracticeDO> pageResult = practiceService.studentGetPracticePage(pageVO,adminUserService.getUser(getLoginUserId()).getTenantId());
+        PageResult<PracticeDO> pageResult = practiceApplyService.studentGetPracticePage(pageVO,adminUserService.getUser(getLoginUserId()).getTenantId());
 
         PageResult<PracticeRespVO> result = PracticeConvert.INSTANCE.convertPage(pageResult);
         for (int i=0;i<result.getList().size();i++) {
