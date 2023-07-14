@@ -37,7 +37,7 @@ export function getPracticeSchool(id) {
 // 获得学校申请实践分页
 export function getPracticeSchoolPage(query) {
   return request({
-    url: '/system/practice-school/page',
+    url: '/system/practice-school/school/page',
     method: 'get',
     params: query
   })
@@ -52,3 +52,5 @@ export function exportPracticeSchoolExcel(query) {
     responseType: 'blob'
   })
 }
+
+

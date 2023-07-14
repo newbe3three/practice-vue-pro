@@ -166,7 +166,7 @@ export default {
       // 驳回意见
       rejectReason: '',
       // 拒绝弹窗
-      showReject:'',
+      showReject: false,
       // 查询参数
       queryParams: {
         pageNo: 1,
