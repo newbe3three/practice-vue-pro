@@ -54,12 +54,12 @@ export function exportPracticeApplyExcel(query) {
 }
 
 // 实践审核
-export function reviewPracticeApply(id) {
-  return request({
-    url: '/system/practice-apply/review?practiceApplyId=' + id,
-    method: 'get',
-  })
-}
+// export function reviewPracticeApply(id) {
+//   return request({
+//     url: '/system/practice-apply/review?practiceApplyId=' + id,
+//     method: 'get',
+//   })
+// }
 
 // 驳回申请
 export function reviewFailurePracticeApply(id, reason) {
@@ -72,3 +72,79 @@ export function reviewFailurePracticeApply(id, reason) {
     }
   })
 }
+
+//////////////////////////////////////////////////////// 企业-实践申请管理（学生） //////////////////////////////////////////////////////////////
+// 学生申请列表todo
+export function companyGetPracticeApply(query) {
+  return request({
+    url: '/system/practice-apply/company/page',
+    method: 'get',
+    data: query,
+  })
+}
+//实践申请审核提示
+export function reviewPracticeApply(id) {
+  return request({
+    url: '/system/practice-apply/review?practiceApplyId=' + id,
+    method: 'get',
+  })
+}
+
+//通过申请
+export function reviewPassPractice(id) {
+  return request({
+    url: '/system/practice-apply/review/pass?practiceApplyId=' + id,
+    method: 'get',
+  })
+}
+
+//实践申请审核未通过
+export function reviewFailurePractice(id, suggestion) {
+  return request({
+    url: '/system/practice-apply/review/failure',
+    method: 'post',
+    data: {
+      'applyId': id,
+      'suggestion': suggestion,
+    }
+  })
+}
+
+
+//////////////////////////////////////////////////////// 企业-实践申请管理（学校） //////////////////////////////////////////////////////////////
+//实践申请审核未通过
+export function companyGetPracticeSchoolPage(query) {
+  return request({
+    url: '/system/practice-school/company/page',
+    method: 'get',
+    data: query,
+  })
+}
+
+export function passPracticeSchool(id) {
+  return request({
+    url: '/system/practice-school/company/review/pass?practiceSchoolId=' + id,
+    method: 'get',
+  })
+}
+
+
+
+
+//////////////////////////////////////////////////////// 企业-实践申请管理（学生） //////////////////////////////////////////////////////////////
+
+
+//院校端查询本校发起的对实践的申请
+export function schoolGetPracticeSchoolPage(query) {
+  return request({
+    url: '/system/practice-school/school/page',
+    method: 'get',
+    data: query,
+  })
+}
+
+
+
+
+
+

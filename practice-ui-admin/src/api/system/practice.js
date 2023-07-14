@@ -1,38 +1,6 @@
 import request from '@/utils/request'
 
-// 创建实践
-export function createPractice(data) {
-  return request({
-    url: '/system/practice/create',
-    method: 'post',
-    data: data
-  })
-}
-
-// 更新实践
-export function updatePractice(data) {
-  return request({
-    url: '/system/practice/update',
-    method: 'put',
-    data: data
-  })
-}
-
-// 删除实践
-export function deletePractice(id) {
-  return request({
-    url: '/system/practice/delete?id=' + id,
-    method: 'delete'
-  })
-}
-
-// 获得实践
-export function getPractice(id) {
-  return request({
-    url: '/system/practice/get?id=' + id,
-    method: 'get'
-  })
-}
+////////////////////////////////////////////////平台端-实践管理////////////////////////////////////////////////////////////
 
 // 获得实践分页
 export function getPracticePage(query) {
@@ -43,18 +11,7 @@ export function getPracticePage(query) {
   })
 }
 
-// 导出实践 Excel
-export function exportPracticeExcel(query) {
-  return request({
-    url: '/system/practice/export-excel',
-    method: 'get',
-    params: query,
-    responseType: 'blob'
-  })
-}
-
-
-// 实践审核
+// 实践审核-平台-查询到驳回记录
 export function reviewPractice(id) {
   return request({
     url: '/system/practice/review?practiceId=' + id,
@@ -62,9 +19,7 @@ export function reviewPractice(id) {
   })
 }
 
-reviewPass
-
-// 审核通过
+// 审核通过-平台
 export function reviewPass(id) {
   return request({
     url: '/system/practice/review/pass?practiceId=' + id,
@@ -73,7 +28,7 @@ export function reviewPass(id) {
 }
 
 
-// 审核通过
+// 审核駁回-平台
 export function reviewFailurePractice(id, reason) {
   return request({
     url: '/system/practice/review/failure',
@@ -84,3 +39,82 @@ export function reviewFailurePractice(id, reason) {
     }
   })
 }
+
+
+////////////////////////////////////////////////学校端-实践管理////////////////////////////////////////////////////////////
+
+
+// 申請實踐-学校
+export function applyPracticeSchool(schoolId, practiceId) {
+  return request({
+    url: '/system/practice-school/school/create',
+    method: 'post',
+    data: {
+      'schoolId': schoolId,
+      'practiceId': practiceId
+    }
+  })
+}
+
+// 学校查询本校发起的对实践的申请-学校-对应已申请状态
+export function schoolGetPracticeSchoolPage(data) {
+  return request({
+    url: '/system/practice-school/school/create',
+    method: 'get',
+    data: data,
+  })
+}
+
+// 院校端查询审核通过还未确定学校的实践
+export function schoolQueryPractice(data) {
+  return request({
+    url: '/system/practice/school/page',
+    method: 'get',
+    data: data,
+  })
+}
+
+////////////////////////////////////////////////企业端-实践管理////////////////////////////////////////////////////////////
+
+
+// 获得本公司实践列表
+export function companyGetPracticePage(data) {
+  return request({
+    url: '/system/practice/company/page',
+    method: 'get',
+    data: data,
+  })
+}
+
+
+// 创建实践
+export function companyCreatePractice(data) {
+  return request({
+    url: '/system/practice/company/create',
+    method: 'post',
+    data: data
+  })
+}
+
+// 更新实践
+export function companyUpdatePractice(data) {
+  return request({
+    url: '/system/practice/company/update',
+    method: 'put',
+    data: data
+  })
+}
+
+// 企业修改实践状态为已经选定学校
+export function companyConfirmPractice(id) {
+  return request({
+    url: '/system/practice/delete?id=' + id,
+    method: 'delete'
+  })
+}
+
+
+
+
+
+
