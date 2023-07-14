@@ -14,9 +14,9 @@ public class TaskApplyCreateReqVO  {
     //@NotNull(message = "用户编号不能为空")
     private Long userId;
 
-    @Schema(description = "用户部门编号", required = true, example = "A学院")
+    @Schema(description = "用户所属企业编号", required = true, example = "A学院")
     //@NotNull(message = "用户部门名称不能为空")
-    private Long deptId;
+    private Long companyId;
 
     @Schema(description = "用户名字", required = true, example = "张三")
     //@NotNull(message = "用户名字不能为空")
@@ -32,7 +32,6 @@ public class TaskApplyCreateReqVO  {
     @NotNull(message = "手机号码不能为空")
     private String mobile;
 
-    @Schema(description = "状态", example = "2")
-    private Byte status;
+
 
 }

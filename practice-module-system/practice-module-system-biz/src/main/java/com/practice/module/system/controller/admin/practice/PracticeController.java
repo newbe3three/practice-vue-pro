@@ -7,6 +7,7 @@ import com.practice.module.system.controller.admin.resourcearticle.vo.reject.Res
 import com.practice.module.system.convert.practice.PracticeRejectConvert;
 import com.practice.module.system.dal.dataobject.practice.PracticeRejectDO;
 import com.practice.module.system.service.practice.PracticeRejectService;
+import com.practice.module.system.service.practiceapply.PracticeApplyService;
 import com.practice.module.system.service.practiceschool.PracticeSchoolService;
 import com.practice.module.system.service.tenant.TenantService;
 import com.practice.module.system.service.user.AdminUserService;
@@ -53,8 +54,7 @@ public class PracticeController {
     private AdminUserService adminUserService;
     @Resource
     private PracticeApplyService practiceApplyService;
-//    @Resource
-//    private PracticeSchoolService practiceSchoolService;
+
 
 
     @DeleteMapping("/delete")
@@ -94,6 +94,19 @@ public class PracticeController {
         List<PracticeExcelVO> datas = PracticeConvert.INSTANCE.convertList02(list);
         ExcelUtils.write(response, "实践.xls", "数据", PracticeExcelVO.class, datas);
     }
+
+    @GetMapping("/get")
+    @Operation(summary = "查询实践的信息")
+    @Parameter(name = "id", description = "编号", required = true, example = "1024")
+    @PreAuthorize("@ss.hasPermission('system:practice:get')")
+    public CommonResult<PracticeRespVO> getPractice(@RequestParam("id") Long id) {
+        PracticeDO practice = practiceService.getPractice(id);
+        PracticeRespVO convert = PracticeConvert.INSTANCE.convert(practice);
+        // companyId --> tenantName
+        convert.setCompanyName(tenantService.getTenant(practice.getCompanyId()).getName());
+        return success(convert);
+    }
+
 
     //平台端接口 实践审核
     @GetMapping("/review")
@@ -138,22 +151,11 @@ public class PracticeController {
     }
 
 
-    @GetMapping("/get")
-    @Operation(summary = "查询实践的信息")
-    @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('system:practice:query')")
-    public CommonResult<PracticeRespVO> getPractice(@RequestParam("id") Long id) {
-        PracticeDO practice = practiceService.getPractice(id);
-        PracticeRespVO convert = PracticeConvert.INSTANCE.convert(practice);
-        // companyId --> tenantName
-        convert.setCompanyName(tenantService.getTenant(practice.getCompanyId()).getName());
-        return success(convert);
-    }
 
     //学校端接口 院校端查询通过审核但还未确定学校的实践
     @GetMapping("/school/page")
     @Operation(summary = "院校端查询审核通过还未确定学校的实践")
-    @PreAuthorize("@ss.hasPermission('system:practice:school:page')")
+    @PreAuthorize("@ss.hasPermission('system:practice:school:query')")
     public CommonResult<PageResult<PracticeRespVO>> schoolQueryPractice(@Valid PracticePageReqVO pageVO)  {
         //可以查询的实践的状态为 1的实践（通过审核实践，并且没选定学校的实践）
         PracticePageReqVO page = new PracticePageReqVO();
@@ -172,7 +174,7 @@ public class PracticeController {
     //学生端接口 学生查询可以申请的实践
     @GetMapping("/student/page")
     @Operation(summary = "学生端查询可以申请的实践")
-    @PreAuthorize("@ss.hasPermission('system:practice:student:get')")
+    @PreAuthorize("@ss.hasPermission('system:practice:student:query')")
     public CommonResult<PageResult<PracticeRespVO>> studentQueryPractice(@Valid PracticePageReqVO pageVO)  {
         //可以查询本schoolId下的实践，已经schoolId为0的实践
         //根据本校的schoolId查询
@@ -196,7 +198,7 @@ public class PracticeController {
     //企业端接口 发起实践的创建
     @PostMapping("/company/create")
     @Operation(summary = "创建实践")
-    @PreAuthorize("@ss.hasPermission('system:practice:create')")
+    @PreAuthorize("@ss.hasPermission('system:practice:company:create')")
     public CommonResult<Long> companyCreatePractice(@Valid @RequestBody PracticeCreateReqVO createReqVO) {
         //用户只能向自己所属的企业创建实践 tenantId == companyId
         createReqVO.setCompanyId(adminUserService.getUser(getLoginUserId()).getTenantId());
@@ -215,10 +217,11 @@ public class PracticeController {
     //企业端的接口，查询自己所属企业的所发布的实践分页（根据tenantId == companyID）
     @GetMapping("/company/page")
     @Operation(summary = "获得本企业的实践分页")
-    @PreAuthorize("@ss.hasPermission('system:practice:company:page')")
+    @PreAuthorize("@ss.hasPermission('system:practice:company:query')")
     public CommonResult<PageResult<PracticeRespVO>> companyGetPracticePage(@Valid PracticePageReqVO pageVO) {
         //根据当前用户的tenantId来限制可以查询到的范围只能是自己所属企业的实践
         pageVO.setCompanyId(adminUserService.getUser(getLoginUserId()).getTenantId());
+        System.out.println("nihao"+adminUserService.getUser(getLoginUserId()).getTenantId());
         PageResult<PracticeDO> pageResult = practiceService.getPracticePage(pageVO);
         PageResult<PracticeRespVO> result = PracticeConvert.INSTANCE.convertPage(pageResult);
         for (int i=0;i<result.getList().size();i++) {

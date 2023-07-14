@@ -166,7 +166,9 @@ public interface ErrorCodeConstants {
     ErrorCode TASK_NOT_EXISTS = new ErrorCode(1003025001, "任务不存在");
     ErrorCode TASK_CREATE_TIME_ERROR = new ErrorCode(1003025002, "任务开始和结束时间冲突");
     ErrorCode TASK_CREATE_PEOPLE_NUMBER_ERROR = new ErrorCode(1003025003, "任务人数不得小于0");
-    ErrorCode TASK_REVIEW_ERROR = new ErrorCode(1003025004, "任务状态不是待审核！");
+    ErrorCode TASK_REVIEW_ERROR = new ErrorCode(1003025004, "审核任务错误！");
+    ErrorCode TASK_UPDATE_ERROR = new ErrorCode(1003025005, "修改权限错误！");
+
     // ======== 任务申请管理 ===========
     ErrorCode TASK_APPLY_NOT_EXISTS = new ErrorCode(1003025005, "任务申请不存在");
     ErrorCode TASK_APPLY_STATUS_ERROR = new ErrorCode(1003025006, "当前申请已审核！");

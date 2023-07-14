@@ -3,6 +3,7 @@ package com.practice.module.system.controller.admin.taskapply;
 import com.practice.module.system.dal.dataobject.dept.DeptDO;
 import com.practice.module.system.service.dept.DeptService;
 import com.practice.module.system.service.task.TaskService;
+import com.practice.module.system.service.tenant.TenantService;
 import com.practice.module.system.service.user.AdminUserService;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -49,17 +50,21 @@ public class TaskApplyController {
     private DeptService deptService;
     @Resource
     private AdminUserService adminUserService;
+    @Resource
+    private TenantService tenantService;
 
     private String taskName;
-    private String deptName;
+    private String companyName;
     private String userName;
+    //学生端接口 学生发起对任务的申请
     @PostMapping("/create")
     @Operation(summary = "创建任务申请")
     @PreAuthorize("@ss.hasPermission('system:task-apply:create')")
     public CommonResult<Long> createTaskApply(@Valid @RequestBody TaskApplyCreateReqVO createReqVO) {
         //获取登录用户id
         createReqVO.setUserId(getLoginUserId());
-
+        //获取用户所属部门id
+        createReqVO.setCompanyId(adminUserService.getUser(getLoginUserId()).getTenantId());
         return success(taskApplyService.createTaskApply(createReqVO));
     }
 
@@ -87,12 +92,12 @@ public class TaskApplyController {
         TaskApplyDO taskApply = taskApplyService.getTaskApply(id);
         TaskApplyRespVO taskApplyRespVO = TaskApplyConvert.INSTANCE.convert(taskApply);
         //deptService 根据deptId获取name后写入taskApplyRespVO，因为前端要name
-        deptName = deptService.getDept(taskApply.getDeptId()).getName();
+        companyName = tenantService.getTenant(taskApplyRespVO.getCompanyId()).getName();
         //taskService 根据taskId获取name后写入taskApplyRespVO，因为前端要name
         taskName = taskService.getTask(taskApply.getTaskId()).getName();
         //adminService 根据userId获取nickname后写入taskApplyRespVO，因为前端要name
         userName = adminUserService.getUser(taskApply.getUserId()).getNickname();
-        taskApplyRespVO.setDeptName(deptName);
+        taskApplyRespVO.setCompanyName(companyName);
         taskApplyRespVO.setTaskName(taskName);
         taskApplyRespVO.setUserName(userName);
         return success(taskApplyRespVO);
@@ -108,10 +113,10 @@ public class TaskApplyController {
         //taskId 转换成 taskName 输出  deptId转换成deptName输出
         for(int i = 0; i < taskApplyRespVOS.size(); i++) {
             taskName = taskService.getTask(taskApplyRespVOS.get(i).getTaskId()).getName();
-            deptName = deptService.getDept(taskApplyRespVOS.get(i).getDeptId()).getName();
+            companyName = tenantService.getTenant(taskApplyRespVOS.get(i).getCompanyId()).getName();
             userName = adminUserService.getUser(taskApplyRespVOS.get(i).getUserId()).getNickname();
             taskApplyRespVOS.get(i).setTaskName(taskName);
-            taskApplyRespVOS.get(i).setDeptName(deptName);
+            taskApplyRespVOS.get(i).setCompanyName(companyName);
             taskApplyRespVOS.get(i).setUserName(userName);
         }
         return success(taskApplyRespVOS);
@@ -134,10 +139,10 @@ public class TaskApplyController {
         //taskId 转换成 taskName 输出  deptId转换成deptName输出
         for(int i = 0; i < taskApplyRespVOS.size(); i++) {
             taskName = taskService.getTask(taskApplyRespVOS.get(i).getTaskId()).getName();
-            deptName = deptService.getDept(taskApplyRespVOS.get(i).getDeptId()).getName();
+            companyName = tenantService.getTenant(taskApplyRespVOS.get(i).getCompanyId()).getName();
             userName = adminUserService.getUser(taskApplyRespVOS.get(i).getUserId()).getNickname();
             taskApplyRespVOS.get(i).setTaskName(taskName);
-            taskApplyRespVOS.get(i).setDeptName(deptName);
+            taskApplyRespVOS.get(i).setCompanyName(companyName);
             taskApplyRespVOS.get(i).setUserName(userName);
         }
         return success(taskApplyRespVOS);
@@ -151,11 +156,11 @@ public class TaskApplyController {
         PageResult<TaskApplyRespVO> taskApplyRespVOPageResult = TaskApplyConvert.INSTANCE.convertPage(pageResult);
         for (int i = 0; i < taskApplyRespVOPageResult.getList().size(); i++) {
             //taskId 转换成 taskName 输出  deptId转换成deptName输出
-            deptName = deptService.getDept(taskApplyRespVOPageResult.getList().get(i).getDeptId()).getName();
+            companyName = tenantService.getTenant(taskApplyRespVOPageResult.getList().get(i).getCompanyId()).getName();
             taskName = taskService.getTask(taskApplyRespVOPageResult.getList().get(i).getTaskId()).getName();
             userName = adminUserService.getUser(taskApplyRespVOPageResult.getList().get(i).getUserId()).getNickname();
             taskApplyRespVOPageResult.getList().get(i).setUserName(userName);
-            taskApplyRespVOPageResult.getList().get(i).setDeptName(deptName);
+            taskApplyRespVOPageResult.getList().get(i).setCompanyName(companyName);
             taskApplyRespVOPageResult.getList().get(i).setTaskName(taskName);
         }
         return success(taskApplyRespVOPageResult);
@@ -172,11 +177,11 @@ public class TaskApplyController {
         List<TaskApplyExcelVO> datas = TaskApplyConvert.INSTANCE.convertList02(list);
         for (int i = 0; i < datas.size(); i++) {
             //向表格中输入部门名称 和 任务名称
-            deptName = deptService.getDept(datas.get(i).getDeptId()).getName();
+            companyName = tenantService.getTenant(datas.get(i).getCompanyId()).getName();
             taskName = taskService.getTask(datas.get(i).getTaskId()).getName();
             userName = adminUserService.getUser(datas.get(i).getUserId()).getNickname();
             datas.get(i).setTaskName(taskName);
-            datas.get(i).setDeptName(deptName);
+            datas.get(i).setCompanyName(companyName);
             datas.get(i).setUserName(userName);
 
         }

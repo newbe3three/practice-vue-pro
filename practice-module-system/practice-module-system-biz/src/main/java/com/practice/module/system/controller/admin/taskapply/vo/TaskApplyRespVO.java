@@ -18,9 +18,9 @@ public class TaskApplyRespVO extends TaskApplyBaseVO {
     @Schema(description = "申请/创建时间", required = true)
     private LocalDateTime createTime;
 
-    @Schema(description = "部门名称", required = true, example = "李四")
-    @NotNull(message = "部门名称不能为空")
-    private String deptName;
+    @Schema(description = "用户所属企业名", required = true, example = "李四")
+    @NotNull(message = "用户所属企业名不能为空")
+    private String companyName;
 
     @Schema(description = "任务名称", required = true, example = "李四")
     @NotNull(message = "部门名称不能为空")

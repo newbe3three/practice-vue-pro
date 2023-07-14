@@ -30,14 +30,13 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Long createTask(TaskCreateReqVO createReqVO) {
         // 插入
-        //TODO 时间校验
-//        System.out.println(createReqVO.getStartTime());
-//        System.out.println(createReqVO.getEndTime());
+        //验证开始时间和结束时间
         int time = createReqVO.getEndTime().compareTo(createReqVO.getStartTime());
         if (time < 0) {
             //结束时间小于开始时间 抛出结束时间小于开始时间异常
             throw exception(TASK_CREATE_TIME_ERROR);
         }
+        //验证需求人数
         if (createReqVO.getNumberPeople() <= 0) {
             //人数等于0 抛出人数错误异常
             throw exception(TASK_CREATE_PEOPLE_NUMBER_ERROR);
@@ -59,7 +58,22 @@ public class TaskServiceImpl implements TaskService {
         validateTaskExists(updateReqVO.getId());
         // 更新
         TaskDO updateObj = TaskConvert.INSTANCE.convert(updateReqVO);
-
+        if(taskMapper.selectById(updateReqVO.getId()).getCompanyId() != updateObj.getCompanyId()) {
+            throw exception(TASK_UPDATE_ERROR);
+        }
+        //验证开始时间和结束时间
+        int time = updateObj.getEndTime().compareTo(updateObj.getStartTime());
+        if (time < 0) {
+            //结束时间小于开始时间 抛出结束时间小于开始时间异常
+            throw exception(TASK_CREATE_TIME_ERROR);
+        }
+        //验证需求人数
+        if (updateObj.getNumberPeople() <= 0) {
+            //人数等于0 抛出人数错误异常
+            throw exception(TASK_CREATE_PEOPLE_NUMBER_ERROR);
+        }
+        updateObj.setAmount(updateReqVO.getAmount()*100);
+        updateObj.setStatus((byte) 0);
         taskMapper.updateById(updateObj);
     }
 
@@ -70,7 +84,7 @@ public class TaskServiceImpl implements TaskService {
         validateTaskExists(reviewReqVO.getId());
         TaskDO reviewObj = TaskConvert.INSTANCE.convert(reviewReqVO);
         //验证任务审核状态：现根据id查询状态，再比较
-
+        //校验任务状态
         if (taskMapper.selectById(reviewObj.getId()).getStatus() != 0) {
             throw exception(TASK_REVIEW_ERROR);
         }
@@ -120,6 +134,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDO getTask(Long id) {
+        //校验存在性
+        validateTaskExists(id);
+
+
         TaskDO taskDO = taskMapper.selectById(id);
         //实现任务金额的单位转换，从数据库的分到前端元
         double amount = taskDO.getAmount() * 0.01;

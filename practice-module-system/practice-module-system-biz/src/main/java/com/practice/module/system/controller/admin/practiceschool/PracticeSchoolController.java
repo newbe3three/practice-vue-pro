@@ -114,7 +114,7 @@ public class PracticeSchoolController {
     //学校端接口 院校端发起对实践的申请
     @PostMapping("/school/create")
     @Operation(summary = "学校发起实践申请")
-    @PreAuthorize("@ss.hasPermission('system:practice-school:school:apply')")
+    @PreAuthorize("@ss.hasPermission('system:practice-school:school:create')")
     public CommonResult<Long> applyPracticeSchool(@Valid @RequestBody PracticeSchoolCreateReqVO createReqVO) {
         return success(practiceSchoolService.applyPracticeSchool(createReqVO));
     }
@@ -139,7 +139,7 @@ public class PracticeSchoolController {
     //企业端接口 企业端通过学校对实践的申请
     @GetMapping("/company/review/pass")
     @Operation(summary = "企业通过学校的申请")
-    @PreAuthorize("@ss.hasPermission('system:practice-apply:review')")
+    @PreAuthorize("@ss.hasPermission('system:practice-school:company:review')")
     @Parameter(name = "practiceApplyId", description = "学校申请编号", required = true, example = "1")
     public CommonResult<Boolean> passPracticeSchool(@RequestParam("practiceSchoolId") Long practiceSchoolId)  {
         practiceSchoolService.reviewPassPracticeSchoolApply(practiceSchoolId);
@@ -148,7 +148,7 @@ public class PracticeSchoolController {
     //企业端接口 企业端查询对自己实践的院校申请
     @GetMapping("/company/page")
     @Operation(summary = "企业端查询对自己实践的院校申请")
-    @PreAuthorize("@ss.hasPermission('system:practice-school:school:page')")
+    @PreAuthorize("@ss.hasPermission('system:practice-school:company:page')")
     public CommonResult<PageResult<PracticeSchoolRespVO>> companyGetPracticeSchoolPage(@Valid PracticeSchoolPageReqVO pageVO) {
         // 查询当前企业创建的已通过审核的实践 status=1 的实践
         //List<PracticeDO> passPracticeWithCompanyId = practiceService.getPassPracticeWithCompanyId(adminUserService.getUser(getLoginUserId()).getTenantId());

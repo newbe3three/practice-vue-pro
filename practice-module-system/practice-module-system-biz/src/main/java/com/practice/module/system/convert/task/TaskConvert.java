@@ -20,7 +20,6 @@ public interface TaskConvert {
     TaskConvert INSTANCE = Mappers.getMapper(TaskConvert.class);
 
     TaskDO convert(TaskCreateReqVO bean);
-
     TaskDO convert(TaskUpdateReqVO bean);
 
     TaskDO convert(TaskReviewReqVO bean);

@@ -20,7 +20,7 @@ public interface TaskApplyMapper extends BaseMapperX<TaskApplyDO> {
     default PageResult<TaskApplyDO> selectPage(TaskApplyPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<TaskApplyDO>()
                 .eqIfPresent(TaskApplyDO::getUserId, reqVO.getUserId())
-                .eqIfPresent(TaskApplyDO::getDeptId, reqVO.getDeptId())
+                .eqIfPresent(TaskApplyDO::getCompanyId, reqVO.getCompanyId())
                 .eqIfPresent(TaskApplyDO::getCreator, reqVO.getCreator())
                 .eqIfPresent(TaskApplyDO::getTaskId, reqVO.getTaskId())
                 .eqIfPresent(TaskApplyDO::getMobile, reqVO.getMobile())
@@ -32,7 +32,7 @@ public interface TaskApplyMapper extends BaseMapperX<TaskApplyDO> {
     default List<TaskApplyDO> selectList(TaskApplyExportReqVO reqVO) {
         return selectList(new LambdaQueryWrapperX<TaskApplyDO>()
                 .eqIfPresent(TaskApplyDO::getUserId, reqVO.getUserId())
-                .eqIfPresent(TaskApplyDO::getDeptId, reqVO.getDeptId())
+                .eqIfPresent(TaskApplyDO::getCompanyId, reqVO.getCompanyId())
                 .eqIfPresent(TaskApplyDO::getCreator, reqVO.getCreator())
                 .eqIfPresent(TaskApplyDO::getTaskId, reqVO.getTaskId())
                 .eqIfPresent(TaskApplyDO::getMobile, reqVO.getMobile())

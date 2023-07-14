@@ -27,8 +27,11 @@ public class TaskExcelVO {
     @ExcelProperty("名字")
     private String name;
 
-    @ExcelProperty("部门名称")
-    private String deptName;
+    @ExcelProperty("企业编号")
+    private Long companyId;
+
+    @ExcelProperty("企业名称")
+    private String  companyName;
 
     @ExcelProperty("任务报酬")
     private Double amount;

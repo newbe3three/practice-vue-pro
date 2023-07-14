@@ -18,8 +18,8 @@ public class TaskApplyPageReqVO extends PageParam {
     @Schema(description = "用户编号", example = "1")
     private Long userId;
 
-    @Schema(description = "部门编号", example = "1234")
-    private Long deptId;
+    @Schema(description = "用户所属企业编号", example = "1234")
+    private Long companyId;
 
     @Schema(description = "创建者")
     private String creator;
