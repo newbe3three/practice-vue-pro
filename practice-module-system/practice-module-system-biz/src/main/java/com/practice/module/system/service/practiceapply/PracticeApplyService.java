@@ -3,12 +3,14 @@ package com.practice.module.system.service.practiceapply;
 import java.util.*;
 import javax.validation.*;
 
+import com.practice.module.system.controller.admin.practice.vo.practice.PracticePageReqVO;
 import com.practice.module.system.controller.admin.practice.vo.reject.PracticeRejectCreateReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyCreateReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyExportReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyPageReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyUpdateReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.reject.PracticeApplyRejectCreateReqVO;
+import com.practice.module.system.dal.dataobject.practice.PracticeDO;
 import com.practice.module.system.dal.dataobject.practice.PracticeRejectDO;
 import com.practice.module.system.dal.dataobject.practiceapply.PracticeApplyDO;
 import com.practice.framework.common.pojo.PageResult;
@@ -104,5 +106,11 @@ public interface PracticeApplyService {
      * @return 申请列表
      */
     PageResult<PracticeApplyDO> getApplyListWithCompanyId(PracticeApplyPageReqVO pageVO,Long companyId);
-
+    /**
+     * 获得实践分页
+     *
+     * @param pageReqVO 根据实践编号列表分页查询
+     * @return 实践分页
+     */
+    PageResult<PracticeDO> studentGetPracticePage(PracticePageReqVO pageReqVO, Long schoolId);
 }

@@ -23,6 +23,8 @@ public interface TaskApplyConvert {
 
     TaskApplyDO convert(TaskApplyUpdateReqVO bean);
 
+
+
     TaskApplyRespVO convert(TaskApplyDO bean);
 
     List<TaskApplyRespVO> convertList(List<TaskApplyDO> list);
@@ -30,5 +32,4 @@ public interface TaskApplyConvert {
     PageResult<TaskApplyRespVO> convertPage(PageResult<TaskApplyDO> page);
 
     List<TaskApplyExcelVO> convertList02(List<TaskApplyDO> list);
-
 }

@@ -18,9 +18,9 @@ public class TaskApplyBaseVO {
     @NotNull(message = "用户编号不能为空")
     private Long  userId;
 
-    @Schema(description = "部门编号", required = true, example = "1")
-    @NotNull(message = "部门编号不能为空")
-    private Long deptId;
+    @Schema(description = "用户所属企业编号", required = true, example = "1")
+    @NotNull(message = "用户所属企业编号不能为空")
+    private Long companyId;
 
     @Schema(description = "任务id", required = true, example = "28559")
     @NotNull(message = "任务id不能为空")

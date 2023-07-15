@@ -108,7 +108,7 @@ public class PracticeApplyController {
     // 学生端接口 学生端发起对实践的申请
     @PostMapping("/student/create")
     @Operation(summary = "创建实践申请")
-    @PreAuthorize("@ss.hasPermission('system:practice-apply:student:reate')")
+    @PreAuthorize("@ss.hasPermission('system:practice-apply:student:create')")
     public CommonResult<Long> createPracticeApply(@Valid @RequestBody PracticeApplyCreateReqVO createReqVO) {
         PracticeApplyDO practiceApply = PracticeApplyConvert.INSTANCE.convert2(createReqVO);
         practiceApply.setUserId(getLoginUserId());
@@ -117,7 +117,7 @@ public class PracticeApplyController {
     //学生端接口 学生端修改或修改被驳回的申请
     @PutMapping("/student/update")
     @Operation(summary = "更新实践申请")
-    @PreAuthorize("@ss.hasPermission('system:practice-apply:update')")
+    @PreAuthorize("@ss.hasPermission('system:practice-apply:student:update')")
     public CommonResult<Boolean> updatePracticeApply(@Valid @RequestBody PracticeApplyUpdateReqVO updateReqVO) {
         PracticeApplyDO practiceApply = PracticeApplyConvert.INSTANCE.convert2(updateReqVO);
 

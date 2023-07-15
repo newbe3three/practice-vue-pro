@@ -36,7 +36,7 @@ public class TaskDO extends BaseDO {
     /**
      * 部门名称
      */
-    private String deptName;
+    private Long companyId;
     /**
      * 任务报酬 数据单位为分，前端单位为元
      */

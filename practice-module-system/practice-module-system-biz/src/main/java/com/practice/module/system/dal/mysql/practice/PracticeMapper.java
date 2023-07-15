@@ -29,6 +29,7 @@ public interface PracticeMapper extends BaseMapperX<PracticeDO> {
                 .eqIfPresent(PracticeDO::getNumberPeople, reqVO.getNumberPeople())
                 .eqIfPresent(PracticeDO::getStatus, reqVO.getStatus())
                 .betweenIfPresent(PracticeDO::getCreateTime, reqVO.getCreateTime())
+                .eqIfPresent(PracticeDO::getCompanyId,reqVO.getCompanyId())
                 .orderByDesc(PracticeDO::getId));
     }
 
@@ -57,6 +58,7 @@ public interface PracticeMapper extends BaseMapperX<PracticeDO> {
                 .eqIfPresent(PracticeDO::getNumberPeople, reqVO.getNumberPeople())
                 .eqIfPresent(PracticeDO::getStatus, reqVO.getStatus())
                 .betweenIfPresent(PracticeDO::getCreateTime, reqVO.getCreateTime())
+                .eqIfPresent(PracticeDO::getCompanyId,reqVO.getCompanyId())
                 .orderByDesc(PracticeDO::getId));
     }
 

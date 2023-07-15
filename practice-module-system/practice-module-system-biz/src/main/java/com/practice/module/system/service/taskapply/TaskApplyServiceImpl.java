@@ -48,8 +48,7 @@ public class TaskApplyServiceImpl implements TaskApplyService {
         TaskDO taskDO = taskMapper.selectById(createReqVO.getTaskId());
         //获取用户姓名并写入
         createReqVO.setName(adminUserDO.getNickname());
-        //获取用户部门id并写入
-        createReqVO.setDeptId(adminUserDO.getDeptId());
+
         //校验任务存在
         if (taskDO == null ){
             throw exception(TASK_NOT_EXISTS);
@@ -58,15 +57,16 @@ public class TaskApplyServiceImpl implements TaskApplyService {
         if (taskDO.getStatus() != 1) {
             throw exception(TASK_STATUS_ALLPY_ERROR);
         }
-        //检验是否存在对当前任务的申请,每个用户对同一人任务只能存在一个状态为待审核的
+        //检验是否存在对当前任务的申请,每个用户对同一任务只能存在一个状态为待审核的
         if(taskApplyMapper.selectByTaskIdAndUserId(
                 createReqVO.getTaskId(),createReqVO.getUserId()) != null){
             throw exception(TASK_APPLY_REPEAT);
         }
 
-        //任务申请的初始状态设置为0 审核中
-        createReqVO.setStatus((byte) 0);
+
         TaskApplyDO taskApply = TaskApplyConvert.INSTANCE.convert(createReqVO);
+        //任务申请的初始状态设置为0 审核中
+        taskApply.setStatus((byte) 0);
         taskApplyMapper.insert(taskApply);
         // 返回
         return taskApply.getId();

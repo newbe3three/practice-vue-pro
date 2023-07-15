@@ -16,8 +16,11 @@ public class TaskExportReqVO {
     @Schema(description = "名字", example = "李四")
     private String name;
 
-    @Schema(description = "部门名称", example = "张三")
-    private String deptName;
+    @Schema(description = "企业编号", example = "张三")
+    private Long companyId;
+
+    @Schema(description = "企业名称", example = "111")
+    private String companyName;
 
     @Schema(description = "任务报酬")
     private Double amount;

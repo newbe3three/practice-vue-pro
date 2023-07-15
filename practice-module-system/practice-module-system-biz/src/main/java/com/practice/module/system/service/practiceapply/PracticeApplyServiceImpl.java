@@ -1,6 +1,7 @@
 package com.practice.module.system.service.practiceapply;
 
 import com.practice.module.system.controller.admin.practice.vo.practice.PracticeIdPageReqVO;
+import com.practice.module.system.controller.admin.practice.vo.practice.PracticePageReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyCreateReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyExportReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyPageReqVO;
@@ -12,6 +13,7 @@ import com.practice.module.system.dal.dataobject.practiceapply.PracticeApplyReje
 import com.practice.module.system.dal.mysql.practice.PracticeMapper;
 import com.practice.module.system.dal.mysql.practiceapply.PracticeApplyRejectMapper;
 import com.practice.module.system.service.practice.PracticeService;
+import com.practice.module.system.service.practiceschool.PracticeSchoolService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -44,7 +46,8 @@ public class PracticeApplyServiceImpl implements PracticeApplyService {
     private PracticeApplyRejectMapper rejectMapper;
     @Resource
     private PracticeService practiceService;
-
+    @Resource
+    private PracticeSchoolService practiceSchoolService;
 
     @Override
     public Long createPracticeApply(PracticeApplyDO practiceApply) {
@@ -213,6 +216,19 @@ public class PracticeApplyServiceImpl implements PracticeApplyService {
         pageVO.setPracticeIdList(practiceIdList);
 
         return practiceApplyMapper.selectPage2(pageVO);
+    }
+    //学生查询可以申请的实践
+    public PageResult<PracticeDO> studentGetPracticePage(PracticePageReqVO pageReqVO, Long schoolId) {
+        //可以查询本schoolId下的实践，已经schoolId为0的实践
+        //根据本校的schoolId查询
+        List<Long> practiceIdList = practiceSchoolService.getPracticeIdListWithSchoolId(schoolId);
+        //查询schoolId为0的实践
+        List<Long> listAll = practiceSchoolService.getPracticeIdListWithSchoolId(0L);
+        practiceIdList.addAll(listAll);
+        pageReqVO.setPracticeIdList(practiceIdList);
+
+
+        return practiceMapper.selectPage2(pageReqVO);
     }
 
 }

@@ -7,7 +7,6 @@ import com.practice.module.system.dal.dataobject.practiceschool.PracticeSchoolDO
 import com.practice.module.system.dal.mysql.practice.PracticeRejectMapper;
 import com.practice.module.system.dal.mysql.practiceschool.PracticeSchoolMapper;
 import com.practice.module.system.dal.mysql.user.AdminUserMapper;
-import com.practice.module.system.service.practiceschool.PracticeSchoolService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -21,7 +20,6 @@ import com.practice.module.system.convert.practice.PracticeConvert;
 import com.practice.module.system.dal.mysql.practice.PracticeMapper;
 
 import static com.practice.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static com.practice.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 import static com.practice.module.system.enums.ErrorCodeConstants.*;
 /**
  * 实践 Service 实现类
@@ -30,6 +28,7 @@ import static com.practice.module.system.enums.ErrorCodeConstants.*;
  */
 @Service
 @Validated
+
 public class PracticeServiceImpl implements PracticeService {
 
     @Resource
@@ -40,8 +39,6 @@ public class PracticeServiceImpl implements PracticeService {
     private AdminUserMapper adminUserMapper;
     @Resource
     private PracticeSchoolMapper practiceSchoolMapper;
-    @Resource
-    private PracticeSchoolService practiceSchoolService;
     @Override
     public Long createPractice(PracticeCreateReqVO createReqVO) {
         // 插入
@@ -77,8 +74,15 @@ public class PracticeServiceImpl implements PracticeService {
 //            throw exception(PRACTICE_PERMISSION_ERROR);
 //        }
 
+        //开始时间在结束时间之前
+        int time = updateReqVO.getEndTime().compareTo(updateReqVO.getStartTime());
+        if (time < 0) {
+            //结束时间小于开始时间 抛出结束时间小于开始时间异常
+            throw exception(PRACTICE_CREATE_TIME_ERROR);
+        }
+
         //todo: 实践审核通过或者在征集中都可以更新实践信息
-        //校验状态 在状态为 驳回或未审核可以更更新实践信息
+        //校验状态 在实践状态为已驳回或待审核都可以更更新实践信息
         Byte status = practiceMapper.selectById(updateReqVO.getId()).getStatus();
         if(status == 2 || status == 0) {
             // 更新
@@ -215,18 +219,7 @@ public class PracticeServiceImpl implements PracticeService {
         }
 
     }
-    public PageResult<PracticeDO> studentGetPracticePage(PracticePageReqVO pageReqVO,Long schoolId) {
-        //可以查询本schoolId下的实践，已经schoolId为0的实践
-        //根据本校的schoolId查询
-        List<Long> practiceIdList = practiceSchoolService.getPracticeIdListWithSchoolId(schoolId);
-        //查询schoolId为0的实践
-        List<Long> listAll = practiceSchoolService.getPracticeIdListWithSchoolId(0L);
-        practiceIdList.addAll(listAll);
-        pageReqVO.setPracticeIdList(practiceIdList);
 
-
-        return practiceMapper.selectPage2(pageReqVO);
-    }
     public List<PracticeDO> getPassPracticeWithCompanyId(Long companyId) {
         List<Byte> statusList = new ArrayList<>();
         statusList.add((byte)1);

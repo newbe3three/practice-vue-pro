@@ -32,9 +32,9 @@ public class TaskApplyDO extends BaseDO {
      */
     private Long userId;
     /**
-     * 部门名称
+     * 用户所属企业编号
      */
-    private Long deptId;
+    private Long companyId;
     /**
      * 任务id
      */
@@ -46,7 +46,7 @@ public class TaskApplyDO extends BaseDO {
     /**
      * 状态
      *
-     * 枚举 {@link TODO system_task_apply_status 对应的类}
+     *
      */
     private Byte status;
 
