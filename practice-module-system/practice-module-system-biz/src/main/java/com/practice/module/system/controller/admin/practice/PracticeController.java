@@ -57,14 +57,6 @@ public class PracticeController {
 
 
 
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除实践")
-    @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('system:practice:delete')")
-    public CommonResult<Boolean> deletePractice(@RequestParam("id") Long id) {
-        practiceService.deletePractice(id);
-        return success(true);
-    }
 
 
 
@@ -238,4 +230,5 @@ public class PracticeController {
         practiceService.confirmPracticeByCompany(practiceId,adminUserService.getUser(getLoginUserId()).getTenantId());
         return success(true);
     }
+
 }

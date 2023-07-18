@@ -223,5 +223,13 @@ public interface ErrorCodeConstants {
 
     ErrorCode ORGANIZATION_OTHER_NOT_EXISTS = new ErrorCode(1003028102, "其他组织不存在");
 
+    ErrorCode USER_SKILL_NOT_EXISTS = new ErrorCode(1004028001, "个人技能不存在");
+    ErrorCode USER_SKILL_LEVEL_NOT_EXISTS = new ErrorCode(1004028002, "技能等级错误");
+
+    ErrorCode USER_WORK_NOT_EXISTS = new ErrorCode(1004038001, "工作经历不存在");
+
+    ErrorCode USER_WORK_TYPE_NOT_EXISTS = new ErrorCode(1004038002, "工作类型不存在");
+    ErrorCode USER_WORK_DEL_ERROR = new ErrorCode(1004038002, "工作经历删除失败");
+
 
 }
