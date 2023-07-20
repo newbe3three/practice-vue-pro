@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-  
+
       <!-- 搜索工作栏 -->
       <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
         <el-form-item label="实践名称" prop="name">
@@ -27,7 +27,7 @@
           <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
         </el-form-item>
       </el-form>
-  
+
       <!-- 操作工具栏 -->
       <!-- <el-row :gutter="10" class="mb8">
         <el-col :span="1.5">
@@ -36,7 +36,7 @@
         </el-col>
         <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
       </el-row> -->
-  
+
       <!-- 列表 -->
       <el-table v-loading="loading" :data="list">
         <el-table-column label="实践编号" align="center" prop="id" />
@@ -74,7 +74,7 @@
       <!-- 分页组件 -->
       <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
         @pagination="getList" />
-  
+
       <!-- 对话框（审核）-->
       <el-dialog :title="title" :visible.sync="showReview" width="500px" v-dialogDrag append-to-body center>
         <div v-show="reviewList.length != 0">
@@ -86,14 +86,15 @@
         </div>
         <div v-show="reviewList.length === 0">是否通过{{ practice.id }}</div>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="reviewPass">审核通过</el-button>
-          <el-button @click="reject">驳 回</el-button>
+
+          <el-button type="primary" @click="reviewPass" v-hasPermi="['system:practice:review']">审核通过</el-button>
+          <el-button @click="reject" v-hasPermi="['system:practice:review']">驳 回</el-button>
         </div>
       </el-dialog>
-  
+
       <!-- 对话框（拒绝）-->
       <el-dialog :title="title" :visible.sync="showReject" width="500px" v-dialogDrag append-to-body>
-  
+
         <el-input v-model="rejectReason" placeholder="请输入驳回意见" />
         <div slot="footer" class="dialog-footer">
           <el-button type="primary" @click="confirmReject">确 定</el-button>
@@ -102,13 +103,13 @@
       </el-dialog>
     </div>
   </template>
-  
+
   <script>
   import { reviewPractice, reviewPass,getPracticePage, exportPracticeExcel,reviewFailurePractice } from "@/api/system/practice";
   import Editor from '@/components/Editor';
   import { getDictDatas, DICT_TYPE } from '@/utils/dict'
 
-  
+
   export default {
     name: "Practice",
     components: {
@@ -233,4 +234,3 @@
     }
   };
   </script>
-  

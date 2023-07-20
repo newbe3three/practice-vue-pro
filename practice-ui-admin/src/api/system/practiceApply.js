@@ -43,6 +43,15 @@ export function getPracticeApplyPage(query) {
   })
 }
 
+
+export function studentGetPracticeApplyPage(query) {
+  return request({
+    url: '/system/practice-apply/student/page',
+    method: 'get',
+    params: query
+  })
+}
+
 // 导出实践申请 Excel
 export function exportPracticeApplyExcel(query) {
   return request({

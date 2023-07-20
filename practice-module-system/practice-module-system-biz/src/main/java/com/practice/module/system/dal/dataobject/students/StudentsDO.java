@@ -56,4 +56,17 @@ public class StudentsDO extends BaseDO {
      */
     private String cardId;
 
+    /**
+     * 开始时间
+     */
+    private LocalDateTime startTime;
+    /**
+     * 结束时间
+     */
+    private LocalDateTime endTime;
+    /**
+     * 校内经历
+     */
+    private String experience;
+
 }

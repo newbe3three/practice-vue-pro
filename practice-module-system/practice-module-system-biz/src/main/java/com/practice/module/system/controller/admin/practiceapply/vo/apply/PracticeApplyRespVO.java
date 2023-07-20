@@ -26,4 +26,5 @@ public class PracticeApplyRespVO extends PracticeApplyBaseVO {
 
     @Schema(description = "状态", example = "2")
     private Byte status;
+    //todo:返回学生的信息
 }

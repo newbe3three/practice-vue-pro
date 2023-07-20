@@ -1,7 +1,5 @@
 package com.practice.module.system.controller.admin.practiceapply;
 
-import com.practice.module.system.controller.admin.practice.vo.reject.PracticeRejectCreateReqVO;
-import com.practice.module.system.controller.admin.practice.vo.reject.PracticeRejectRespVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.*;
 import com.practice.module.system.controller.admin.practiceapply.vo.reject.PracticeApplyRejectCreateReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.reject.PracticeApplyRejectRespVO;
@@ -144,7 +142,7 @@ public class PracticeApplyController {
         return success(result);
     }
     //企业端接口 查询学生对一实践的申请驳回记录
-    @GetMapping("/review")
+    @GetMapping("/company/review")
     @Operation(summary = "实践申请审核提示")
     @PreAuthorize("@ss.hasPermission('system:practice-apply:comapny:review')")
     @Parameter(name = "practiceApplyId", description = "实践申请编号", required = true, example = "1")
@@ -174,8 +172,8 @@ public class PracticeApplyController {
     }
     //企业端接口 企业查询对自己创建的实践的学生申请
     @GetMapping("/company/page")
-    @Operation(summary = "获得实践申请分页")
-    @PreAuthorize("@ss.hasPermission('system:practice-apply:company:page')")
+    @Operation(summary = "企业查询对自己创建的实践的学生申请")
+    @PreAuthorize("@ss.hasPermission('system:practice-apply:company:query')")
     public CommonResult<PageResult<PracticeApplyRespVO>> companyGetPracticeApply(@Valid PracticeApplyPageReqVO pageVO) {
         // getCompanyId()  --> practiceList() --> practiceIdList() --> applyList()
         Long companyId = adminUserService.getUser(getLoginUserId()).getTenantId();

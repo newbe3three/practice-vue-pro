@@ -82,7 +82,7 @@ public class UserWorkServiceImplTest extends BaseDbUnitTest {
         assertServiceException(() -> userWorkService.updateUserWork(reqVO), USER_WORK_NOT_EXISTS);
     }
 
-    @Test
+    //@Test
 //    public void testDeleteUserWork_success() {
 //        // mock 数据
 //        UserWorkDO dbUserWork = randomPojo(UserWorkDO.class);

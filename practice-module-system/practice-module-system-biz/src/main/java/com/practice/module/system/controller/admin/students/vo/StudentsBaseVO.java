@@ -2,10 +2,14 @@ package com.practice.module.system.controller.admin.students.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.*;
 import java.time.LocalDateTime;
 import java.time.LocalDateTime;
 import javax.validation.constraints.*;
+
+import static com.practice.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 
 /**
 * 学生信息 Base VO，提供给添加、修改、详细的子 VO 使用
@@ -39,5 +43,18 @@ public class StudentsBaseVO {
     @Schema(description = "身份证号", required = true, example = "19565")
     @NotNull(message = "身份证号不能为空")
     private String cardId;
+
+    @Schema(description = "开始时间")
+    @NotNull(message = "身份证号不能为空")
+    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    private LocalDateTime startTime;
+
+    @Schema(description = "结束时间")
+    @NotNull(message = "身份证号不能为空")
+    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    private LocalDateTime endTime;
+
+    @Schema(description = "校内经历")
+    private String experience;
 
 }

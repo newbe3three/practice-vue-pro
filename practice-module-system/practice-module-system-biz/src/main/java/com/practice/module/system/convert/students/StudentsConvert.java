@@ -19,6 +19,8 @@ public interface StudentsConvert {
 
     StudentsConvert INSTANCE = Mappers.getMapper(StudentsConvert.class);
 
+
+
     StudentsDO convert(StudentCreateVO bean);
 
     StudentsDO convert(StudentsCreateReqVO bean);
@@ -34,5 +36,6 @@ public interface StudentsConvert {
     PageResult<StudentsRespVO> convertPage(PageResult<StudentsDO> page);
 
     List<StudentsExcelVO> convertList02(List<StudentsDO> list);
+
 
 }

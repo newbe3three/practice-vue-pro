@@ -40,6 +40,12 @@ public class StudentsServiceImpl implements StudentsService {
     private TeachersService teachersService;
     @Override
     public Long createStudents(StudentsCreateReqVO createReqVO) {
+        //验证开始时间和结束时间
+        int time = createReqVO.getEndTime().compareTo(createReqVO.getStartTime());
+        if (time < 0) {
+            //结束时间小于开始时间 抛出结束时间小于开始时间异常
+            throw exception(TASK_CREATE_TIME_ERROR);
+        }
         // 插入
         StudentsDO students = StudentsConvert.INSTANCE.convert(createReqVO);
         studentsMapper.insert(students);

@@ -2,6 +2,8 @@ package com.practice.module.system.controller.admin.practice.vo.practice;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Schema(description = "管理后台 - 实践 Response VO")
@@ -23,4 +25,11 @@ public class PracticeRespVO extends PracticeBaseVO {
 
     @Schema(description = "状态", example = "1")
     private Byte status;
+
+
+
+
+    @Schema(description = "地址", example = "15601691300")
+    //@NotNull(message = "") 可以为空，后续修改添加
+    private String address;
 }

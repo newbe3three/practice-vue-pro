@@ -56,10 +56,6 @@ public class PracticeController {
     private PracticeApplyService practiceApplyService;
 
 
-
-
-
-
     @GetMapping("/list")
     @Operation(summary = "获得实践列表")
     @Parameter(name = "ids", description = "编号列表", required = true, example = "1024,2048")
@@ -96,6 +92,7 @@ public class PracticeController {
         PracticeRespVO convert = PracticeConvert.INSTANCE.convert(practice);
         // companyId --> tenantName
         convert.setCompanyName(tenantService.getTenant(practice.getCompanyId()).getName());
+        convert.setAddress(tenantService.getTenant(practice.getCompanyId()).getAddress());
         return success(convert);
     }
 
