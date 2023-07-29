@@ -535,6 +535,7 @@ export default {
       this.form.id = id;
       this.form.username = row.username;
       this.form.nickname = row.nickname;
+      
 
     },
     /** 提交按钮 */

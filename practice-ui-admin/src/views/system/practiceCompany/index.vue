@@ -32,7 +32,7 @@
         <el-row :gutter="10" class="mb8">
             <el-col :span="1.5">
                 <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-                    v-hasPermi="['system:practice:create']">创建实践</el-button>
+                    v-hasPermi="['system:practice:company:create']">创建实践</el-button>
             </el-col>
             <!-- <el-col :span="1.5">
           <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
@@ -70,9 +70,12 @@
             </el-table-column>
             <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
                 <template v-slot="scope">
-                    <el-button size="mini" type="text" icon="el-icon-edit" v-show="scope.row.status != 3"
+                    <el-button size="mini" type="text" icon="el-icon-edit" v-show="scope.row.status < 3"
                         @click="handleUpdate(scope.row)" v-hasPermi="['system:practice:company:update']">修 改</el-button>
-                    <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+                    <el-button size="mini" type="text" icon="el-icon-edit" v-show="scope.row.status === 1 || scope.row.status === 2"
+                        @click="handleConfirm(scope.row)" v-hasPermi="['system:practice:company:confirm']">开始征集</el-button>
+                    <span v-show="scope.row.status === 3">征集中</span>
+                    <el-button size="mini" icon="el-icon-delete" @click="handleDelete(scope.row)"
                         v-hasPermi="['system:practice:delete']">删 除</el-button>
                 </template>
             </el-table-column>
@@ -88,7 +91,7 @@
                     <el-input v-model="form.name" placeholder="请输入名字" />
                 </el-form-item>
                 <el-form-item label="实践内容">
-                    <editor v-model="form.content" :min-height="192" />
+                    <el-input v-model="form.content" placeholder="请输入实践内容" />
                 </el-form-item>
                 <el-form-item label="实践要求" prop="requirement">
                     <el-input v-model="form.requirement" placeholder="请输入实践要求" />
@@ -120,7 +123,7 @@
 </template>
   
 <script>
-import { companyUpdatePractice, companyCreatePractice, companyGetPracticePage } from "@/api/system/practice";
+import { companyUpdatePractice, companyCreatePractice, companyGetPracticePage, getPractice, companyConfirmPractice} from "@/api/system/practice";
 import Editor from '@/components/Editor';
 import { getDictDatas, DICT_TYPE } from '@/utils/dict'
 import { getTenantId } from '@/utils/auth'
@@ -221,10 +224,18 @@ export default {
             this.open = true;
             this.title = "新建实践";
         },
+        /** 修改状态开始征集 */
+        handleConfirm(row) {
+            console.log('qweqwe',row.id);
+            companyConfirmPractice(row.id).then(res => {
+                this.$modal.msgSuccess("开始征集")
+            })
+        },
         /** 表单重置 */
         reset() {
             this.form = {
                 name: undefined,
+                companyId: undefined,
                 content: undefined,
                 requirement: undefined,
                 startTime: undefined,
@@ -250,7 +261,7 @@ export default {
                     return;
                 }
                 // 修改的提交
-                if (this.form.id != null) {
+                if (this.form.companyId != null) {
                     companyUpdatePractice(this.form).then(response => {
                         this.$modal.msgSuccess("修改成功");
                         this.open = false;

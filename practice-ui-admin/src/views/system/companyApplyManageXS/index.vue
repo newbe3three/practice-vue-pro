@@ -57,10 +57,10 @@
         </el-table-column>
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template v-slot="scope">
-            <el-button size="mini" type="text" icon="el-icon-edit" @click="handleReview(scope.row)"
-                       v-hasPermi="['system:practice-apply:company:review']">审 核</el-button>
-            <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                       v-hasPermi="['system:practice-school:delete']">删 除</el-button>
+            <el-button v-show="scope.row.status === 0" size="mini" type="text" icon="el-icon-edit" @click="handleReview(scope.row)"
+                       v-hasPermi="['system:practice-apply:comapny:review']">审 核</el-button>
+                       <span v-show="scope.row.status === 1">已通过</span> 
+
           </template>
         </el-table-column>
       </el-table>

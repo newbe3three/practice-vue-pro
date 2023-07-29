@@ -31,6 +31,11 @@ export const DICT_TYPE = {
   SYSTEM_TASK_APPLY_STATUS: 'system_task_apply_status',
   PRACTICE_STATUS: 'practice_status',
   PRACTICE_APPLY_STATUS: 'practice_apply_status',
+  PRACTICE_STUDENT_STATUS: 'practice_apply_status',
+  PRACTICE_SCHOOL_STATUS: 'practice_school_status',
+  WORK_TYPE: 'work_type',
+  USER_SKILL_LEVEL: 'user_skill_level',
+
 
   // ========== INFRA 模块 ==========
   INFRA_BOOLEAN_STRING: 'infra_boolean_string',
