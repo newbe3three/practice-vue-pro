@@ -40,7 +40,8 @@ DELETE FROM "system_practice_apply";
 DELETE FROM "system_practice_school";
 DELETE FROM "system_students";
 DELETE FROM "system_teachers";
-
+DELETE FROM "system_user_skill";
 DELETE FROM "system_organization_company";
 DELETE FROM "system_organization_school";
 DELETE FROM "system_organization_other";
+DELETE FROM "system_user_work";

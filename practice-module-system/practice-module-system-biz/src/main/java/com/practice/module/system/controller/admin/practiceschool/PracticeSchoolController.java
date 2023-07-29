@@ -52,6 +52,8 @@ public class PracticeSchoolController {
     @Operation(summary = "创建学校申请实践")
     @PreAuthorize("@ss.hasPermission('system:practice-school:create')")
     public CommonResult<Long> createPracticeSchool(@Valid @RequestBody PracticeSchoolCreateReqVO createReqVO) {
+        createReqVO.setSchoolId( tenantService.getTenant(getLoginUserId()).getId());
+        System.out.println(createReqVO.getSchoolId()+"nihao");
         return success(practiceSchoolService.createPracticeSchool(createReqVO));
     }
 
@@ -116,12 +118,13 @@ public class PracticeSchoolController {
     @Operation(summary = "学校发起实践申请")
     @PreAuthorize("@ss.hasPermission('system:practice-school:school:create')")
     public CommonResult<Long> applyPracticeSchool(@Valid @RequestBody PracticeSchoolCreateReqVO createReqVO) {
+        createReqVO.setSchoolId( tenantService.getTenant(getLoginUserId()).getId());
         return success(practiceSchoolService.applyPracticeSchool(createReqVO));
     }
     //学校端接口 院校端查询本校发起的对实践的申请
     @GetMapping("/school/page")
     @Operation(summary = "院校端查询本校发起的对实践的申请")
-    @PreAuthorize("@ss.hasPermission('system:practice-school:school:page')")
+    @PreAuthorize("@ss.hasPermission('system:practice-school:school:query')")
     public CommonResult<PageResult<PracticeSchoolRespVO>> schoolGetPracticeSchoolPage(@Valid PracticeSchoolPageReqVO pageVO) {
         //查询当前用户所属学校发起的申请 user.getTenantId == SchoolId
         pageVO.setSchoolId(adminUserService.getUser(getLoginUserId()).getTenantId());
@@ -145,10 +148,10 @@ public class PracticeSchoolController {
         practiceSchoolService.reviewPassPracticeSchoolApply(practiceSchoolId);
         return success(true);
     }
-    //企业端接口 企业端查询对自己实践的院校申请
+    //企业端接口 企业端查询对自己所实践发起的院校申请
     @GetMapping("/company/page")
-    @Operation(summary = "企业端查询对自己实践的院校申请")
-    @PreAuthorize("@ss.hasPermission('system:practice-school:company:page')")
+    @Operation(summary = " 企业端查询对自己所实践发起的院校申请")
+    @PreAuthorize("@ss.hasPermission('system:practice-school:company:query')")
     public CommonResult<PageResult<PracticeSchoolRespVO>> companyGetPracticeSchoolPage(@Valid PracticeSchoolPageReqVO pageVO) {
         // 查询当前企业创建的已通过审核的实践 status=1 的实践
         //List<PracticeDO> passPracticeWithCompanyId = practiceService.getPassPracticeWithCompanyId(adminUserService.getUser(getLoginUserId()).getTenantId());

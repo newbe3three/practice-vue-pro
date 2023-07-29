@@ -26,6 +26,9 @@ public interface StudentsMapper extends BaseMapperX<StudentsDO> {
                 .eqIfPresent(StudentsDO::getMajor, reqVO.getMajor())
                 .eqIfPresent(StudentsDO::getMobile, reqVO.getMobile())
                 .eqIfPresent(StudentsDO::getCardId, reqVO.getCardId())
+                .betweenIfPresent(StudentsDO::getStartTime, reqVO.getStartTime())
+                .betweenIfPresent(StudentsDO::getEndTime, reqVO.getEndTime())
+                .likeIfPresent(StudentsDO::getExperience, reqVO.getExperience())
                 .betweenIfPresent(StudentsDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(StudentsDO::getId));
     }
@@ -39,6 +42,9 @@ public interface StudentsMapper extends BaseMapperX<StudentsDO> {
                 .eqIfPresent(StudentsDO::getMajor, reqVO.getMajor())
                 .eqIfPresent(StudentsDO::getMobile, reqVO.getMobile())
                 .eqIfPresent(StudentsDO::getCardId, reqVO.getCardId())
+                .betweenIfPresent(StudentsDO::getStartTime, reqVO.getStartTime())
+                .betweenIfPresent(StudentsDO::getEndTime, reqVO.getEndTime())
+                .likeIfPresent(StudentsDO::getExperience, reqVO.getExperience())
                 .betweenIfPresent(StudentsDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(StudentsDO::getId));
     }

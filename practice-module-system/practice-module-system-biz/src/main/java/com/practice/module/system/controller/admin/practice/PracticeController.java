@@ -56,18 +56,6 @@ public class PracticeController {
     private PracticeApplyService practiceApplyService;
 
 
-
-    @DeleteMapping("/delete")
-    @Operation(summary = "删除实践")
-    @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('system:practice:delete')")
-    public CommonResult<Boolean> deletePractice(@RequestParam("id") Long id) {
-        practiceService.deletePractice(id);
-        return success(true);
-    }
-
-
-
     @GetMapping("/list")
     @Operation(summary = "获得实践列表")
     @Parameter(name = "ids", description = "编号列表", required = true, example = "1024,2048")
@@ -104,6 +92,7 @@ public class PracticeController {
         PracticeRespVO convert = PracticeConvert.INSTANCE.convert(practice);
         // companyId --> tenantName
         convert.setCompanyName(tenantService.getTenant(practice.getCompanyId()).getName());
+        convert.setAddress(tenantService.getTenant(practice.getCompanyId()).getAddress());
         return success(convert);
     }
 
@@ -238,4 +227,5 @@ public class PracticeController {
         practiceService.confirmPracticeByCompany(practiceId,adminUserService.getUser(getLoginUserId()).getTenantId());
         return success(true);
     }
+
 }

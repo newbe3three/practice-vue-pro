@@ -77,7 +77,7 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template v-slot="scope">
           <el-button v-show="scope.row.status === 1" size="mini" type="text" icon="el-icon-edit"
-            @click="handleApply(scope.row)">申 请</el-button>
+            @click="handleApply(scope.row)" v-hasPermi="['system:practice-school:school:create']">申 请</el-button>
         </template>
       </el-table-column>
     </el-table>
