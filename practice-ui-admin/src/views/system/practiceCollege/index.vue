@@ -77,7 +77,7 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template v-slot="scope">
           <el-button v-show="scope.row.status === 1" size="mini" type="text" icon="el-icon-edit"
-            @click="handleApply(scope.row)" v-hasPermi="['system:practice-school:school:apply']">申 请</el-button>
+            @click="handleApply(scope.row)">申 请</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -122,6 +122,7 @@ export default {
         pageNo: 1,
         pageSize: 10,
         name: null,
+        companyId: null,
         content: null,
         startTime: [],
         endTime: [],
@@ -158,9 +159,9 @@ export default {
       });
     },
     handleApply(row){
-      console.log('qwe', getTenantId());
+      console.log('qwe', row.id);
       this.$modal.confirm('是否确认申请该实践："' + row.name).then(function () {
-        return applyPracticeSchool(getTenantId, row.id);
+        return applyPracticeSchool(row.id);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("申请成功");

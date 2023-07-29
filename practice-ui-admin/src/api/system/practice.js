@@ -45,12 +45,11 @@ export function reviewFailurePractice(id, reason) {
 
 
 // 申請實踐-学校
-export function applyPracticeSchool(schoolId, practiceId) {
+export function applyPracticeSchool(practiceId) {
   return request({
     url: '/system/practice-school/school/create',
     method: 'post',
     data: {
-      'schoolId': schoolId,
       'practiceId': practiceId
     }
   })
@@ -105,14 +104,21 @@ export function companyUpdatePractice(data) {
   })
 }
 
-// 企业修改实践状态为已经选定学校
+// 企业修改实践状态为已经选定学校-征集开始征集
 export function companyConfirmPractice(id) {
   return request({
-    url: '/system/practice/delete?id=' + id,
-    method: 'delete'
+    url: '/system/practice/company/confirm?practiceId=' + id,
+    method: 'get'
   })
 }
 
+// 获得实践详细信息
+export function getPractice(id) {
+  return request({
+    url: '/system/practice/get?id=' + id,
+    method: 'get'
+  })
+}
 
 
 
