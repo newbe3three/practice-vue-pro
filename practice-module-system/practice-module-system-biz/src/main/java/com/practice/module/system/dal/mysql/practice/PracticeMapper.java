@@ -6,7 +6,6 @@ import com.practice.framework.common.pojo.PageResult;
 import com.practice.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.practice.framework.mybatis.core.mapper.BaseMapperX;
 import com.practice.module.system.controller.admin.practice.vo.practice.PracticeExportReqVO;
-import com.practice.module.system.controller.admin.practice.vo.practice.PracticeIdPageReqVO;
 import com.practice.module.system.controller.admin.practice.vo.practice.PracticePageReqVO;
 import com.practice.module.system.dal.dataobject.practice.PracticeDO;
 import org.apache.ibatis.annotations.Mapper;

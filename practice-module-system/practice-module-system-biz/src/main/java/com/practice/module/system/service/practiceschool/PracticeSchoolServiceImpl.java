@@ -1,8 +1,6 @@
 package com.practice.module.system.service.practiceschool;
 
-import com.practice.module.system.controller.admin.practice.vo.practice.PracticeIdPageReqVO;
 import com.practice.module.system.dal.dataobject.practice.PracticeDO;
-import com.practice.module.system.dal.mysql.dept.DeptMapper;
 import com.practice.module.system.dal.mysql.practice.PracticeMapper;
 import com.practice.module.system.service.dept.DeptService;
 import com.practice.module.system.service.practice.PracticeService;

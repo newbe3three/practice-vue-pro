@@ -1,11 +1,8 @@
 package com.practice.module.system.service.practiceapply;
 
-import com.practice.module.system.controller.admin.practice.vo.practice.PracticeIdPageReqVO;
 import com.practice.module.system.controller.admin.practice.vo.practice.PracticePageReqVO;
-import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyCreateReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyExportReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyPageReqVO;
-import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyUpdateReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.reject.PracticeApplyRejectCreateReqVO;
 import com.practice.module.system.convert.practiceapply.PracticeApplyRejectConvert;
 import com.practice.module.system.dal.dataobject.practice.PracticeDO;
@@ -56,12 +53,13 @@ public class PracticeApplyServiceImpl implements PracticeApplyService {
         if(practiceMapper.selectById(practiceApply.getPracticeId()) == null) {
             throw exception(PRACTICE_NOT_EXISTS);
         }
-        if(practiceMapper.selectById(practiceApply.getPracticeId()).getStatus() != 2) {
+        if(practiceMapper.selectById(practiceApply.getPracticeId()).getStatus() != 3) {
             throw exception(PRACTICE_STATUS_ERROR);
         }
         //检验申请是否重复，同一个用户对同意实践只能申请一次
-        if(practiceApplyMapper.selectWithUserIdAndPracticeId(
-                practiceApply.getUserId(),practiceApply.getPracticeId()) != null) {
+                if(practiceApplyMapper.selectWithUserIdAndPracticeId(
+                        practiceApply.getUserId(),practiceApply.getPracticeId()) != null && practiceApplyMapper.selectWithUserIdAndPracticeId(
+                        practiceApply.getUserId(),practiceApply.getPracticeId()).size() > 0) {
             throw exception(PRACTICE_APPLY_REPEAT);
         }
         //发起申请时，默认设置申请的状态为待审核 0

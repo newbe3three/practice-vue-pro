@@ -1,7 +1,7 @@
 // 应用全局配置
 module.exports = {
-  // baseUrl: 'http://api-dashboard.practice.iocoder.cn',
-  baseUrl: 'http://localhost:48080',
+  baseUrl: 'http://api-dashboard.practice.iocoder.cn',
+  // baseUrl: 'http://localhost:48080',
   baseApi: '/admin-api',
   // 应用信息
   appInfo: {
