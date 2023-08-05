@@ -62,14 +62,6 @@ export function exportPracticeApplyExcel(query) {
   })
 }
 
-// 实践审核
-// export function reviewPracticeApply(id) {
-//   return request({
-//     url: '/system/practice-apply/review?practiceApplyId=' + id,
-//     method: 'get',
-//   })
-// }
-
 // 驳回申请
 export function reviewFailurePracticeApply(id, reason) {
   return request({
@@ -94,7 +86,7 @@ export function companyGetPracticeApply(query) {
 //实践申请审核提示
 export function reviewPracticeApply(id) {
   return request({
-    url: '/system/practice-apply/review?practiceApplyId=' + id,
+    url: '/system/practice-apply/company/review?practiceApplyId=' + id,
     method: 'get',
   })
 }
@@ -102,7 +94,7 @@ export function reviewPracticeApply(id) {
 //通过申请
 export function reviewPassPractice(id) {
   return request({
-    url: '/system/practice-apply/review/pass?practiceApplyId=' + id,
+    url: '/system/practice-apply/company/review/pass?practiceApplyId=' + id,
     method: 'get',
   })
 }
@@ -110,7 +102,7 @@ export function reviewPassPractice(id) {
 //实践申请审核未通过
 export function reviewFailurePractice(id, suggestion) {
   return request({
-    url: '/system/practice-apply/review/failure',
+    url: '/system/practice-apply/company/review/failure',
     method: 'post',
     data: {
       'applyId': id,

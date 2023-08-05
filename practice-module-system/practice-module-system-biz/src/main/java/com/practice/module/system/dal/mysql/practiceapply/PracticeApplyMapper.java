@@ -5,7 +5,6 @@ import java.util.*;
 import com.practice.framework.common.pojo.PageResult;
 import com.practice.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.practice.framework.mybatis.core.mapper.BaseMapperX;
-import com.practice.module.system.controller.admin.practice.vo.practice.PracticeIdPageReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyExportReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyPageReqVO;
 import com.practice.module.system.dal.dataobject.practiceapply.PracticeApplyDO;

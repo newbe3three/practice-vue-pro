@@ -67,7 +67,6 @@ public class PracticeServiceImpl implements PracticeService {
     public void updatePracticeApply(PracticeUpdateReqVO updateReqVO, Long companyId) {
         // 校验存在
         validatePracticeExists(updateReqVO.getId());
-        // 校验归属
 
         validatePracticeCompanyId(updateReqVO.getId(),companyId);
 //        if(practiceMapper.selectById(updateReqVO.getId()).getCompanyId() != companyId) {
@@ -180,7 +179,7 @@ public class PracticeServiceImpl implements PracticeService {
     }
 
     // 企业端可以在选定学校后，修改状态，也可以不选择任何院校，让实践面向所有学生
-    public void confirmPracticeByCompany(Long practiceId,Long companyId){
+    public void confirmPracticeByCompany(Long practiceId,Long companyId) {
         //校验存在性
         validatePracticeExists(practiceId);
         //校验归属

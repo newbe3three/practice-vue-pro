@@ -118,7 +118,7 @@ public class PracticeSchoolController {
     @Operation(summary = "学校发起实践申请")
     @PreAuthorize("@ss.hasPermission('system:practice-school:school:create')")
     public CommonResult<Long> applyPracticeSchool(@Valid @RequestBody PracticeSchoolCreateReqVO createReqVO) {
-        createReqVO.setSchoolId( tenantService.getTenant(getLoginUserId()).getId());
+        createReqVO.setSchoolId( adminUserService.getUser(getLoginUserId()).getTenantId());
         return success(practiceSchoolService.applyPracticeSchool(createReqVO));
     }
     //学校端接口 院校端查询本校发起的对实践的申请

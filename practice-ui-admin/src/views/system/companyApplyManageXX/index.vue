@@ -3,12 +3,12 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <!-- <el-form-item label="用户名称" prop="userNickName">
-        <el-input v-model="queryParams.schoolId" placeholder="请输入用户名称" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item label="学校名称" prop="schoolName">
+        <el-input v-model="queryParams.schoolId" placeholder="请输入学校名称" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="实践名称" prop="practiceName">
         <el-input v-model="queryParams.schoolId" placeholder="请输入实践名称" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item> -->
+      </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
           <el-option v-for="dict in this.getDictDatas(DICT_TYPE.PRACTICE_SCHOOL_STATUS)"
@@ -29,6 +29,8 @@
     <el-table v-loading="loading" :data="list">
       <el-table-column label="编号" align="center" prop="id" />
       <el-table-column label="实践名称" align="center" prop="practiceName" />
+      <el-table-column label="学校名称" align="center" prop="schoolName" />
+      <el-table-column label="状态" align="center" prop="status" />
       <el-table-column label="状态" align="center" prop="status">
         <template v-slot="scope">
           <dict-tag :type="DICT_TYPE.PRACTICE_SCHOOL_STATUS" :value="scope.row.status" />
@@ -41,8 +43,9 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template v-slot="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleReview(scope.row)"
-                     v-hasPermi="['system:practice-apply:review']">通过申请</el-button>
+          <el-button v-show="scope.row.status === 0" size="mini" type="text" icon="el-icon-edit" @click="handleReview(scope.row)"
+                     v-hasPermi="['system:practice-school:company:review']">通过申请</el-button>
+          <span v-show="scope.row.status === 1">已通过</span> 
           <!-- <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
                      v-hasPermi="['system:practice-school:delete']">删 除</el-button> -->
         </template>
@@ -76,6 +79,8 @@ export default {
         pageNo: 1,
         pageSize: 10,
         schoolId: null,
+        schoolName: null,
+        practiceName: null,
         practiceId: null,
         status: null,
         createTime: [],
@@ -92,6 +97,7 @@ export default {
     getList() {
       this.loading = true;
       // 执行查询
+      console.log("12312313", this.queryParams.status);
       companyGetPracticeSchoolPage(this.queryParams).then(response => {
         this.list = response.data.list;
         this.total = response.data.total;

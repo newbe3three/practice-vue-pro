@@ -5,10 +5,10 @@
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <!-- <el-form-item label="用户名称" prop="userNickName">
         <el-input v-model="queryParams.schoolId" placeholder="请输入用户名称" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="实践名称" prop="practiceName">
         <el-input v-model="queryParams.schoolId" placeholder="请输入实践名称" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item> -->
+      </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
           <el-option v-for="dict in this.getDictDatas(DICT_TYPE.PRACTICE_SCHOOL_STATUS)"
@@ -34,19 +34,19 @@
           <dict-tag :type="DICT_TYPE.PRACTICE_SCHOOL_STATUS" :value="scope.row.status" />
         </template>
       </el-table-column>
-      <el-table-column label="申请/创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="申请/创建时间" align="center" prop="createTime">
         <template v-slot="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <!-- <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template v-slot="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleCancel(scope.row)"
                      v-hasPermi="['system:practice-apply:review']">取消申请</el-button>
-          <!-- <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['system:practice-school:delete']">删 除</el-button> -->
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+                     v-hasPermi="['system:practice-school:delete']">删 除</el-button>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <!-- 分页组件 -->
     <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
@@ -76,6 +76,7 @@ export default {
         pageNo: 1,
         pageSize: 10,
         schoolId: null,
+        practiceName: null,
         practiceId: null,
         status: null,
         createTime: [],
