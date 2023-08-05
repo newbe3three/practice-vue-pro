@@ -112,7 +112,7 @@ public class PracticeServiceImpl implements PracticeService {
     }
 
     public void validatePracticeCompanyId(Long practiceId,Long companyId){
-        if(practiceMapper.selectById(practiceId).getCompanyId() != companyId) {
+        if(!practiceMapper.selectById(practiceId).getCompanyId().equals(companyId)) {
             throw exception(PRACTICE_PERMISSION_ERROR);
         }
     }

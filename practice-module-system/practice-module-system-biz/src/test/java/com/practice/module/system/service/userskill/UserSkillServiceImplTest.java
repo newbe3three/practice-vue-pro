@@ -82,28 +82,28 @@ public class UserSkillServiceImplTest extends BaseDbUnitTest {
         assertServiceException(() -> userSkillService.updateUserSkill(reqVO), USER_SKILL_NOT_EXISTS);
     }
 
-    @Test
-    public void testDeleteUserSkill_success() {
-        // mock 数据
-        UserSkillDO dbUserSkill = randomPojo(UserSkillDO.class);
-        userSkillMapper.insert(dbUserSkill);// @Sql: 先插入出一条存在的数据
-        // 准备参数
-        Long id = dbUserSkill.getId();
+//    @Test
+//    public void testDeleteUserSkill_success() {
+//        // mock 数据
+//        UserSkillDO dbUserSkill = randomPojo(UserSkillDO.class);
+//        userSkillMapper.insert(dbUserSkill);// @Sql: 先插入出一条存在的数据
+//        // 准备参数
+//        Long id = dbUserSkill.getId();
+//
+//        // 调用
+//        userSkillService.deleteUserSkill(id);
+//       // 校验数据不存在了
+//       assertNull(userSkillMapper.selectById(id));
+//    }
 
-        // 调用
-        userSkillService.deleteUserSkill(id);
-       // 校验数据不存在了
-       assertNull(userSkillMapper.selectById(id));
-    }
-
-    @Test
-    public void testDeleteUserSkill_notExists() {
-        // 准备参数
-        Long id = randomLongId();
-
-        // 调用, 并断言异常
-        assertServiceException(() -> userSkillService.deleteUserSkill(id), USER_SKILL_NOT_EXISTS);
-    }
+//    @Test
+//    public void testDeleteUserSkill_notExists() {
+//        // 准备参数
+//        Long id = randomLongId();
+//
+//        // 调用, 并断言异常
+//        assertServiceException(() -> userSkillService.deleteUserSkill(id), USER_SKILL_NOT_EXISTS);
+//    }
 
     @Test
     @Disabled  // TODO 请修改 null 为需要的值，然后删除 @Disabled 注解

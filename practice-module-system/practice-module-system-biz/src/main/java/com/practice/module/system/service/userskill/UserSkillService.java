@@ -33,7 +33,7 @@ public interface UserSkillService {
      *
      * @param id 编号
      */
-    void deleteUserSkill(Long id);
+    void deleteUserSkill(Long id,Long userId);
 
     /**
      * 获得个人技能

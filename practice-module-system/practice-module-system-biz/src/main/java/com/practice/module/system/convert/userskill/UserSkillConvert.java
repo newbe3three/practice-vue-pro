@@ -25,6 +25,8 @@ public interface UserSkillConvert {
 
     UserSkillRespVO convert(UserSkillDO bean);
 
+
+    //List<UserSkillRespVO> convertList2(List<UserSkillDO> list);
     List<UserSkillRespVO> convertList(List<UserSkillDO> list);
 
     PageResult<UserSkillRespVO> convertPage(PageResult<UserSkillDO> page);

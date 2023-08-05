@@ -15,6 +15,7 @@ import com.practice.module.system.convert.userskill.UserSkillConvert;
 import com.practice.module.system.dal.mysql.userskill.UserSkillMapper;
 
 import static com.practice.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.practice.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 import static com.practice.module.system.enums.ErrorCodeConstants.*;
 
 /**
@@ -93,8 +94,10 @@ public class UserSkillServiceImpl implements UserSkillService {
     public void updateUserSkill(UserSkillUpdateReqVO updateReqVO) {
         // 校验存在
         validateUserSkillExists(updateReqVO.getId());
-        //校验用户存在性
-        adminUserService.validateUserExists(updateReqVO.getUserId());
+        //验证是否有权修改
+        if(getLoginUserId() != userSkillMapper.selectById(updateReqVO.getId()).getUserId()){
+            throw exception(USER_SKILL_DEL_ERROR);
+        }
         List<String> list = Arrays.asList("初级","中级","高级");
         boolean flag = false;
         for (String l:list) {
@@ -118,9 +121,13 @@ public class UserSkillServiceImpl implements UserSkillService {
     }
 
     @Override
-    public void deleteUserSkill(Long id) {
+    public void deleteUserSkill(Long id,Long userId) {
         // 校验存在
         validateUserSkillExists(id);
+        //校验是否有权删除
+        if(userId != userSkillMapper.selectById(id).getUserId()){
+            throw exception(USER_SKILL_DEL_ERROR);
+        }
         // 删除
         userSkillMapper.deleteById(id);
     }

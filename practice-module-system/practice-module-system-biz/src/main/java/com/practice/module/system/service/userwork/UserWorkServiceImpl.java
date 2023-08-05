@@ -14,6 +14,7 @@ import com.practice.module.system.convert.userwork.UserWorkConvert;
 import com.practice.module.system.dal.mysql.userwork.UserWorkMapper;
 
 import static com.practice.framework.common.exception.util.ServiceExceptionUtil.exception;
+import static com.practice.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 import static com.practice.module.system.enums.ErrorCodeConstants.*;
 
 /**
@@ -91,7 +92,10 @@ public class UserWorkServiceImpl implements UserWorkService {
         // 校验存在
         validateUserWorkExists(updateReqVO.getId());
         //验证用户存在性
-        adminUserService.validateUserExists(updateReqVO.getUserId());
+        //验证是否有权修改
+        if(getLoginUserId() != userWorkMapper.selectById(updateReqVO.getId()).getUserId()){
+            throw exception(USER_WORK_DEL_ERROR);
+        }
         //验证开始时间和结束时间
         int time = updateReqVO.getEndTime().compareTo(updateReqVO.getStartTime());
         if (time < 0) {

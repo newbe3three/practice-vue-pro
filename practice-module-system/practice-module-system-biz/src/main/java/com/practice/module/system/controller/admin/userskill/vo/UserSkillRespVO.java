@@ -13,7 +13,7 @@ public class UserSkillRespVO extends UserSkillBaseVO {
     @Schema(description = "编号", required = true, example = "18839")
     private Long id;
 
-    @Schema(description = "创建时间", required = true)
-    private LocalDateTime createTime;
+   // @Schema(description = "创建时间", required = true)
+    //private LocalDateTime createTime;
 
 }

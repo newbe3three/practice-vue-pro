@@ -91,7 +91,7 @@ public class UserSkillController {
     @Parameter(name = "id", description = "编号", required = true)
     @PreAuthorize("@ss.hasPermission('system:user-skill:delete')")
     public CommonResult<Boolean> deleteUserSkill(@RequestParam("id") Long id) {
-        userSkillService.deleteUserSkill(id);
+        userSkillService.deleteUserSkill(id,getLoginUserId());
         return success(true);
     }
     //学生端接口：修改个人技能
