@@ -3,6 +3,7 @@ package com.practice.module.system.service.practiceapply;
 import com.practice.module.system.controller.admin.practice.vo.practice.PracticePageReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyExportReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyPageReqVO;
+import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeCurrentId;
 import com.practice.module.system.controller.admin.practiceapply.vo.reject.PracticeApplyRejectCreateReqVO;
 import com.practice.module.system.convert.practiceapply.PracticeApplyRejectConvert;
 import com.practice.module.system.dal.dataobject.practice.PracticeDO;
@@ -11,6 +12,7 @@ import com.practice.module.system.dal.mysql.practice.PracticeMapper;
 import com.practice.module.system.dal.mysql.practiceapply.PracticeApplyRejectMapper;
 import com.practice.module.system.service.practice.PracticeService;
 import com.practice.module.system.service.practiceschool.PracticeSchoolService;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -20,7 +22,6 @@ import java.util.*;
 import com.practice.module.system.dal.dataobject.practiceapply.PracticeApplyDO;
 import com.practice.framework.common.pojo.PageResult;
 
-import com.practice.module.system.convert.practiceapply.PracticeApplyConvert;
 import com.practice.module.system.dal.mysql.practiceapply.PracticeApplyMapper;
 
 import static com.practice.framework.common.exception.util.ServiceExceptionUtil.exception;
@@ -227,6 +228,19 @@ public class PracticeApplyServiceImpl implements PracticeApplyService {
 
 
         return practiceMapper.selectPage2(pageReqVO);
+    }
+
+    @Override
+    public PracticeApplyDO getCurrentPracticeId(Long loginUserId) {
+        PracticeCurrentId practiceCurrentId = new PracticeCurrentId();
+        practiceCurrentId.setUserId(loginUserId);
+        practiceCurrentId.setStatus((byte) 1);
+
+        PracticeApplyDO practiceApplyDO = practiceApplyMapper.selectCurrentPracticeId(practiceCurrentId);
+        if (practiceApplyDO == null) {
+            throw exception(PRACTICE_NOT_CURRENT_ALREADY);
+        }
+        return practiceApplyDO;
     }
 
 }

@@ -141,6 +141,15 @@ public class PracticeApplyController {
 
         return success(result);
     }
+
+    @GetMapping("/student/getPracticeId")
+    @Operation(summary = "获得进行中的实践id")
+    @PreAuthorize("@ss.hasPermission('system:practice-apply:student:page')")
+    @Parameter(name = "practiceApplyId", description = "实践申请编号", required = true, example = "1")
+    public CommonResult<Long> studentGetPracticeID() {
+        return success(practiceApplyService.getCurrentPracticeId(getLoginUserId()).getId());
+    }
+
     //企业端接口 查询学生对一实践的申请驳回记录
     @GetMapping("/company/review")
     @Operation(summary = "实践申请审核提示")

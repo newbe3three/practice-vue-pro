@@ -4,14 +4,10 @@ import java.util.*;
 import javax.validation.*;
 
 import com.practice.module.system.controller.admin.practice.vo.practice.PracticePageReqVO;
-import com.practice.module.system.controller.admin.practice.vo.reject.PracticeRejectCreateReqVO;
-import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyCreateReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyExportReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyPageReqVO;
-import com.practice.module.system.controller.admin.practiceapply.vo.apply.PracticeApplyUpdateReqVO;
 import com.practice.module.system.controller.admin.practiceapply.vo.reject.PracticeApplyRejectCreateReqVO;
 import com.practice.module.system.dal.dataobject.practice.PracticeDO;
-import com.practice.module.system.dal.dataobject.practice.PracticeRejectDO;
 import com.practice.module.system.dal.dataobject.practiceapply.PracticeApplyDO;
 import com.practice.framework.common.pojo.PageResult;
 import com.practice.module.system.dal.dataobject.practiceapply.PracticeApplyRejectDO;
@@ -113,4 +109,6 @@ public interface PracticeApplyService {
      * @return 实践分页
      */
     PageResult<PracticeDO> studentGetPracticePage(PracticePageReqVO pageReqVO, Long schoolId);
+
+    PracticeApplyDO getCurrentPracticeId(Long loginUserId);
 }

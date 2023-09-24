@@ -45,3 +45,5 @@ DELETE FROM "system_organization_company";
 DELETE FROM "system_organization_school";
 DELETE FROM "system_organization_other";
 DELETE FROM "system_user_work";
+DELETE FROM "system_sign_in";
+DELETE FROM "system_work_log";

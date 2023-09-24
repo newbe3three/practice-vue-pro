@@ -143,25 +143,25 @@ public class ResourceArticleController {
 
         return success(resourceArticleRespVOPageResult);
     }
-    @GetMapping("/query/username")
-    @Operation(summary = "根据用户名称查询文章资源分页")
-    @PreAuthorize("@ss.hasPermission('system:resource-article:query')")
-    @Parameter(name = "username", description = "用户名", required = true, example = "admin")
-    public CommonResult<PageResult<ResourceArticleRespVO>> getResourceArticleListWithUserName(@Valid ResourceArticlePageReqVO pageVO) {
-
-        //ResourceArticlePageReqVO pageVO = new ResourceArticlePageReqVO();
-        //先根据username查询userid，然后再去查询article表
-        pageVO.setUserId(adminUserService.getUserIdWithUserName(pageVO.getUserName()));
-        PageResult<ResourceArticleDO> pageResult = resourceArticleService.getResourceArticlePage(pageVO);
-        PageResult<ResourceArticleRespVO> resourceArticleRespVOPageResult = ResourceArticleConvert.INSTANCE.convertPage(pageResult);
-        for (int i=0; i<resourceArticleRespVOPageResult.getList().size();i++) {
-            userName = adminUserService.getUser(resourceArticleRespVOPageResult.getList().get(i).getUserId()).getUsername();
-            resourceArticleRespVOPageResult.getList().get(i).setUserName(userName);
-        }
-
-        return success(resourceArticleRespVOPageResult);
-    }
-    //Todo:分页？？？
+//    @GetMapping("/query/username")
+//    @Operation(summary = "根据用户名称查询文章资源分页")
+//    @PreAuthorize("@ss.hasPermission('system:resource-article:query')")
+//    @Parameter(name = "username", description = "用户名", required = true, example = "admin")
+//    public CommonResult<PageResult<ResourceArticleRespVO>> getResourceArticleListWithUserName(@Valid ResourceArticlePageReqVO pageVO) {
+//
+//        //ResourceArticlePageReqVO pageVO = new ResourceArticlePageReqVO();
+//        //先根据username查询userid，然后再去查询article表
+//        pageVO.setUserId(adminUserService.getUserIdWithUserName(pageVO.getUserName()));
+//        PageResult<ResourceArticleDO> pageResult = resourceArticleService.getResourceArticlePage(pageVO);
+//        PageResult<ResourceArticleRespVO> resourceArticleRespVOPageResult = ResourceArticleConvert.INSTANCE.convertPage(pageResult);
+//        for (int i=0; i<resourceArticleRespVOPageResult.getList().size();i++) {
+//            userName = adminUserService.getUser(resourceArticleRespVOPageResult.getList().get(i).getUserId()).getUsername();
+//            resourceArticleRespVOPageResult.getList().get(i).setUserName(userName);
+//        }
+//
+//        return success(resourceArticleRespVOPageResult);
+//    }
+//    //Todo:分页？？？
     @GetMapping("/review")
     @Operation(summary = "文章资源审核")
     @PreAuthorize("@ss.hasPermission('system:resource-article:review')")
@@ -200,31 +200,31 @@ public class ResourceArticleController {
         return success(true);
     }
 
-    @GetMapping("/query/category")
-    @Operation(summary = "根据类别编号查询文章资源并分页")
-    @PreAuthorize("@ss.hasPermission('system:resource-article:query')")
-   // @Parameter(name = "categoryId", description = "类别编号", required = true, example = "1")
-    public CommonResult<PageResult<ResourceArticleRespVO>> getResourceArticleListWithCategoryId(@Valid ResourceArticlePageReqVO pageReqVO) {
-      //  类别编号不存在就查询不出数据
+//    @GetMapping("/query/category")
+//    @Operation(summary = "根据类别编号查询文章资源并分页")
+//    @PreAuthorize("@ss.hasPermission('system:resource-article:query')")
+//   // @Parameter(name = "categoryId", description = "类别编号", required = true, example = "1")
+//    public CommonResult<PageResult<ResourceArticleRespVO>> getResourceArticleListWithCategoryId(@Valid ResourceArticlePageReqVO pageReqVO) {
+//      //  类别编号不存在就查询不出数据
+//
+//        PageResult<ResourceArticleDO> pageResult = resourceArticleService.getResourceArticlePage(pageReqVO);
+//        PageResult<ResourceArticleRespVO> resourceArticleRespVOPageResult = ResourceArticleConvert.INSTANCE.convertPage(pageResult);
+//        for (int i=0; i<resourceArticleRespVOPageResult.getList().size();i++) {
+//            userName = adminUserService.getUser(resourceArticleRespVOPageResult.getList().get(i).getUserId()).getUsername();
+//            resourceArticleRespVOPageResult.getList().get(i).setUserName(userName);
+//        }
+//
+//        return success(resourceArticleRespVOPageResult);
+//    }
 
-        PageResult<ResourceArticleDO> pageResult = resourceArticleService.getResourceArticlePage(pageReqVO);
-        PageResult<ResourceArticleRespVO> resourceArticleRespVOPageResult = ResourceArticleConvert.INSTANCE.convertPage(pageResult);
-        for (int i=0; i<resourceArticleRespVOPageResult.getList().size();i++) {
-            userName = adminUserService.getUser(resourceArticleRespVOPageResult.getList().get(i).getUserId()).getUsername();
-            resourceArticleRespVOPageResult.getList().get(i).setUserName(userName);
-        }
 
-        return success(resourceArticleRespVOPageResult);
-    }
-
-
-    @PutMapping("/update")
-    @Operation(summary = "文章资源修改")
-    @PreAuthorize("@ss.hasPermission('system:resource-article:update')")
-    public CommonResult<Boolean> updateResourceArticle(@Valid @RequestBody ResourceArticleUpdateReqVO updateReqVO) {
-        resourceArticleService.updateResourceArticle(updateReqVO);
-        return success(true);
-    }
+//    @PutMapping("/update")
+//    @Operation(summary = "文章资源修改")
+//    @PreAuthorize("@ss.hasPermission('system:resource-article:update')")
+//    public CommonResult<Boolean> updateResourceArticle(@Valid @RequestBody ResourceArticleUpdateReqVO updateReqVO) {
+//        resourceArticleService.updateResourceArticle(updateReqVO);
+//        return success(true);
+//    }
 }
 
 

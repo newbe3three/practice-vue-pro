@@ -198,10 +198,11 @@ public interface ErrorCodeConstants {
 
     ErrorCode PRACTICE_APPLY_NOT_EXISTS = new ErrorCode(1003027006, "实践申请不存在");
     ErrorCode PRACTICE_APPLY_REPEAT = new ErrorCode(1003027008, "实践申请重复");
+    ErrorCode PRACTICE_NOT_CURRENT_ALREADY = new ErrorCode(1003027009, "当前不存在进行中的实践");
 
     ErrorCode PRACTICE_STATUS_ERROR = new ErrorCode(1003027007, "修改实践状态错误！请检查！");
 
-    ErrorCode PRACTICE_APPLY_STATUS_ERROR = new ErrorCode(1003027008, "此申请状态不是待审核");
+    ErrorCode PRACTICE_APPLY_STATUS_ERROR = new ErrorCode(1003027010, "此申请状态不是待审核");
 
     ErrorCode PRACTICE_SCHOOL_NOT_EXISTS = new ErrorCode(1003028001, "学校申请实践不存在");
     ErrorCode PRACTICE_SCHOOL_STATUS_ERROR = new ErrorCode(1003028002, "当前实践已选定学校");
@@ -210,6 +211,9 @@ public interface ErrorCodeConstants {
     ErrorCode TEACHERS_NOT_EXISTS = new ErrorCode(1003030001, "导师信息不存在");
 
     ErrorCode ID_CARD_ERROR = new ErrorCode(1003030002, "身份证号错误！");
+
+    // ========== 签到  1004039001 ==========
+    ErrorCode SIGN_IN_NOT_EXISTS = new ErrorCode(1004039001, "签到不存在");
 
 
     ErrorCode USER_ACTIVATE_ERROR = new ErrorCode(1003030003, "username或UUID错误！！");
@@ -233,4 +237,8 @@ public interface ErrorCodeConstants {
     ErrorCode USER_WORK_DEL_ERROR = new ErrorCode(1004038002, "操作失败，请检查权限！");
     ErrorCode USER_EDUCATION_NOT_EXISTS = new ErrorCode(1005038002, "教育经历不存在");
     ErrorCode USER_EDUCATION_DEL_ERROR = new ErrorCode(1005038003, "操作失败，请检查权限！");
+
+
+    ErrorCode WORK_LOG_NOT_EXISTS = new ErrorCode(1005039003, "工作日志不存在");
+
 }

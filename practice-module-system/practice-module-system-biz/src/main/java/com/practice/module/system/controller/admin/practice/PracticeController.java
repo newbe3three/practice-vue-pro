@@ -132,9 +132,10 @@ public class PracticeController {
     public CommonResult<PageResult<PracticeRespVO>> getPracticePage(@Valid PracticePageReqVO pageVO) {
         PageResult<PracticeDO> pageResult = practiceService.getPracticePage(pageVO);
         PageResult<PracticeRespVO> result = PracticeConvert.INSTANCE.convertPage2(pageResult);
+        System.out.println("111111111111111======"+ result.getList().size());
+
         for (int i=0;i<result.getList().size();i++) {
             result.getList().get(i).setCompanyName(tenantService.getTenant(result.getList().get(i).getCompanyId()).getName());
-
         }
         return success(result);
     }
