@@ -32,12 +32,12 @@ public class SignInBaseVO {
     @Schema(description = "签到结果（默认为0，迟到为1，早退2，迟到且早退为3，正常签到为4）")
     private Byte result;
 
-    @Schema(description = "纬度", required = true)
-    @NotNull(message = "纬度不能为空")
+    @Schema(description = "纬度-签到", required = true)
+//    @NotNull(message = "纬度不能为空")
     private String lat;
 
-    @Schema(description = "经度", required = true)
-    @NotNull(message = "经度不能为空")
+    @Schema(description = "经度-签到", required = true)
+//    @NotNull(message = "经度不能为空")
     private String lon;
 
     @Schema(description = "签到时间", required = true)
@@ -57,5 +57,13 @@ public class SignInBaseVO {
     @Schema(description = "签退地点", required = true)
     @NotNull(message = "签退地点不能为空")
     private String signOutLocation;
+
+    @Schema(description = "纬度-签退", required = true)
+//    @NotNull(message = "纬度不能为空")
+    private String latEnd;
+
+    @Schema(description = "经度-签退", required = true)
+//    @NotNull(message = "经度不能为空")
+    private String lonEnd;
 
 }

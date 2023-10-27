@@ -46,11 +46,11 @@ public class SignInDO extends BaseDO {
      */
     private Byte result;
     /**
-     * 纬度
+     * 纬度-签到
      */
     private String lat;
     /**
-     * 经度
+     * 经度-签到
      */
     private String lon;
     /**
@@ -69,5 +69,13 @@ public class SignInDO extends BaseDO {
      * 签退地点
      */
     private String signOutLocation;
+    /**
+     * 纬度-签退
+     */
+    private String latEnd;
+    /**
+     * 经度-签退
+     */
+    private String lonEnd;
 
 }

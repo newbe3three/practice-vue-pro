@@ -2,6 +2,7 @@ package com.practice.module.infra.service.file;
 
 import com.practice.module.infra.controller.admin.file.vo.file.FilePageReqVO;
 import com.practice.framework.common.pojo.PageResult;
+import com.practice.module.infra.controller.admin.file.vo.file.FileRespRVO;
 import com.practice.module.infra.dal.dataobject.file.FileDO;
 
 /**
@@ -27,6 +28,8 @@ public interface FileService {
      * @param content 文件内容
      * @return 文件路径
      */
+    FileRespRVO uploadFile(String name, String path, byte[] content) throws Exception;
+
     String createFile(String name, String path, byte[] content);
 
     /**

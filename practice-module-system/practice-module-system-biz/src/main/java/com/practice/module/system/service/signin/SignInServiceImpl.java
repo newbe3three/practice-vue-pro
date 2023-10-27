@@ -29,7 +29,7 @@ public class SignInServiceImpl implements SignInService {
     private SignInMapper signInMapper;
 
     @Override
-    public Long createSignIn(SignInCreateReqVO createReqVO) {
+    public SignInDO createSignIn(SignInCreateReqVO createReqVO) {
 
         // 状态修改为1，表示已经签到
         createReqVO.setStatus((byte) 1);
@@ -40,11 +40,11 @@ public class SignInServiceImpl implements SignInService {
         SignInDO signIn = SignInConvert.INSTANCE.convert(createReqVO);
         signInMapper.insert(signIn);
         // 返回
-        return signIn.getId();
+        return signIn;
     }
 
     @Override
-    public void updateSignOut(SignInUpdateReqVO updateReqVO) {
+    public SignInDO updateSignOut(SignInUpdateReqVO updateReqVO) {
         // 校验存在
         validateSignInExists(updateReqVO.getId());
         // 状态修改为2 表示已经签退
@@ -54,6 +54,7 @@ public class SignInServiceImpl implements SignInService {
         // 更新
         SignInDO updateObj = SignInConvert.INSTANCE.convert(updateReqVO);
         signInMapper.updateById(updateObj);
+        return signInMapper.selectById(updateReqVO.getId());
     }
 
     @Override

@@ -48,7 +48,7 @@ public class SignInServiceImplTest extends BaseDbUnitTest {
         SignInCreateReqVO reqVO = randomPojo(SignInCreateReqVO.class);
 
         // 调用
-        Long signInId = signInService.createSignIn(reqVO);
+        SignInDO signInId = signInService.createSignIn(reqVO);
         // 断言
         assertNotNull(signInId);
         // 校验记录的属性是否正确

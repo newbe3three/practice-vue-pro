@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
 import javax.validation.*;
 import javax.servlet.http.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.io.IOException;
 
@@ -23,6 +24,7 @@ import com.practice.framework.excel.core.util.ExcelUtils;
 
 import com.practice.framework.operatelog.core.annotations.OperateLog;
 import static com.practice.framework.operatelog.core.enums.OperateTypeEnum.*;
+import static com.practice.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 import com.practice.module.system.controller.admin.signin.vo.*;
 import com.practice.module.system.dal.dataobject.signin.SignInDO;
@@ -41,8 +43,10 @@ public class SignInController {
     @PostMapping("/signIn")
     @Operation(summary = "创建签到")
     @PreAuthorize("@ss.hasPermission('system:sign-in:create')")
-    public CommonResult<Long> createSignIn(@Valid @RequestBody SignInCreateReqVO createReqVO) {
-        return success(signInService.createSignIn(createReqVO));
+    public CommonResult<SignInRespVO> createSignIn(@Valid @RequestBody SignInCreateReqVO createReqVO) {
+        createReqVO.setUserId(getLoginUserId());
+        createReqVO.setSignInTime(LocalDateTime.now());
+        return success(SignInConvert.INSTANCE.convert(signInService.createSignIn(createReqVO)));
     }
 
 
@@ -61,9 +65,11 @@ public class SignInController {
     @PutMapping("/signOut")
     @Operation(summary = "签退")
     @PreAuthorize("@ss.hasPermission('system:sign-in:update')")
-    public CommonResult<Boolean> updateSignOut(@Valid @RequestBody SignInUpdateReqVO updateReqVO) {
+    public CommonResult<SignInRespVO> updateSignOut(@Valid @RequestBody SignInUpdateReqVO updateReqVO) {
+        updateReqVO.setUserId(getLoginUserId());
+        updateReqVO.setSignOutTime(LocalDateTime.now());
         signInService.updateSignOut(updateReqVO);
-        return success(true);
+        return success(SignInConvert.INSTANCE.convert(signInService.updateSignOut(updateReqVO)));
     }
 
     @DeleteMapping("/delete")

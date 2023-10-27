@@ -7,6 +7,7 @@ import com.practice.framework.common.pojo.PageResult;
 import com.practice.framework.common.util.servlet.ServletUtils;
 import com.practice.framework.operatelog.core.annotations.OperateLog;
 import com.practice.module.infra.controller.admin.file.vo.file.FilePageReqVO;
+import com.practice.module.infra.controller.admin.file.vo.file.FileRespRVO;
 import com.practice.module.infra.controller.admin.file.vo.file.FileRespVO;
 import com.practice.module.infra.controller.admin.file.vo.file.FileUploadReqVO;
 import com.practice.module.infra.convert.file.FileConvert;
@@ -47,6 +48,15 @@ public class FileController {
         MultipartFile file = uploadReqVO.getFile();
         String path = uploadReqVO.getPath();
         return success(fileService.createFile(file.getOriginalFilename(), path, IoUtil.readBytes(file.getInputStream())));
+    }
+
+    @PostMapping("/resume")
+    @Operation(summary = "上传文件")
+    @OperateLog(logArgs = false) // 上传文件，没有记录操作日志的必要
+    public CommonResult<FileRespRVO> uploadResume(FileUploadReqVO uploadReqVO) throws Exception {
+        MultipartFile file = uploadReqVO.getFile();
+        String path = uploadReqVO.getPath();
+        return success(fileService.uploadFile(file.getOriginalFilename(), path, IoUtil.readBytes(file.getInputStream())));
     }
 
     @DeleteMapping("/delete")

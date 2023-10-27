@@ -19,14 +19,14 @@ public interface SignInService {
      * @param createReqVO 创建信息
      * @return 编号
      */
-    Long createSignIn(@Valid SignInCreateReqVO createReqVO);
+    SignInDO createSignIn(@Valid SignInCreateReqVO createReqVO);
 
     /**
      * 更新签到
      *
      * @param updateReqVO 更新信息
      */
-    void updateSignOut(@Valid SignInUpdateReqVO updateReqVO);
+    SignInDO updateSignOut(@Valid SignInUpdateReqVO updateReqVO);
 
     /**
      * 删除签到
